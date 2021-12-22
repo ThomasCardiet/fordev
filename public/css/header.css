@@ -37,6 +37,10 @@ html {
     padding: 0;
 }
 
+main {
+    margin-top: 180px;
+}
+
 /* HEADER */
 
 header {
@@ -92,37 +96,6 @@ header {
 .header-top-logo-desc > h1{
     font-size: 2em;
     margin-top: -6px;
-}
-
-        /* SEARCH */
-
-.header-top-right {
-    float: right;
-    display: flex;
-    margin-top: 30px;
-    margin-right: 1%;
-}
-
-.header-top-search {
-    background-color: white;
-    padding: 8px 0 8px 8px;
-}
-
-.header-top-search > i {
-    font-size: 1.1em;
-}
-
-.header-top-search > input {
-    border: none;
-    font-size: 1.2em;
-    outline: none;
-    width: 80%;
-}
-
-.header-top-right > .fa-user {
-    color: white;
-    font-size: 2.38em;
-    margin-left: 2%;
 }
 
 

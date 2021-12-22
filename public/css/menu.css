@@ -1,0 +1,47 @@
+header, main, footer {
+    width: 96%;
+}
+
+#right-menu {
+    position: fixed;
+    width: 4%;
+    height: 100%;
+    right: 0;
+    top: 0;
+    background-color: black;
+    color: white;
+    list-style: none;
+    z-index: 11;
+}
+
+/*Popups*/
+.right-menu-popup {
+    position: absolute;
+    width: 500%;
+    height: 120px;
+    background-color: var(--dark_grey);
+    top: 0;
+    left: -500%;
+    border: solid white 1px;
+}
+
+/*Icons*/
+
+#right-menu > li
+{
+    text-align: center;
+    font-size: 2em;
+    position: relative;
+}
+
+#right-menu> li > i:hover
+{
+    background-color: var(--dark_grey);
+    cursor: pointer;
+}
+
+#right-menu > li > i
+{
+    width: 100%;
+    padding: 12px 0;
+}
