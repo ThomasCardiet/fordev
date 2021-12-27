@@ -1,0 +1,145 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/profile/profile.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profile/user.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profile/relations.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profile/projects.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profile/stats.css') }}">
+{% endblock %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+    <section id="profile">
+
+        <div id="profile-content">
+
+            {#Links section#}
+            <div id="profile-content-left">
+                <p class="profile-btn active" data-target="user">Profil</p>
+                <p class="profile-btn" data-target="relations">Relations</p>
+                <p class="profile-btn" data-target="projects">Projets</p>
+                <p class="profile-btn" data-target="stats">Statistiques</p>
+            </div>
+
+            {# ****************MENUS SECTION***************** #}
+
+            {#User content#}
+            <div class="menu-info" id="content-user">
+
+                <img src="{{ asset('img/profile/unknown.png') }}" alt="#">
+                <h1 id="menu-info-username">TraXxFr</h1>
+                <h2>Email: traXx@gmail.com</h2>
+                <h2>Date de création: 22/12/2021</h2>
+                <button id="menu-info-btn">Modifier</button>
+
+            </div>
+
+            {#Relations content#}
+            <div class="menu-info" id="content-relations">
+                <div id="relations-icons">
+                    <i class="popup-btn fas fa-user-friends"></i>
+                    <i class="fas fa-user-clock"></i>
+                    <i class="fas fa-user-plus"></i>
+                </div>
+
+                <div id="relations-img-list">
+                    {% for i in range(0,20) %}
+                    <div class="relations-img">
+                        <img src="{{ asset('img/profile/unknown.png') }}" alt="#">
+                        <h3>Unknown{{ i }}</h3>
+                        <i class="fas fa-circle"></i>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div id="relations-conversations">
+
+                    <h2>Discussions Récentes:</h2>
+
+                    <div id="relations-conversations-block">
+                        {% for i in range(0,5) %}
+                        <div class="relations-conversation">
+                            <img src="{{ asset('img/profile/unknown.png') }}" alt="">
+                            <p>Salut ça va ? Ca te dit de se voir dans pas trop longtemps dans un bar ou je sais pas quoi écrire, alors je mets de la *****!</p>
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+
+            {#Projects content#}
+            <div class="menu-info" id="content-projects">
+                <div id="projects-icons">
+                    <i class="popup-btn fas fa-list"></i>
+                    <i class="fas fa-clock"></i>
+                    <i class="fas fa-plus-square"></i>
+                </div>
+
+                <div id="projects-recents">
+
+                    <h2>Projets Récents:</h2>
+
+                    <div id="projects-recents-block">
+                        {% for i in range(0,5) %}
+                        <div class="projects-recent">
+                            <img src="{{ asset('img/profile/unknown_project.png') }}" alt="">
+                            <div>
+                                <h3>Site de greenDev</h3>
+                                <p>4 contributeurs</p>
+                                <p>crée le 22/12/2021</p>
+                            </div>
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            {#Stats content#}
+            <div class="menu-info" id="content-stats">
+                <div id="content-stats-values">
+                    <div class="gold">
+                        <div>
+                            47 <br> Gloires
+                        </div>
+                    </div>
+                    <div class="aqua">
+                        <div>
+                            14 <br> Projets
+                        </div>
+                    </div>
+                    <div class="red">
+                        <div>
+                            64 <br> Posts
+                        </div>
+                    </div>
+                    <div class="mat_gold">
+                        <div>
+                            24 semaines <br> d'ancienneté
+                        </div>
+                    </div>
+                    <div class="mat_aqua">
+                        <div>
+                            132 <br> Visites profil
+                        </div>
+                    </div>
+                    <div class="mat_red">
+                        <div>
+                            47 <br> Gloires
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset("js/profile/links.js") }}"></script>
+{% endblock %}
