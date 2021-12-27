@@ -1,0 +1,15 @@
+#content-user {
+    text-align: center;
+    color: white;
+}
+
+#content-user > img {
+    max-width: 12%;
+    border-radius: 50%;
+}
+
+#content-user > img, #user > h1, #user > h2 {
+    margin-bottom: 5px;
+    font-family: var(--text_font);
+    font-size: 1em;
+}

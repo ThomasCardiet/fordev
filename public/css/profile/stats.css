@@ -1,0 +1,50 @@
+#content-stats-values {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+}
+
+#content-stats-values > div {
+    position: relative;
+    background-color: red;
+    width: calc((100% - 20%)/3);
+    border-radius: 50%;
+    margin-bottom: 40px;
+}
+
+#content-stats-values > div::after {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+}
+
+#content-stats-values > div > div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    top: 35%;
+    font-size: 2vw;
+    color: white;
+}
+
+#content-stats-values > .gold {
+    background-color: var(--gold);
+}
+#content-stats-values > .aqua {
+    background-color: var(--aqua);
+}
+#content-stats-values > .red {
+    background-color: var(--red);
+}
+#content-stats-values > .mat_gold {
+    background-color: var(--mat_gold);
+}
+#content-stats-values > .mat_aqua {
+    background-color: var(--mat_aqua);
+}
+#content-stats-values > .mat_red {
+    background-color: var(--mat_red);
+}

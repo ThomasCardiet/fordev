@@ -8,19 +8,29 @@ function hidePopups() {
 }
 hidePopups();
 
-icons.hover(function () {
+icons.mouseenter(function () {
     let target = $(this).data('target');
     hidePopups();
     $(`#right-menu-popup-${target}`).show();
     setTimeout(function () {
         let hovers = $(':hover');
         let hover = hovers[hovers.length-1];
-        if(!hover.className.includes('right-menu-icon') && !hover.className.includes('right-menu-popup')) {
+        if(!hover.className.includes('right-menu-icon')
+            && !hover.className.includes('right-menu-popup')) {
+            while (hover) {
+                hover = hover.parentNode;
+                if(hover !== document && hover !== null) {
+                    if (hover.classList.contains('right-menu-popup')) {
+                        return;
+                        return;
+                    }
+                }
+            }
             hidePopups();
         }
     }, 1000);
 })
 
-popups.mouseout(function (e) {
+popups.mouseleave(e => {
     hidePopups();
 })

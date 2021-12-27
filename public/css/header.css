@@ -5,11 +5,23 @@
     --grey: #9c9c9c;
     --yellow: #FFEE3E;
     --green: #00fec2;
+    --light_green: #00ff88;
     --dark_green: #00694f;
     --blue: #488CE1;
     --red: #E6103B;
     --error: #ab2f2f;
     --success: #37a237;
+
+    --gold: #CBBD31;
+    --aqua: #00FEC2;
+    --mat_gold: #b79136;
+    --mat_aqua: #39a289;
+    --mat_red: #993249;
+
+    --text_font: sans-serif;
+    --button_font: sans-serif;
+    --title_font: sans-serif;
+
 
 }
 

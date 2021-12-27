@@ -1,0 +1,121 @@
+#content-relations {
+    position: relative;
+}
+
+/*Icons*/
+#relations-icons {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: white;
+    font-size: 2.5em;
+}
+
+#relations-icons > i:hover {
+    cursor: pointer;
+    color: var(--green);
+}
+
+/*Friends-list*/
+#relations-img-list {
+    display: flex;
+    width: 88%;
+    margin: auto;
+    overflow-x: scroll;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
+.relations-img {
+    width: 20%;
+    position: relative;
+    margin-right: 50px;
+    user-select: none;
+}
+
+.relations-img > img {
+    max-width: 100%;
+    display: block;
+    margin: auto;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.relations-img > i {
+    position: absolute;
+    right: 10px;
+    top: 55%;
+    color: red;
+    font-size: 1.3em;
+}
+
+.relations-img > i.online {
+    color: green;
+}
+
+.relations-img > h3 {
+    font-family: var(--text_font);
+    font-size: 1.3em;
+    text-align: center;
+    color: white;
+}
+
+/*Conversations*/
+#relations-conversations {
+    width: 95%;
+    margin: 20px auto auto auto;
+}
+
+#relations-conversations > h2 {
+    width: 35%;
+    text-align: center;
+    padding: 10px 0;
+    background-color: var(--green);
+    border-radius: 10px;
+    font-size: 1.3em;
+    font-family: var(--title_font);
+    margin: 20px 0;
+}
+
+.relations-conversation {
+    display: flex;
+    background-color: var(--dark_grey);
+    border: solid 1px var(--grey);
+    margin-top: 10px;
+    padding: 10px 15px;
+}
+
+.relations-conversation > img {
+    width: 3.2em;
+    border-radius: 50%;
+    border: #707070 solid 1px;
+    margin-right: 18px;
+}
+
+.relations-conversation > p {
+    width: 90%;
+    text-align: left;
+    color: var(--green);
+    font-family: sans-serif;
+    font-size: 1.6em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 2.5%;
+    transform: translateY(25%);
+}
+
+.relations-conversation > i {
+    color: var(--grey);
+    font-size: 2.3em;
+    margin-top: 8px;
+    text-align: right;
+    width: 3%;
+}
+
+.relations-conversation > i:hover {
+    cursor: pointer;
+    color: var(--green);
+}
+
