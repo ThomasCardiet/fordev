@@ -9,9 +9,7 @@
 
     <title>{% block title %}{% endblock %}</title>
     <script src="https://kit.fontawesome.com/dc883addae.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{{ asset('css/header.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/includes/style.css') }}">
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
@@ -50,17 +48,18 @@
 <ul id="right-menu">
     {#USER MENU#}
     <li>
-        <i data-target="account" class="fas fa-user right-menu-icon"></i>
+        <i data-path="{{ path('auth') }}" data-target="account" class="link fas fa-user right-menu-icon"></i>
+        {% if app.user %}
         <div class="right-menu-popup" id="right-menu-popup-account">
             <div id="right-menu-popup-account-informations">
                 <img src="{{ asset('img/profile/unknown.png') }}" alt="">
                 <div>
-                    <h3>TraXxFr</h3>
-                    <p>22/12/2021</p>
+                    <h3>{{ app.user.username }}</h3>
+                    <p>{{ app.user.createdAt|date('d/m/Y') }}</p>
                 </div>
             </div>
             <div id="right-menu-popup-account-icons">
-                <i class="fas fa-sign-out-alt"></i>
+                <i data-path="{{ path('security_logout') }}" class="link fas fa-sign-out-alt"></i>
                 <i class="fas fa-bell"></i>
             </div>
             <div class="right-menu-popup-account-stat yellow">
@@ -78,8 +77,8 @@
                     64 <br> Posts
                 </div>
             </div>
-            </div>
         </div>
+        {% endif %}
     </li>
     {#SEARCH MENU#}
     <li>

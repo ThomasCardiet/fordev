@@ -11,8 +11,8 @@ function resetContent(resetAll = true) {
     })
 
     if(!resetAll) {
-        buttons[3].classList.add('active');
-        $(contents[3]).show();
+        buttons[0].classList.add('active');
+        $(contents[0]).show();
     }
 }
 resetContent(false);

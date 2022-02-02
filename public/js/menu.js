@@ -1,5 +1,6 @@
 let icons = $('.right-menu-icon');
 let popups = $('.right-menu-popup');
+let links = $('.link');
 
 function hidePopups() {
     popups.each(function () {
@@ -8,6 +9,7 @@ function hidePopups() {
 }
 hidePopups();
 
+// HOVERS
 icons.mouseenter(function () {
     let target = $(this).data('target');
     hidePopups();
@@ -33,4 +35,10 @@ icons.mouseenter(function () {
 
 popups.mouseleave(e => {
     hidePopups();
+})
+
+// CLICKS
+links.click(function () {
+    if(this.dataset.path === undefined) return;
+    window.location.href = this.dataset.path;
 })
