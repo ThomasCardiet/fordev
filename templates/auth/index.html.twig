@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/auth/style.css') }}">
+{% endblock %}
+
+{% block title %}Authentification{% endblock %}
+
+{% block body %}
+
+    <div id="auth">
+
+        {#LOGIN SECTION#}
+        <section class="auth-block" id="log-in">
+            <img src="{{ asset('img/logo.png') }}" alt="#">
+            <h2>FOR DEV</h2>
+
+            <form action="{{ path('auth') }}" class="auth-block-form" method="post">
+
+                <div class="auth-block-form-input">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="user_login" placeholder="Identifiant ou Email" value="">
+                </div>
+                {% if errors['login'] is defined and errors['type'] == 'login' %}
+                    {% for msg in errors['login'] %}
+                        <p class="error_msg">*{{ msg }}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="auth-block-form-input">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="user_password" placeholder="Mot de passe">
+                </div>
+                {% if errors['password'] is defined and errors['type'] == 'login' %}
+                    {% for msg in errors['password'] %}
+                        <p class="error_msg">*{{ msg }}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="auth-block-form-remember">
+                    <input type="checkbox" name="remember" value="1">
+                    Se souvenir de moi
+                </div>
+
+                <!--FORGET PASSWORD-->
+                <p id="auth-block-forget">Mot de passe oublié ? <span id="forget-pass">Cliquez-ici</span></p>
+                <div id="forget-content">
+
+                    <div id="forget-content-msg">
+                        <i class="fas fa-info"></i> Merci de saisir votre email afin de vous envoyer un mail pour modifier votre mot de passe.
+                    </div>
+
+                    <div class="auth-block-form-input">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" name="forget_email" placeholder="Email">
+                    </div>
+
+                    <button type="submit" name="forget_submit">Envoyer</button>
+
+                </div>
+
+                <button type="submit" name="login_submit">Connexion</button>
+
+            </form>
+
+            <p id="auth-block-type">Pas encore membre ? <span class="auth-toggle" data-change="1">Créer un compte</span></p>
+        </section>
+
+        {#SIGNIN SECTION#}
+        <section class="auth-block" id="sign-in">
+            <img src="{{ asset('img/logo.png') }}" alt="#">
+            <h2>FOR DEV</h2>
+
+            <form action="{{ path('auth') }}" class="auth-block-form" method="post">
+
+                <div class="auth-block-form-input">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="user_username" placeholder="Identifiant" value="">
+                </div>
+                {% if errors['username'] is defined and errors['type'] == 'register' %}
+                    {% for msg in errors['username'] %}
+                        <p class="error_msg">*{{ msg }}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="auth-block-form-input">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="user_email" placeholder="Email" value="">
+                </div>
+                {% if errors['email'] is defined and errors['type'] == 'register' %}
+                    {% for msg in errors['email'] %}
+                        <p class="error_msg">*{{ msg }}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="auth-block-form-input">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="user_password" placeholder="Mot de passe">
+                </div>
+                {% if errors['password'] is defined and errors['type'] == 'register' %}
+                    {% for msg in errors['password'] %}
+                        <p class="error_msg">*{{ msg }}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="auth-block-form-input">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="user_confirm_password" placeholder="Confirmation de mot de passe">
+                </div>
+                {% if errors['confirm_password'] is defined and errors['type'] == 'register' %}
+                    {% for msg in errors['confirm_password'] %}
+                        <p class="error_msg">*{{ msg }}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <button type="submit" name="register_submit">S'inscrire</button>
+
+            </form>
+
+            <p id="auth-block-type">Déjà membre ? <span class="auth-toggle" data-change="0">Se connecter</span></p>
+        </section>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset("js/auth/auth.js") }}"></script>
+{% endblock %}
