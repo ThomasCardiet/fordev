@@ -89,7 +89,7 @@ class AuthController extends AbstractController
                         default:
                             if ($value['foreign']) {
                                 $search = $user_repo->findBy([$key => $value['value']]);
-                                if (isset($search)) {
+                                if (!empty($search)) {
                                     $errors[$key][] = ucfirst($key) . ' déjà utilisé';
                                 }
                             }
@@ -98,7 +98,8 @@ class AuthController extends AbstractController
                 }
 
                 /*ADD USER*/
-                if (empty($errors)) {
+
+                if (sizeof($errors) === 1) {
                     $user->setUsername($fields['username']['value']);
                     $user->setEmail($fields['email']['value']);
                     $encoded = $encoder->encodePassword($user, $fields['password']['value']);

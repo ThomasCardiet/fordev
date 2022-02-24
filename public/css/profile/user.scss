@@ -1,15 +1,30 @@
 #content-user {
     text-align: center;
     color: white;
-}
 
-#content-user > img {
-    max-width: 12%;
-    border-radius: 50%;
-}
+    img {
+        max-width: 12%;
+        border-radius: 50%;
+    }
 
-#content-user > img, #user > h1, #user > h2 {
-    margin-bottom: 5px;
-    font-family: var(--text_font);
-    font-size: 1em;
+    button {
+        text-decoration: none;
+        color: black;
+        background-color: var(--green);
+        padding: 10px 0;
+        width: 15%;
+        display: block;
+        margin: 40px auto 0 auto;
+        font-size: 1em;
+        font-weight: bold;
+        border: none;
+        outline: none;
+        transform: scale(1);
+        transition: transform 0.5s;
+
+        &:hover {
+            cursor: pointer;
+            transform: scale(1.15);
+        }
+    }
 }

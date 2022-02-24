@@ -1,24 +1,29 @@
 let buttons = $('.profile-btn');
 let contents = $('.menu-info');
 
+let first_menu = 2;
+let current_menu = null
+
 /*reset all content (false -> display first menu)*/
 function resetContent(resetAll = true) {
     buttons.each(i => {
         buttons[i].classList.remove('active');
     })
     contents.each(i => {
-        $(contents[i]).hide();
+        if(!resetAll && i === first_menu) {
+            let btn = buttons[i];
+            btn.classList.add('active');
+            current_menu = btn.dataset.target;
+            $(contents[i]).show();
+        }
+        else $(contents[i]).hide();
     })
-
-    if(!resetAll) {
-        buttons[0].classList.add('active');
-        $(contents[0]).show();
-    }
 }
 resetContent(false);
 
 /*Display specific menu*/
 function openContent(target) {
+    current_menu = target;
     resetContent();
     buttons.each(i => {
         if($(buttons[i]).data('target') === target) {

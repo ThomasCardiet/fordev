@@ -1,8 +1,10 @@
 :root {
   --dark_grey: #252633;
+  --medium_grey: #313140;
   --light_grey: #363743;
   --grey: #9c9c9c;
   --yellow: #FFEE3E;
+  --orange: #FDD56C;
   --green: #00fec2;
   --light_green: #00ff88;
   --dark_green: #00694f;
@@ -18,6 +20,8 @@
   --text_font: sans-serif;
   --button_font: sans-serif;
   --title_font: sans-serif;
+  --right_menu_size: 4%;
+  --popup_width: 90%;
 }
 
 /* FONTS */
@@ -46,6 +50,10 @@ select:-webkit-autofill:focus {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.model {
+  display: none;
 }
 
 html {
@@ -284,7 +292,7 @@ header, main, footer {
 
 #right-menu {
   position: fixed;
-  width: 4%;
+  width: var(--right_menu_size);
   height: 100%;
   right: 0;
   top: 0;
@@ -451,6 +459,108 @@ header, main, footer {
   text-align: center;
   width: 100%;
   height: 100%;
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+#popup {
+  position: fixed;
+  top: 22%;
+  left: 5%;
+  width: calc(var(--popup_width) - var(--right_menu_size));
+  background-color: var(--light_grey);
+  z-index: 12;
+  padding: 2%;
+  height: 75%;
+}
+#popup .popup-message {
+  width: 100%;
+  padding: 10px;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  min-height: 40px;
+}
+#popup .popup-message #popup-message-content {
+  color: white;
+}
+#popup .popup-message.success {
+  background-color: var(--success);
+}
+#popup .popup-message.error {
+  background-color: var(--error);
+}
+#popup #popup-close {
+  position: absolute;
+  color: var(--green);
+  font-size: 3em;
+  top: -25px;
+  right: -16px;
+  z-index: 12;
+}
+#popup #popup-close:hover {
+  cursor: pointer;
+  color: #1b1e21;
+}
+
+.popup-content {
+  display: none;
+}
+
+@keyframes popup-in {
+  0% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes popup-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes msg-in {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@keyframes msg-out {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+/*LOADING*/
+#popup-loader {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 0;
+  left: 0;
+  z-index: 11;
+}
+#popup-loader img {
+  width: 8%;
+  position: absolute;
+  top: 45%;
+  left: 46%;
 }
 
 /*# sourceMappingURL=style.css.map */

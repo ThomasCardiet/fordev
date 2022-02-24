@@ -4,7 +4,7 @@ header, main, footer {
 
 #right-menu {
     position: fixed;
-    width: 4%;
+    width: var(--right_menu_size);
     height: 100%;
     right: 0;
     top: 0;

@@ -1,9 +1,11 @@
 :root {
 
     --dark_grey: #252633;
+    --medium_grey: #313140;
     --light_grey: #363743;
     --grey: #9c9c9c;
     --yellow: #FFEE3E;
+    --orange: #FDD56C;
     --green: #00fec2;
     --light_green: #00ff88;
     --dark_green: #00694f;
@@ -22,6 +24,8 @@
     --button_font: sans-serif;
     --title_font: sans-serif;
 
+    --right_menu_size: 4%;
+    --popup_width: 90%;
 
 }
 
@@ -58,6 +62,10 @@ select:-webkit-autofill:focus {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+.model {
+    display: none;
 }
 
 html {

@@ -43,25 +43,6 @@ hr {
   padding: 120px 0;
 }
 
-#menu-info-btn {
-  text-decoration: none;
-  color: black;
-  background-color: var(--green);
-  padding: 10px 0;
-  width: 15%;
-  display: block;
-  margin: 40px auto 0 auto;
-  font-size: 1em;
-  font-weight: bold;
-  border: none;
-  outline: none;
-}
-
-#menu-info-btn:hover {
-  cursor: pointer;
-  background-color: var(--light_green);
-}
-
 #content-projects {
   position: relative;
 }
@@ -152,8 +133,33 @@ hr {
   color: white;
   font-size: 2.5em;
 }
-
-#relations-icons > i:hover {
+#relations-icons i {
+  position: relative;
+  margin: 0 5px;
+}
+#relations-icons i #relation-requests-count {
+  position: absolute;
+  background-color: var(--orange);
+  width: 60%;
+  border-radius: 50%;
+  top: -20%;
+  right: -20%;
+}
+#relations-icons i #relation-requests-count::after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+#relations-icons i #relation-requests-count div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  top: 5%;
+  font-size: 25px;
+  color: white;
+}
+#relations-icons i:hover {
   cursor: pointer;
   color: var(--green);
 }
@@ -171,7 +177,7 @@ hr {
 }
 
 .relations-img {
-  width: 20%;
+  width: 9%;
   position: relative;
   margin-right: 50px;
   user-select: none;
@@ -187,10 +193,10 @@ hr {
 
 .relations-img > i {
   position: absolute;
-  right: 10px;
+  right: 5px;
   top: 55%;
   color: red;
-  font-size: 1.3em;
+  font-size: 1.5em;
 }
 
 .relations-img > i.online {
@@ -209,11 +215,10 @@ hr {
   width: 95%;
   margin: 20px auto auto auto;
 }
-
-#relations-conversations > h2 {
-  width: 35%;
+#relations-conversations h2 {
+  display: inline-block;
   text-align: center;
-  padding: 10px 0;
+  padding: 10px 15px;
   background-color: var(--green);
   border-radius: 10px;
   font-size: 1.3em;
@@ -221,22 +226,20 @@ hr {
   margin: 20px 0;
 }
 
-.relations-conversation {
+#relations-conversations-block li {
   display: flex;
   background-color: var(--dark_grey);
   border: solid 1px var(--grey);
   margin-top: 10px;
   padding: 10px 15px;
 }
-
-.relations-conversation > img {
+#relations-conversations-block li img {
   width: 3.2em;
   border-radius: 50%;
   border: #707070 solid 1px;
   margin-right: 18px;
 }
-
-.relations-conversation > p {
+#relations-conversations-block li p {
   width: 90%;
   text-align: left;
   color: var(--green);
@@ -248,18 +251,165 @@ hr {
   margin-right: 2.5%;
   transform: translateY(25%);
 }
-
-.relations-conversation > i {
+#relations-conversations-block li i {
   color: var(--grey);
   font-size: 2.3em;
   margin-top: 8px;
   text-align: right;
   width: 3%;
 }
-
-.relations-conversation > i:hover {
+#relations-conversations-block li i:hover {
   cursor: pointer;
   color: var(--green);
+}
+
+/*POPUPS*/
+.relation-popup {
+  /*MANAGE RELATIONS POPUP*/
+  /*CONVERSATION POPUP*/
+}
+.relation-popup h2 {
+  color: var(--green);
+  font-size: 2em;
+}
+.relation-popup input {
+  margin: 10px 0;
+  border: none;
+  outline: none;
+  padding: 5px;
+  font-size: 1.2em;
+}
+.relation-popup .relation-popup-list-block {
+  background-color: var(--dark_grey);
+  height: 87%;
+  overflow-y: auto;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list {
+  list-style: none;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 2%;
+  border: solid var(--dark_grey) 1px;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li img {
+  width: 5%;
+  border-radius: 50%;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li div {
+  transform: translateY(25%);
+  width: 72%;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li div h3 {
+  color: var(--green);
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li div p {
+  color: white;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li div.unique-btn {
+  width: 84%;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li button {
+  border: solid var(--grey) 1px;
+  background-color: var(--dark_grey);
+  color: var(--green);
+  padding: 0 1%;
+  height: 40px;
+  font-size: 1em;
+  transform: translateY(45%);
+  width: 9%;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li button:hover {
+  color: white;
+  cursor: pointer;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li:hover {
+  border: solid var(--grey) 1px;
+  background-color: var(--medium_grey);
+}
+.relation-popup .relation-popup-conversation-block {
+  background-color: var(--dark_grey);
+  margin-top: 20px;
+  height: 82%;
+  padding: 20px;
+  overflow-y: auto;
+  width: 100%;
+}
+.relation-popup .relation-popup-conversation-block .relation-popup-conversation-message-block {
+  display: flex;
+  width: 45%;
+  margin-bottom: 20px;
+  clear: right;
+  position: relative;
+}
+.relation-popup .relation-popup-conversation-block .relation-popup-conversation-message-block img {
+  width: 3vw;
+  border-radius: 50%;
+  height: 100%;
+}
+.relation-popup .relation-popup-conversation-block .relation-popup-conversation-message-block div {
+  margin: 0.8vw 10px;
+  background-color: var(--green);
+  color: white;
+  border-radius: 5px;
+  padding: 6px 10px;
+  height: fit-content;
+}
+.relation-popup .relation-popup-conversation-block .relation-popup-conversation-message-block div .relation-popup-conversation-message-content {
+  display: inline;
+}
+.relation-popup .relation-popup-conversation-block .relation-popup-conversation-message-block div .relation-popup-conversation-message-date {
+  position: absolute;
+  left: 3.8vw;
+  bottom: -10px;
+  font-size: 0.8em;
+  color: var(--grey);
+}
+.relation-popup .relation-popup-conversation-block .relation-popup-conversation-message-block.owned {
+  float: right;
+  justify-content: right;
+}
+.relation-popup .relation-popup-conversation-block .relation-popup-conversation-message-block.owned div {
+  background-color: var(--light_green);
+}
+.relation-popup .relation-popup-conversation-block .relation-popup-conversation-message-block.owned div > .relation-popup-conversation-message-date {
+  width: 100%;
+  text-align: right;
+  left: -3.8vw;
+}
+.relation-popup .relation-popup-conversation-send-block {
+  height: 8%;
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+.relation-popup .relation-popup-conversation-send-block textarea {
+  height: 100%;
+  width: 84%;
+  margin: 0;
+  background-color: var(--dark_grey);
+  color: white;
+  padding: 5px 5px 0 5px;
+  resize: none;
+  outline: none;
+  border: none;
+}
+.relation-popup .relation-popup-conversation-send-block textarea::placeholder {
+  opacity: 0.5;
+}
+.relation-popup .relation-popup-conversation-send-block button {
+  height: 100%;
+  border: solid var(--grey) 1px;
+  background-color: var(--dark_grey);
+  color: var(--green);
+  padding: 0 1%;
+  font-size: 1em;
+  width: 15%;
+}
+.relation-popup .relation-popup-conversation-send-block button:hover {
+  color: white;
+  cursor: pointer;
 }
 
 #content-stats-values {
@@ -269,22 +419,18 @@ hr {
   width: 80%;
   margin: auto;
 }
-
-#content-stats-values > div {
+#content-stats-values div {
   position: relative;
-  background-color: red;
   width: calc((100% - 20%)/3);
   border-radius: 50%;
   margin-bottom: 40px;
 }
-
-#content-stats-values > div::after {
+#content-stats-values div::after {
   content: "";
   display: block;
   padding-bottom: 100%;
 }
-
-#content-stats-values > div > div {
+#content-stats-values div div {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -293,28 +439,22 @@ hr {
   font-size: 2vw;
   color: white;
 }
-
-#content-stats-values > .gold {
+#content-stats-values div.gold {
   background-color: var(--gold);
 }
-
-#content-stats-values > .aqua {
+#content-stats-values div.aqua {
   background-color: var(--aqua);
 }
-
-#content-stats-values > .red {
+#content-stats-values div.red {
   background-color: var(--red);
 }
-
-#content-stats-values > .mat_gold {
+#content-stats-values div.mat_gold {
   background-color: var(--mat_gold);
 }
-
-#content-stats-values > .mat_aqua {
+#content-stats-values div.mat_aqua {
   background-color: var(--mat_aqua);
 }
-
-#content-stats-values > .mat_red {
+#content-stats-values div.mat_red {
   background-color: var(--mat_red);
 }
 
@@ -322,16 +462,28 @@ hr {
   text-align: center;
   color: white;
 }
-
-#content-user > img {
+#content-user img {
   max-width: 12%;
   border-radius: 50%;
 }
-
-#content-user > img, #user > h1, #user > h2 {
-  margin-bottom: 5px;
-  font-family: var(--text_font);
+#content-user button {
+  text-decoration: none;
+  color: black;
+  background-color: var(--green);
+  padding: 10px 0;
+  width: 15%;
+  display: block;
+  margin: 40px auto 0 auto;
   font-size: 1em;
+  font-weight: bold;
+  border: none;
+  outline: none;
+  transform: scale(1);
+  transition: transform 0.5s;
+}
+#content-user button:hover {
+  cursor: pointer;
+  transform: scale(1.15);
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -43,7 +43,19 @@
 
 </header>
 
-<main>{% block body %}{% endblock %}</main>
+<main>
+    <div id="overlay"></div>
+    <div id="popup" data-has_value=false>
+        <div class="popup-message success">
+            <p id="popup-message-content"></p>
+        </div>
+        <i class="fas fa-times popup-btn" id="popup-close"></i>
+        <div id="popup-loader">
+            <img src="{{ asset('img/gif/loader.gif') }}" alt="#">
+        </div>
+    </div>
+    {% block body %}{% endblock %}
+</main>
 
 <ul id="right-menu">
     {#USER MENU#}
@@ -136,6 +148,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="{{ asset('js/menu.js') }}"></script>
+<script src="{{ asset("js/popups.js") }}"></script>
 {% block javascripts %}{% endblock %}
 </body>
 </html>

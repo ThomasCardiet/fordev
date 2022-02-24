@@ -42,22 +42,3 @@ hr {
     background-color: #363743;
     padding: 120px 0;
 }
-
-#menu-info-btn {
-    text-decoration: none;
-    color: black;
-    background-color: var(--green);
-    padding: 10px 0;
-    width: 15%;
-    display: block;
-    margin: 40px auto 0 auto;
-    font-size: 1em;
-    font-weight: bold;
-    border: none;
-    outline: none;
-}
-
-#menu-info-btn:hover {
-    cursor: pointer;
-    background-color: var(--light_green);
-}
