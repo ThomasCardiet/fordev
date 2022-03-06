@@ -1,7 +1,9 @@
-let buttons = $('.profile-btn');
+let buttons = $('.menu-btn');
 let contents = $('.menu-info');
 
-let first_menu = 2;
+let menus = {}
+let first_menu = 0
+
 let current_menu = null
 
 /*reset all content (false -> display first menu)*/
@@ -19,7 +21,6 @@ function resetContent(resetAll = true) {
         else $(contents[i]).hide();
     })
 }
-resetContent(false);
 
 /*Display specific menu*/
 function openContent(target) {
@@ -36,18 +37,4 @@ function openContent(target) {
 /*Event when button is clicked*/
 buttons.click(e => {
     openContent($(e.target).data('target'))
-})
-
-/*Event when wheel scroll*/
-$('#relations-img-list').bind('mousewheel DOMMouseScroll', e => {
-    if(e.originalEvent.wheelDelta /120 > 0) e.target.scrollLeft += 40;
-    else e.target.scrollLeft -= 40;
-    return false
-})
-
-$('.relations-img').bind('mousewheel DOMMouseScroll', e => {
-    let element = $('#relations-img-list')[0]
-    if(e.originalEvent.wheelDelta /120 > 0) element.scrollLeft += 40;
-    else element.scrollLeft -= 40;
-    return false
 })

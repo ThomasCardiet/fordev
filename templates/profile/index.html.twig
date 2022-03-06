@@ -13,10 +13,10 @@
 
             {#Links section#}
             <div id="profile-content-left">
-                <p class="profile-btn active" data-target="user">Profil</p>
-                <p class="profile-btn" data-target="relations">Relations</p>
-                <p class="profile-btn" data-target="projects">Projets</p>
-                <p class="profile-btn" data-target="stats">Statistiques</p>
+                <p class="menu-btn active" data-target="user">Profil</p>
+                <p class="menu-btn" data-target="relations">Relations</p>
+                <p class="menu-btn" data-target="projects">Projets</p>
+                <p class="menu-btn" data-target="stats">Statistiques</p>
             </div>
 
             {# ****************MENUS SECTION***************** #}
@@ -24,7 +24,6 @@
             {#User content#}
             <div class="menu-info" id="content-user" data-id="{{ app.user.id }}" >
 
-                <div>
                     {% set pp_path = 'users/' ~ app.user.getPpPath() %}
                     {% if app.user.getPpPath() is null %}
                         {% set pp_path = 'unknown.png' %}
@@ -37,11 +36,95 @@
 
                     {#User Popup#}
                     <div class="popup-content" data-popup="user-update" data-class="user-popup" data-loader="false">
-                        <input id="profile-image-input" type="file">
 
-                        <button class="ajax-btn" data-method="updateUser" data-file="#profile-image-input">Confirmer</button>
+                        <h2>Modification du profil</h2>
+                        <div class="user-popup-block">
+                            <div class="upload">
+                                <img id="update-user-file-visual" src="{{ asset("img/profile/#{pp_path}") }}" width = 100 height = 100 alt="">
+                                <div class="round">
+                                    <input id="update-user-file" type="file" data-file_type="image">
+                                    <i class = "fa fa-camera" style = "color: #fff;"></i>
+                                </div>
+                            </div>
+
+                            <div class="user-popup-input">
+                                <i class="fas fa-user"></i>
+                                <input type="text" name="user_username" placeholder="Identifiant" value="{{ app.user.username }}">
+                            </div>
+
+                            <div class="user-popup-input">
+                                <i class="fas fa-envelope"></i>
+                                <input type="text" name="user_email" placeholder="Email" value="{{ app.user.email }}">
+                            </div>
+
+                            {#ADVANCED BUTTON#}
+                            <p class="advanced-properties" data-active="false" data-target="user-popup-password-change"><i class="fas fa-caret-right"></i> Modifier le mot de passe</p>
+
+                            {#ADVANCED CONTENT#}
+                            <div class="advanced-content" id="user-popup-password-change">
+
+                                <div class="user-popup-input">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="text" name="user_old_password" placeholder="Ancien mot de passe">
+                                </div>
+
+                                <div class="flex-wrap">
+                                    <div class="user-popup-input">
+                                        <i class="fas fa-lock"></i>
+                                        <input type="text" name="user_new_password" placeholder="Nouveau mot de passe">
+                                    </div>
+
+                                    <div class="user-popup-input">
+                                        <i class="fas fa-lock"></i>
+                                        <input type="text" name="user_new_password" placeholder="Confirmer le mot de passe">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="user-popup-textarea">
+                                <i class="fas fa-align-justify"></i>
+                                <textarea name="user_description" placeholder="Décrivez-vous"></textarea>
+                            </div>
+
+                            {#ADVANCED BUTTON#}
+                            <p class="advanced-properties" data-active="false" data-target="user-popup-advanced"><i class="fas fa-caret-right"></i> Paramètres avancés</p>
+
+                            {#ADVANCED CONTENT#}
+                            <div class="advanced-content" id="user-popup-advanced">
+
+                                <div class="user-popup-advanced-input">
+                                    <h3>Type de compte</h3>
+                                    <div>
+                                        <input type="radio" id="visitor-account" name="account-type" value=0 checked>
+                                        <label for="visitor-account">Visiteur</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="professional-account" name="account-type" value=1>
+                                        <label for="professional-account">Professionnel</label>
+                                    </div>
+                                </div>
+
+                                {#PROFESSIONAL ACCOUNT FIELDS#}
+                                <div id="user-popup-advanced-professional-content">
+
+                                    <h3>Liste des compétences</h3>
+                                    <div id="professional-content-skills">
+                                        <ul id="professional-content-skills-list">
+                                            {% for i in 0..30 %}
+                                                <li class="professional-content-skill-list">Compétence {{ i }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        <ul id="professional-content-skills-owned"></ul>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <button class="ajax-btn" data-method="updateUser">Confirmer</button>
+                        </div>
                     </div>
-                </div>
 
             </div>
 
@@ -96,7 +179,7 @@
                     {#Relation Requests#}
                 <div class="popup-content" data-popup="relation-requests" data-class="relation-popup" data-loader="true">
                     <h2>Requêtes reçues <span class="relation-popup-list-requests-count"></span></h2>
-                    <input type="text" placeholder="Rechercher">
+                    <br><br><br>
                     <div class="relation-popup-list-block">
                         <ul class="relation-popup-list relation-popup-list-requests">
                             <li class="model">
@@ -135,7 +218,7 @@
                     <h2>Conversation avec <span class="relation-popup-conversation-target"></span></h2>
                     <div class="relation-popup-conversation-block" data-loading="true"></div>
                     <div class="relation-popup-conversation-send-block">
-                        <textarea placeholder="Écrivez votre message"></textarea>
+                        <textarea id="send-message-msg" placeholder="Écrivez votre message"></textarea>
                         <button id="send-message-btn" class="ajax-btn" data-method="sendMessage" data-target_id="0">Envoyer</button>
                     </div>
                 </div>
@@ -166,7 +249,7 @@
                                 <p>%contributors% contributeurs</p>
                                 <p>crée le %created_at%</p>
                             </div>
-                            <i class="fas fa-eye popup-btn ajax-btn" data-target="project" data-method="getProject" data-project_id="%id%"></i>
+                            <i class="fas fa-eye popup-btn ajax-btn" data-target="project-preview" data-method="getProject" data-project_id="%id%"></i>
                         </li>
                     </ul>
                 </div>
@@ -176,7 +259,21 @@
 
                 {#Projects List#}
             <div class="popup-content" data-popup="project-list" data-class="project-popup" data-loader="false">
-                <h2>Liste des projets <span class="project-popup-list-list-count"></span></h2>
+                <h2>Liste de vos projets <span class="project-popup-list-list-count"></span></h2>
+                <input type="text" placeholder="Rechercher">
+                <div class="project-popup-list project-popup-list-block">
+                    <ul class="project-popup-list project-popup-list-list">
+                        <li class="project-popup-list-model model">
+                            %img%
+                            <div>
+                                <h3>%title%</h3>
+                                <p>%contributors% contributeur(s)</p>
+                                <p>crée le %created_at%</p>
+                            </div>
+                            <i class="fas fa-eye popup-btn ajax-btn" data-target="project-preview" data-method="getProject" data-project_id="%id%"></i>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
                 {#Projects Requests#}
@@ -187,6 +284,61 @@
                 {#Projects Create#}
             <div class="popup-content" data-popup="project-create" data-class="project-popup" data-loader="false">
                 <h2>Créer un projet <span class="project-popup-list-create-count"></span></h2>
+                <div class="project-popup-block">
+                    <div class="upload">
+                        <img id="create-project-file-visual" src="{{ asset("img/profile/unknown_project.png") }}" width = 100 height = 100 alt="">
+                        <div class="round">
+                            <input id="create-project-file" type="file" data-file_type="image">
+                            <i class = "fa fa-camera" style = "color: #fff;"></i>
+                        </div>
+                    </div>
+
+                    <div class="project-popup-input">
+                        <i class="fas fa-pen"></i>
+                        <input id="create-project-title" type="text" placeholder="Nom du projet">
+                    </div>
+
+                    <div class="project-popup-textarea">
+                        <i class="fas fa-align-justify"></i>
+                        <textarea id="create-project-description" placeholder="Décrivez votre projet"></textarea>
+                    </div>
+
+                    <button class="ajax-btn" data-method="createProject">Créer</button>
+                </div>
+            </div>
+
+                {#Project Preview#}
+            <div class="popup-content" data-popup="project-preview" data-class="project-popup project-popup-preview" data-loader="true">
+                <h2>Projet '<span data-value="title"></span>'</h2>
+                <div class="project-popup-preview-block">
+                    <img data-value="image" src="{{ asset("img/profile/unknown_project.png") }}" alt="#">
+                    <p data-value="description"></p>
+                    <p data-value="owner.username"></p>
+
+                    {#ADVANCED BUTTON#}
+                    <p class="advanced-properties" data-active="false" data-target="project-popup-preview-members"><i class="fas fa-caret-right"></i> Gestion des contributeurs</p>
+
+                    {#ADVANCED CONTENT#}
+                    <div class="advanced-content" id="project-popup-preview-members">
+
+                        <div id="project-popup-preview-members-add">
+                            <h3>Ajouter des contributeurs</h3>
+                            <div data-value="$getFriends">
+
+                            </div>
+                        </div>
+
+                        <div id="project-popup-preview-members-manage">
+                            <h3>Liste des contributeurs</h3>
+                            <ul data-value="contributors|list">
+
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <a data-param="project/%project_id%|href" href="">Voir le projet</a>
+                </div>
             </div>
 
             {#Stats content#}
@@ -231,6 +383,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset("js/profile/links.js") }}"></script>
-    <script src="{{ asset("js/profile/ajax.js") }}"></script>
+    <script src="{{ asset("js/links.js") }}"></script>
+    <script src="{{ asset("js/ajax.js") }}"></script>
+    <script src="{{ asset("js/profile/profile.js") }}"></script>
 {% endblock %}

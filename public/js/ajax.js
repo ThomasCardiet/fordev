@@ -1,6 +1,4 @@
 const url = `${this.location.href}/ajax`;
-let content_user = $('#content-user');
-const user_id = content_user.data('id');
 
 let models = $('.model');
 models.hide();
@@ -16,168 +14,25 @@ function formatDate(string) {
 }
 
 //SECTIONS OF PROFILE
-let sections = [
-    'user',
-    'relations',
-    'projects',
-    'stats'
-]
+let sections = {}
 
 //FONCTIONS AJAX
-let methods = {
+let methods = {}
 
-   /*Get methods*/
-
-    /*USER*/
-    getUserInformations: {
-        function: {
-            section: sections[0],
-        },
-        update: true,
-        type: 'get',
-        style: null,
-        params: {
-            target: '#content-user',
-            data: 'users',
-            count: true,
-            bubble: false,
-            popup: null,
-            popup_update: false,
-            need_popup_data: false,
-        }
+let img_paths = {
+    pp: {
+        path: 'img/profile/users/',
+        unknown_path: 'img/profile/unknown.png'
     },
-
-    /*RELATIONS*/
-    getFriends: {
-        function: {
-            section: sections[1],
-        },
-        update: true,
-        type: 'get',
-        style: 'list',
-        params: {
-            target: '.relation-popup-list-list',
-            data: 'users',
-            count: true,
-            bubble: false,
-            popup: 'relation-list',
-            popup_update: true,
-            need_popup_data: false,
-        }
-    },
-    getFriendRequests: {
-        function: {
-            section: sections[1],
-        },
-        update: true,
-        type: 'get',
-        style: 'list',
-        params: {
-            target: '.relation-popup-list-requests',
-            data: 'users',
-            count: true,
-            bubble: true,
-            popup: 'relation-requests',
-            popup_update: true,
-            need_popup_data: false,
-        }
-    },
-    getUnfriendUsers: {
-        function: {
-            section: sections[1],
-        },
-        update: false,
-        type: 'get',
-        style: 'list',
-        params: {
-            target: '.relation-popup-list-add',
-            data: 'users',
-            count: false,
-            bubble: false,
-            popup: 'relation-add',
-            popup_update: true,
-            need_popup_data: false,
-        }
-    },
-
-    getRecentConversations: {
-        function: {
-            section: sections[1],
-        },
-        update: true,
-        type: 'get',
-        style: 'list',
-        params: {
-            target: '#relations-conversations-block',
-            data: 'conversations',
-            count: true,
-            bubble: false,
-            popup: null,
-            popup_update: false,
-            need_popup_data: false,
-        }
-    },
-
-    getConversation: {
-        function: {
-            section: sections[1],
-        },
-        update: false,
-        type: 'get',
-        style: null,
-        params: {
-            target: '.relation-popup-conversation',
-            data: 'conversations',
-            count: false,
-            bubble: false,
-            popup: 'conversation',
-            popup_update: true,
-            need_popup_data: true,
-        }
-    },
-
-    /*Update methods*/
-
-        /*USER*/
-    updateUser: {
-        function: {
-            section: sections[0],
-        },
-        update: false,
-        type: 'action',
-        style: 'message'
-    },
-
-        /*RELATIONS*/
-    addFriend: {
-        function: {
-            section: sections[1],
-        },
-        update: false,
-        type: 'action',
-        style: 'message'
-    },
-    removeFriend: {
-        function: {
-            section: sections[1],
-        },
-        update: false,
-        type: 'action',
-        style: 'message'
-    },
-    sendMessage: {
-        function: {
-            section: sections[1],
-        },
-        update: false,
-        type: 'action',
-        style: null
-    },
+    image: {
+        path: 'img/profile/projects/',
+        unknown_path: 'img/profile/unknown_project.png'
+    }
 }
 
 function methodsFunctions(name, value, data = {}, containFile = false) {
 
-    popup_data = data;
+    if(!(data instanceof FormData)) popup_data = data;
 
     let ajax_request = {
         url:`${url}/${name}`,
@@ -233,22 +88,25 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
 
                             datas.forEach(o => {
 
-
-                                let pp_path = o.pp_path ? `users/${o.pp_path}` : 'unknown.png'
-
                                 //Update model
-                                let html = $(model).html()
-                                    .replaceAll("%img%", `<img src='img/profile/${pp_path}' alt='#'>`);
+                                let html = $(model).html();
 
+                                let paths = Object.keys(o).filter(k => k.includes('path'));
+                                paths.forEach(path => {
+                                    let p_field = path.split('_')[0];
+                                    html = html.replaceAll("%img%", `<img src='${o[path] ? img_paths[p_field].path + o[path] : img_paths[p_field].unknown_path}' alt='#'>`);
+                                })
 
                                 for (const [key, value] of Object.entries(o)) {
                                     html = html.replaceAll(`%${key}%`, key.includes('_at') ? formatDate(value) : value);
                                 }
 
-                                list[0].innerHTML += "<li>" + html + "</li>";
+                                let classList = $(model).attr('class').split(' ').filter(v => v !== 'model').toString().replaceAll(',', ' ');
+                                list[0].innerHTML += `<li ${classList.length ? `class="${classList}"` : ''}>${html}</li>`;
 
                                 //Liste d'amis scrollable
                                 if(name === "getFriends") {
+                                    let pp_path = o.pp_path ? `users/${o.pp_path}` : 'unknown.png'
                                     friends_block_html +=
                                         '<div class="relations-img">' +
                                         `<img src='../../img/profile/${pp_path}' alt='#'>` +
@@ -270,7 +128,7 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                             switch (name) {
 
                                 //GET CONVERSATION
-                                case Object.keys(methods)[5]:
+                                case 'getConversation':
                                     let block_element = $(`${value.params.target}-block`)
                                     let target_element = $(`${value.params.target}-target`);
 
@@ -281,6 +139,9 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                                     target_element.html(response.data.target.username);
                                     $('#send-message-btn').attr('data-target_id', response.data.target.id);
                                     values.forEach((v) => {
+
+                                        v.content = v.content.replace(/\n\r?/g, '<br />');
+
                                         let owned = v.owned === '1';
                                         let pp_path = v.pp_path ? `users/${v.pp_path}` : 'unknown.png';
                                         let img = `<img src='img/profile/${pp_path}' alt='#'>`;
@@ -304,12 +165,83 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                                 //WITH MODEL
                                 default:
 
-                                    element.find(">:first-child").children().each(function() {
-                                        for (const [key, value] of Object.entries(values)) {
-                                            if($(this).data('value') === key) $(this).html(value);
-                                            if($(this).data('value') === 'pp' && key === 'pp_path' && value !== null) $(this).attr('src', `img/profile/users/${value}?t=${new Date().getTime()}`);
+                                    //UPDATE MODEL VALUE
+                                    function updateModelValue(e) {
+
+                                        let field = e.data('value');
+                                        let obj = field.split('.');
+                                        let type = field.split('|')[1];
+
+                                        for (let [key, value] of Object.entries(values)) {
+
+                                            let tries = [{
+                                                field: field,
+                                                key: key,
+                                                value: value
+                                            }];
+
+                                            //IF VALUE IS OBJECT AND KEY IS (exemple.value)
+                                            if(obj.length > 1 && typeof value === 'object') {
+                                                for (const [obj_key, obj_value] of Object.entries(value)) {
+                                                    tries.push({
+                                                        field: obj[1],
+                                                        key: obj_key,
+                                                        value: obj_value
+                                                    })
+                                                }
+                                            }
+
+                                            //IF STYLE
+                                            if(type) {
+                                                switch (type) {
+                                                    case 'list':
+                                                        if(!Array.isArray(value)) break;
+
+                                                        e.html('');
+                                                        value.forEach(v => {
+                                                            e.html(e.html() +
+                                                                `<li data-target_id="${v.id}">${v.username}</li>`
+                                                            )
+                                                        })
+
+                                                        break;
+                                                }
+                                            }
+
+                                            tries.forEach(t => {
+                                                if(t.field === t.key) e.html(t.value);
+                                                if(t.key.includes('_path') && t.field === t.key.split('_')[0] && t.value !== null) {
+                                                    e.attr('src', `${img_paths[t.field].path + t.value}?t=${new Date().getTime()}`);
+                                                }
+                                            })
                                         }
+                                    }
+
+                                    //UPDATE MODEL PARAM
+                                    function updateModelParam(e) {
+
+                                        let field = e.data('param');
+                                        let param = field.split('|')[1];
+                                        let value = field.split('|')[0];
+
+                                        if(!param) return false;
+
+                                        let data = value.match(/\%(.*)\%/)[1];
+
+                                        e.attr(param, value.replace(`%${data}%`, popup_data[data]));
+
+                                    }
+
+                                    //MODIFICATION OF MODEL FOR ALL ELEMENTS CHILDRENS
+                                    element.find("[data-value]").each(function () {
+                                        updateModelValue($(this));
                                     })
+
+                                    //MODIFICATION OF MODEL FOR ALL ELEMENTS CHILDRENS
+                                    element.find("[data-param]").each(function () {
+                                        updateModelParam($(this));
+                                    })
+
                                     break;
                             }
 
@@ -332,6 +264,14 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                         default:
                             break;
                     }
+
+                    //CLOSE POPUP
+                    if(value.close_popup) {
+                        setTimeout(function () {
+                            togglePopup(false, true);
+                        }, 1000)
+                    }
+
                     break;
             }
 
@@ -375,8 +315,6 @@ function setUpdate(m = null) {
     update_interval = setInterval(update, 5000);
 }
 
-setUpdate();
-
 //Stop interval when popup is open
 body.on('click', '.popup-btn', e => {
     update();
@@ -389,46 +327,51 @@ body.on('click', '.ajax-btn', e => {
     let method_name = $(e.target).data('method');
     let data = $(e.target).clone().data();
 
+    let method = methods[method_name];
+    let has_file = false;
     switch (data.method) {
-        case 'sendMessage':
-            let textarea = $(e.target).prev();
-            let msg = textarea.val();
-            if(msg.length > 0) {
-                data.msg = msg;
-                textarea.val('');
-            } else UpdatePopup(null, {
-                'type': 'error',
-                'value': 'Vous devez écrire un message.'
-            });
+
+        default:
+
+            if(method.form === undefined) break;
+
+            let fields = []
+            let formData = null;
+
+            //CREATE FIELDS
+            for (const [field, options] of Object.entries(method.form.data)) {
+
+                if(options.file) has_file = true;
+
+                let input = $(`#${method.form.name}-${field}`);
+                let value = input.val();
+                if(value.length === 0 && !options.can_empty) return UpdatePopup(null, {
+                    'type': 'error',
+                    'value': options.error_message
+                });
+
+                if(options.file) {
+                    has_file = true;
+                    value = input.prop('files')[0];
+                }
+                fields[field] = value
+                if(options.reset) input.val('');
+            }
+
+            //CREATE FORMDATA
+            if(has_file) data = new FormData()
+
+            for (const [field, value] of Object.entries(fields)) {
+                has_file ? data.append(field, value) : data[field] = value;
+            }
+
+
+
             break;
     }
 
     delete data.method;
-
-    //If contains file
-    let has_file = false;
-    if(data.file) {
-        has_file = true;
-        let file_element = $(`${data.file}`);
-        if(!file_element.val()) {
-            UpdatePopup(null, {
-                'type': 'error',
-                'value': 'Vous devez sélectionner une image de profil.'
-            });
-            return false;
-        }
-        delete data.file;
-        let file =  file_element.prop('files')[0];
-
-        let formData = new FormData()
-        formData.append('profile_img', file)
-        for (const [key, value] of Object.entries(data)) {
-            formData.append(key, value);
-        }
-
-        data = formData;
-        file_element.val(null);
-    }
+    delete data.target;
 
     methodsFunctions(method_name, methods[method_name], data, has_file)
     update();
@@ -436,19 +379,64 @@ body.on('click', '.ajax-btn', e => {
 
 
 //FILES
-function isImage(file) {
+function verifyFile(file, extensions) {
+    if(extensions === null) return true;
+
     let parts = file.split('.');
     let ext = parts[parts.length - 1];
-    let exts = ['jpg', 'jpeg', 'png'];
-    return exts.includes(ext.toLowerCase());
+    return extensions.includes(ext.toLowerCase());
 }
 
 body.on('change', 'input[type=file]', e => {
-    if(!isImage(e.target.value)) {
+
+    let data_file_type = $(e.target).data('file_type');
+    let visual = $(`#${e.target.id}-visual`);
+
+    let file_types = {
+        image: {
+            extensions: ['jpg', 'jpeg', 'png'],
+            error_message: 'Vous devez sélectionner une image.',
+            visual: visual
+        },
+        default: {
+            extensions: null,
+            error_message: 'Vous devez sélectionner un fichier.',
+            visual: visual
+        }
+    }
+
+    let file_type = data_file_type === undefined ? file_types.default : file_types[data_file_type];
+
+    //VERIFICATIONS
+    let error;
+
+    let max_size = 5; //Mo
+    switch (true) {
+
+        //FILE EXTENSION
+        case !verifyFile(e.target.value, file_type.extensions):
+            error = file_type.error_message;
+            break;
+
+        //FILE SIZE
+        case e.target.files[0].size > max_size*Math.pow(10,6):
+            error = `La taille du fichier ne doit pas dépasser ${max_size} Mo.`;
+            break;
+    }
+
+    if(error) {
         UpdatePopup(null, {
             'type': 'error',
-            'value': 'Vous devez sélectionner une image.'
+            'value': error
         });
         e.target.value = null;
+    }
+
+    //VISUAL
+    if(file_type.visual) {
+        const file = e.target.files[0];
+        if (file) {
+            visual.attr('src',URL.createObjectURL(file));
+        }
     }
 })

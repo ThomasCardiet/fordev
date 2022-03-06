@@ -86,12 +86,24 @@ class User implements UserInterface
      */
     private $fReceivedMessages;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Project::class, mappedBy="owner")
+     */
+    private $ownedProjects;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ProjectContributor::class, mappedBy="contributor")
+     */
+    private $contributedProjects;
+
     public function __construct()
     {
         $this->requestedFriends = new ArrayCollection();
         $this->acceptedFriends = new ArrayCollection();
         $this->fOwnedMessages = new ArrayCollection();
         $this->fReceivedMessages = new ArrayCollection();
+        $this->ownedProjects = new ArrayCollection();
+        $this->contributedProjects = new ArrayCollection();
     }
 
 
@@ -337,6 +349,66 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($fReceivedMessage->getFriend() === $this) {
                 $fReceivedMessage->setFriend(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Project[]
+     */
+    public function getOwnedProjects(): Collection
+    {
+        return $this->ownedProjects;
+    }
+
+    public function addOwnedProject(Project $ownedProject): self
+    {
+        if (!$this->ownedProjects->contains($ownedProject)) {
+            $this->ownedProjects[] = $ownedProject;
+            $ownedProject->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOwnedProject(Project $ownedProject): self
+    {
+        if ($this->ownedProjects->removeElement($ownedProject)) {
+            // set the owning side to null (unless already changed)
+            if ($ownedProject->getOwner() === $this) {
+                $ownedProject->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProjectContributor[]
+     */
+    public function getContributedProjects(): Collection
+    {
+        return $this->contributedProjects;
+    }
+
+    public function addContributedProject(ProjectContributor $contributedProject): self
+    {
+        if (!$this->contributedProjects->contains($contributedProject)) {
+            $this->contributedProjects[] = $contributedProject;
+            $contributedProject->setContributor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContributedProject(ProjectContributor $contributedProject): self
+    {
+        if ($this->contributedProjects->removeElement($contributedProject)) {
+            // set the owning side to null (unless already changed)
+            if ($contributedProject->getContributor() === $this) {
+                $contributedProject->setContributor(null);
             }
         }
 

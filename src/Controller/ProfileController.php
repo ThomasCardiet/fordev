@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\FMessage;
 use App\Entity\Friend;
+use App\Entity\Project;
+use App\Entity\ProjectContributor;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,6 +22,7 @@ class ProfileController extends AbstractController
      */
     public function index(ManagerRegistry $managerRegistry): Response
     {
+        /*NOT CONNECTED*/
         if(is_null($this->getUser())) {
             return $this->redirectToRoute('auth');
         }
@@ -49,7 +52,8 @@ class ProfileController extends AbstractController
         //REPOSITORIES
         $user_repo = $em->getRepository(User::class);
         $friends_repo = $em->getRepository(Friend::class);
-        $fMessages_repo = $em->getRepository(FMessage::class);
+        $projects_repo = $em->getRepository(Project::class);
+        $contributors_repo = $em->getRepository(ProjectContributor::class);
 
         $data = [];
         $method_exist = true;
@@ -59,10 +63,12 @@ class ProfileController extends AbstractController
         $RAW_QUERY = null;
         $executes = [];
 
-        $user_id = $user->getId();
-        $friend_id = $request->request->get('target_id');
+        $fields = ['user_id' => $user->getId()];
+        foreach ($request->request as $field => $value) {
+            $fields[$field] = $value;
+        }
 
-        $user = $user_repo->find($user_id);
+        $user = $user_repo->find($fields['user_id']);
 
         switch ($m) {
 
@@ -92,7 +98,7 @@ class ProfileController extends AbstractController
                                                         WHERE friend.friend_id = :user_id)
                                 AND user.id != :user_id";
 
-                $executes = ['user_id' => $user_id, 'accepted' => true];
+                $executes = ['user_id' => $fields['user_id'], 'accepted' => true];
                 break;
             case 'getFriendRequests':
 
@@ -101,12 +107,12 @@ class ProfileController extends AbstractController
                                 WHERE friend_id = :user_id and accepted = :accepted
                                 AND user_id != :user_id";
 
-                $executes = ['user_id' => $user_id, 'accepted' => false];
+                $executes = ['user_id' => $fields['user_id'], 'accepted' => false];
                 break;
             case 'getFriends':
 
-                $friends_with = $friends_repo->findBy(['friend' => $user_id, 'accepted' => true]);
-                $friends_by = $friends_repo->findBy(['user' => $user_id, 'accepted' => true]);
+                $friends_with = $friends_repo->findBy(['friend' => $fields['user_id'], 'accepted' => true]);
+                $friends_by = $friends_repo->findBy(['user' => $fields['user_id'], 'accepted' => true]);
                 $friends = array_merge($friends_with, $friends_by);
 
                 $data = [
@@ -116,7 +122,7 @@ class ProfileController extends AbstractController
                 ];
 
                 foreach ($friends as $friend) {
-                    $target = $friend->getUser()->getId() === $user_id ? $friend->getFriend() : $friend->getUser();
+                    $target = $friend->getUser()->getId() === $fields['user_id'] ? $friend->getFriend() : $friend->getUser();
 
                     $data['values'][] =
                     [
@@ -155,7 +161,7 @@ class ProfileController extends AbstractController
                                 ORDER BY fmessage.created_at DESC
                                 LIMIT 5";
 
-                $executes = ['user_id' => $user_id];
+                $executes = ['user_id' => $fields['user_id']];
                 break;
 
             case 'getConversation':
@@ -177,11 +183,75 @@ class ProfileController extends AbstractController
                                 OR fmessage.friend_id = :user_id AND fmessage.owner_id = :friend_id
                                 ORDER BY fmessage.created_at";
 
-                $executes = ['user_id' => $user_id, 'friend_id' => $friend_id];
+                $executes = ['user_id' => $fields['user_id'], 'friend_id' => $fields['target_id']];
 
                 $data['target'] = [
-                    'id' => $friend_id,
-                    'username' => $user_repo->find($friend_id)->getUsername(),
+                    'id' => $fields['target_id'],
+                    'username' => $user_repo->find($fields['target_id'])->getUsername(),
+                ];
+
+                break;
+
+                /*PROJECTS*/
+            case 'getProjects':
+
+                $projects = $projects_repo->findBy(['owner' => $fields['user_id']]);
+
+                $data = [
+                    'code' => 200,
+                    'status' => 'success',
+                    'values' => []
+                ];
+
+                foreach ($projects as $project) {
+
+                    $contributors = $contributors_repo->findBy(['project' => $project->getId()]);
+
+                    $data['values'][] =
+                        [
+                            'id' => $project->getId(),
+                            'title' => $project->getTitle(),
+                            'description' => $project->getCreatedAt(),
+                            'image_path' => $project->getImgPath(),
+                            'contributors' => count($contributors),
+
+                            'created_at' => $project->getCreatedAt(),
+                        ];
+                }
+
+                break;
+
+            case 'getProject':
+
+                $project = $projects_repo->find($fields['project_id']);
+                $owner = $project->getOwner();
+
+                $contributors = [];
+                foreach ($project->getProjectContributors() as $projectContributor) {
+                    $contributor = $projectContributor->getContributor();
+                    $contributors[] = [
+                        'id' => $contributor->getId(),
+                        'username' => $contributor->getUsername()
+                    ];
+                }
+
+                $data = [
+                    'code' => 200,
+                    'status' => 'success',
+                    'values' =>
+                        [
+                            'id' => $project->getId(),
+                            'title' => $project->getTitle(),
+                            'description' => $project->getDescription(),
+                            'image_path' => $project->getImgPath(),
+                            'owner' => [
+                                'id' => $owner->getId(),
+                                'username' => $owner->getUsername()
+                            ],
+                            'contributors' => $contributors,
+
+                            'created_at' => $project->getCreatedAt(),
+                        ]
                 ];
 
                 break;
@@ -194,7 +264,7 @@ class ProfileController extends AbstractController
                 $old_file = "img/profile/users/" . $user->getPpPath();
                 if(file_exists($old_file)){unlink($old_file);}
 
-                $file = $_FILES['profile_img'];
+                $file = $_FILES['file'];
                 $file_ext = pathinfo($file['name'], PATHINFO_EXTENSION);
 
                 $file_name = $user->getUsername() . '.' . strtolower($file_ext);
@@ -216,10 +286,11 @@ class ProfileController extends AbstractController
                 /*RELATIONS*/
             case 'addFriend':
 
-                $friend = empty($friends_repo->findOneBy(['user' => $user_id, 'friend' => $friend_id])) ? $friends_repo->findOneBy(['friend' => $user_id, 'user' => $friend_id]) : $friends_repo->findOneBy(['user' => $user_id, 'friend' => $friend_id]);
+                $friend = empty($friends_repo->findOneBy(['user' => $fields['user_id'], 'friend' => $fields['target_id']])) ? $friends_repo->findOneBy(['friend' => $fields['user_id'], 'user' =>
+                    $fields['target_id']]) : $friends_repo->findOneBy(['user' => $fields['user_id'], 'friend' => $fields['target_id']]);
 
                 //Target
-                $target = $user_repo->find($friend_id);
+                $target = $user_repo->find($fields['target_id']);
                 $target_username = $target->getUsername();
 
                 $data = [
@@ -231,8 +302,8 @@ class ProfileController extends AbstractController
                 //ENVOIS DE REQUÊTE
                 if(empty($friend)) {
                     $friend = new Friend();
-                    $friend->setUser($user_repo->find($user_id))
-                        ->setFriend($user_repo->find($friend_id))
+                    $friend->setUser($user_repo->find($fields['user_id']))
+                        ->setFriend($user_repo->find($fields['target_id']))
                         ->setAccepted(false)
                         ->setRequestedAt(new \DateTimeImmutable());
 
@@ -243,7 +314,7 @@ class ProfileController extends AbstractController
                 }else if(!$friend->getAccepted()) {
 
                     //DEJA ENVOYÉE
-                    if($friend->getUser()->getId() === $user_id) {
+                    if($friend->getUser()->getId() === $fields['user_id']) {
                         $data['msg'] = "Vous avez déjà envoyé une requête à ${target_username}";
 
                     //ACCEPTER LA REQUÊTE
@@ -268,9 +339,9 @@ class ProfileController extends AbstractController
                 break;
             case 'removeFriend':
 
-                $friend = empty($friends_repo->findOneBy(['user' => $user_id, 'friend' => $friend_id])) ? $friends_repo->findOneBy(['friend' => $user_id, 'user' => $friend_id]) : $friends_repo->findOneBy(['user' => $user_id, 'friend' => $friend_id]);
+                $friend = empty($friends_repo->findOneBy(['user' => $fields['user_id'], 'friend' => $fields['target_id']])) ? $friends_repo->findOneBy(['friend' => $fields['user_id'], 'user' => $fields['target_id']]) : $friends_repo->findOneBy(['user' => $fields['user_id'], 'friend' => $fields['target_id']]);
 
-                $target = $user_repo->find($friend_id);
+                $target = $user_repo->find($fields['target_id']);
 
                 $data = [
                     'code' => 200,
@@ -285,7 +356,7 @@ class ProfileController extends AbstractController
 
                     //SELECTION DU MESSAGE SI REQUÊTE ACCEPTÉE OU NON
                     $data['msg'] = $friend->getAccepted() ? 'Relation supprimée avec ' . $target->getUsername() . '.' : 'Requête de relation avec ' . $target->getUsername() . ' supprimée.';
-                    if($friend->getFriend()->getId() === $user_id && !$friend->getAccepted()) $data['msg'] = 'Requête de relation avec ' . $target->getUsername() . ' refusée.';
+                    if($friend->getFriend()->getId() === $fields['user_id'] && !$friend->getAccepted()) $data['msg'] = 'Requête de relation avec ' . $target->getUsername() . ' refusée.';
                     $data['status'] = 'success';
 
                 //PAS EN RELATION
@@ -299,8 +370,8 @@ class ProfileController extends AbstractController
 
                 $msg = $request->request->get('msg');
                 $fMessage = new FMessage();
-                $fMessage->setOwner($user_repo->find($user_id))
-                    ->setFriend($user_repo->find($friend_id))
+                $fMessage->setOwner($user_repo->find($fields['user_id']))
+                    ->setFriend($user_repo->find($fields['target_id']))
                     ->setCreatedAt(new \DateTimeImmutable())
                     ->setContent($msg);
 
@@ -312,6 +383,39 @@ class ProfileController extends AbstractController
                     'message' => 'Message envoyé avec succès',
                     'status' => 'success'
                 ];
+                break;
+
+            case 'createProject':
+
+                $project = new Project();
+
+                $title = $request->request->get('title');
+                $description = $request->request->get('description');
+
+                $file = $_FILES['file'];
+                $file_ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+
+                $file_name = $fields['user_id'] . '-' . clean($title) . '.' . strtolower($file_ext);
+                $upload_path = "img/profile/projects/" . $file_name;
+                move_uploaded_file($file['tmp_name'], $upload_path);
+
+                $project->setImgPath($file_name)
+                    ->setImgPath($file_name)
+                    ->setTitle($title)
+                    ->setDescription($description)
+                    ->setOwner($user_repo->find($fields['user_id']))
+                    ->setCreatedAt(new \DateTimeImmutable());
+
+                $em->persist($project);
+                $em->flush();
+
+
+                $data = [
+                    'code' => 200,
+                    'msg' => 'Projet créé avec succès.',
+                    'status' => 'success'
+                ];
+
                 break;
 
             default:
@@ -340,4 +444,11 @@ class ProfileController extends AbstractController
             'methode' => $m
         ], 403);
     }
+}
+
+//REMOVE SPACES AND SPECIAL CHARS OF STRING
+function clean($string) {
+    $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+
+    return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
 }
