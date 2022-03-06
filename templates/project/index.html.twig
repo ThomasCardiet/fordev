@@ -1,0 +1,147 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/project/style.css') }}">
+{% endblock %}
+
+{% block title %}Projet{% endblock %}
+
+{% block body %}
+
+    <section id="project">
+
+        {#HEADER#}
+        <div id="project-header">
+
+            <div id="project-header-content">
+
+                {% set img_path = 'projects/' ~ project.getImgPath() %}
+                {% if project.getImgPath() is null %}
+                    {% set img_path = 'unknown_project.png' %}
+                {% endif %}
+                <img data-value="image" src="{{ asset("img/profile/#{img_path}") }}" alt="#">
+                <div>
+                    <h1 data-value="title">{{ project.title }}</h1>
+                    <p>Créé le {{ project.getCreatedAt() | date("m/d/Y à H:i") }}</p>
+                </div>
+                
+            </div>
+
+            <p data-value="description">{{ project.description }}</p>
+
+            <div id="project-header-owner">
+                {% set owner_pp_path = 'users/' ~ project.owner.getPpPath() %}
+                {% if project.owner.getPpPath() is null %}
+                    {% set owner_pp_path = 'unknown.png' %}
+                {% endif %}
+                <div id="project-header-owner-img">
+                    <i class="fas fa-crown"></i>
+                    <img src="{{ asset("img/profile/#{owner_pp_path}") }}" alt="#">
+                </div>
+                <div id="project-header-owner-infos">
+                    <h3>{{ project.owner.username }}</h3>
+                    <p>Depuis le {{ project.owner.getCreatedAt() | date("m/d/Y à H:i") }}</p>
+                </div>
+            </div>
+            <i class="fas fa-cog" aria-hidden="true"></i>
+
+        </div>
+
+        {#CONTENT#}
+        <div id="project-block" data-id="{{ project.id }}">
+            <ul id="project-block-menu">
+                <li class="menu-btn" data-target="informations">Informations</li>
+                <li class="menu-btn" data-target="contributors">Contributeurs</li>
+                <li class="menu-btn" data-target="roles">Rôles</li>
+                <li class="menu-btn" data-target="tools">Outils</li>
+            </ul>
+
+            {#INFORMATIONS#}
+            <div class="menu-info" id="content-informations">
+
+                informations
+
+            </div>
+
+            {#CONTRIBUTORS#}
+            <div class="menu-info" id="content-contributors">
+
+                <h2>Gestion des contributeurs</h2>
+
+                <div class="content-project-block">
+
+                    <input type="text" placeholder="Rechercher">
+
+                    <ul id="content-contributors-list">
+
+                        {% for projectContributor in projectContributors %}
+                            <li>
+                                {% set pp_path = 'users/' ~ projectContributor.contributor.getPpPath() %}
+                                {% if projectContributor.contributor.getPpPath() is null %}
+                                    {% set pp_path = 'unknown.png' %}
+                                {% endif %}
+                                <img src="{{ asset("img/profile/#{pp_path}") }}" alt="#">
+                                <div>
+                                    <h3>{{ projectContributor.contributor.username }}</h3>
+                                    <p>Depuis le {{ projectContributor.contributor.getCreatedAt | date("m/d/Y à H:i") }}</p>
+                                </div>
+                                <select>
+                                    <option value="">test</option>
+                                </select>
+                                <button class="ajax-btn" data-method="addFriend" data-target_id="%id%">Exclure</button>
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+            {#ROLES#}
+            <div class="menu-info" id="content-roles">
+
+                <h2>Gestion des rôles</h2>
+
+                <div class="content-project-create">
+                    <input id="create-role-name" class="content-project-create-name" type="text" placeholder="Nom du nouveau rôle">
+                    <input id="create-role-color" class="content-project-create-color" type="color">
+                    <button class="ajax-btn" data-method="createRole">Créer</button>
+                </div>
+
+                <div class="content-project-block">
+
+                    <input type="text" placeholder="Rechercher">
+
+                    <ul id="content-roles-list">
+
+
+                            <li>
+                                <h3 style="color: #ab2f2f">Développeur Web</h3>
+                                <button class="popup-btn" data-method="getPermissions" data-role_id="%id%">Permissions</button>
+                                <button class="ajax-btn" data-method="addFriend" data-role_id="%id%">Supprimer</button>
+                            </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+            {#TOOLS#}
+            <div class="menu-info" id="content-tools">
+
+                tools
+
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset("js/links.js") }}"></script>
+    <script src="{{ asset("js/ajax.js") }}"></script>
+    <script src="{{ asset("js/project/project.js") }}"></script>
+{% endblock %}

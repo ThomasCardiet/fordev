@@ -1,0 +1,227 @@
+#project {
+  background: url("../../img/home/background_1.png") no-repeat;
+  background-size: cover;
+  padding: 150px 0 100px 0;
+}
+
+#project-header {
+  position: relative;
+  width: 90%;
+  margin: 0 auto 100px auto;
+  min-height: 245px;
+  background-color: white;
+  padding: 10px 3vh 0 0;
+}
+#project-header > p {
+  margin-left: 32vh;
+}
+#project-header > i {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  color: black;
+  font-size: 2em;
+}
+#project-header > i:hover {
+  color: var(--green);
+  cursor: pointer;
+}
+#project-header #project-header-owner {
+  position: absolute;
+  display: flex;
+  right: 0;
+  top: -45px;
+}
+#project-header #project-header-owner #project-header-owner-img {
+  position: relative;
+  margin-right: 10px;
+}
+#project-header #project-header-owner #project-header-owner-img i {
+  position: absolute;
+  color: var(--green);
+  top: -25px;
+  font-size: 1vw;
+  left: 0.45vw;
+}
+#project-header #project-header-owner #project-header-owner-img img {
+  width: 2vw;
+  border-radius: 50%;
+}
+#project-header #project-header-owner #project-header-owner-infos h3 {
+  color: var(--green);
+  font-size: 1.2em;
+}
+#project-header #project-header-owner #project-header-owner-infos p {
+  color: white;
+  font-size: 0.8em;
+}
+#project-header #project-header-content {
+  position: absolute;
+  width: 85%;
+  margin: auto;
+  display: flex;
+  top: -55px;
+  left: 3vh;
+}
+#project-header #project-header-content img {
+  width: 28vh;
+  margin-right: 1vh;
+}
+#project-header #project-header-content div h1 {
+  font-size: 1.8em;
+  color: var(--green);
+}
+#project-header #project-header-content div p {
+  color: white;
+  font-weight: bold;
+}
+
+#project-block {
+  width: 90%;
+  margin: auto;
+}
+#project-block #project-block-menu {
+  display: flex;
+  list-style: none;
+  width: 100%;
+}
+#project-block #project-block-menu li {
+  background-color: var(--light_grey);
+  border: 1px solid var(--grey);
+  color: white;
+  padding: 10px 0;
+  width: 100%;
+  text-align: center;
+}
+#project-block #project-block-menu li:hover {
+  background-color: var(--green);
+  cursor: pointer;
+}
+#project-block #project-block-menu li.active {
+  background-color: var(--green);
+}
+#project-block .menu-info {
+  background-color: white;
+  padding: 10px;
+}
+#project-block .menu-info h2 {
+  color: var(--green);
+  font-size: 1.5em;
+}
+#project-block .menu-info .content-project-create {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
+}
+#project-block .menu-info .content-project-create input, #project-block .menu-info .content-project-create button {
+  border: none;
+  outline: none;
+  background-color: var(--dark_grey);
+  font-size: 1.5em;
+}
+#project-block .menu-info .content-project-create .content-project-create-name {
+  width: 80%;
+  color: white;
+  padding: 10px;
+}
+#project-block .menu-info .content-project-create .content-project-create-color {
+  width: 5%;
+  height: 50px;
+}
+#project-block .menu-info .content-project-create .content-project-create-color::-webkit-color-swatch-wrapper {
+  padding: 10px;
+}
+#project-block .menu-info .content-project-create .content-project-create-color:hover {
+  cursor: pointer;
+}
+#project-block .menu-info .content-project-create button {
+  width: 14%;
+  color: var(--green);
+  padding: 10px 0;
+}
+#project-block .menu-info .content-project-create button:hover {
+  cursor: pointer;
+  color: white;
+}
+#project-block .menu-info .content-project-block {
+  background-color: var(--dark_grey);
+  padding: 15px;
+}
+#project-block .menu-info .content-project-block #content-contributors-list {
+  list-style: none;
+}
+#project-block .menu-info .content-project-block #content-contributors-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 2%;
+  border: solid var(--dark_grey) 1px;
+}
+#project-block .menu-info .content-project-block #content-contributors-list li img {
+  width: 5%;
+  border-radius: 50%;
+}
+#project-block .menu-info .content-project-block #content-contributors-list li div {
+  transform: translateY(25%);
+  width: 72%;
+}
+#project-block .menu-info .content-project-block #content-contributors-list li div h3 {
+  color: var(--green);
+}
+#project-block .menu-info .content-project-block #content-contributors-list li div p {
+  color: white;
+}
+#project-block .menu-info .content-project-block #content-contributors-list li div.unique-btn {
+  width: 84%;
+}
+#project-block .menu-info .content-project-block #content-contributors-list li button, #project-block .menu-info .content-project-block #content-contributors-list li select {
+  border: solid var(--grey) 1px;
+  background-color: var(--dark_grey);
+  color: var(--green);
+  padding: 0 1%;
+  height: 40px;
+  font-size: 1em;
+  transform: translateY(45%);
+  width: 9%;
+}
+#project-block .menu-info .content-project-block #content-contributors-list li button:hover, #project-block .menu-info .content-project-block #content-contributors-list li select:hover {
+  color: white;
+  cursor: pointer;
+}
+#project-block .menu-info .content-project-block #content-contributors-list li:hover {
+  border: solid var(--grey) 1px;
+  background-color: var(--medium_grey);
+}
+#project-block .menu-info .content-project-block #content-roles-list {
+  list-style: none;
+}
+#project-block .menu-info .content-project-block #content-roles-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 2%;
+  border: solid var(--dark_grey) 1px;
+}
+#project-block .menu-info .content-project-block #content-roles-list li h3 {
+  width: 80%;
+  font-size: 1.5em;
+  transform: translateY(20%);
+}
+#project-block .menu-info .content-project-block #content-roles-list li button {
+  border: solid var(--grey) 1px;
+  background-color: var(--dark_grey);
+  color: var(--green);
+  padding: 0 1%;
+  height: 40px;
+  font-size: 1em;
+  width: 9%;
+}
+#project-block .menu-info .content-project-block #content-roles-list li button:hover {
+  color: white;
+  cursor: pointer;
+}
+#project-block .menu-info .content-project-block #content-roles-list li:hover {
+  border: solid var(--grey) 1px;
+  background-color: var(--medium_grey);
+}
+
+/*# sourceMappingURL=style.css.map */
