@@ -42,6 +42,11 @@ class ProjectContributor
      */
     private $accepted_at;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=projectRole::class, inversedBy="contributorsWithRole")
+     */
+    private $role;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class ProjectContributor
     public function setAcceptedAt(?\DateTimeImmutable $accepted_at): self
     {
         $this->accepted_at = $accepted_at;
+
+        return $this;
+    }
+
+    public function getRole(): ?projectRole
+    {
+        return $this->role;
+    }
+
+    public function setRole(?projectRole $role): self
+    {
+        $this->role = $role;
 
         return $this;
     }

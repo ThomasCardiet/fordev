@@ -54,6 +54,27 @@
             <img src="{{ asset('img/gif/loader.gif') }}" alt="#">
         </div>
     </div>
+    <div id="popup-notification">
+        <div class="success-checkmark popup-notification-anim" data-type="success">
+            <div class="check-icon">
+                <span class="icon-line line-tip"></span>
+                <span class="icon-line line-long"></span>
+                <div class="icon-circle"></div>
+                <div class="icon-fix"></div>
+            </div>
+        </div>
+
+        <div class="error-checkmark popup-notification-anim" data-type="error">
+            <div class="check-icon">
+                <span class="icon-line line-tip"></span>
+                <span class="icon-line line-long"></span>
+                <div class="icon-circle"></div>
+                <div class="icon-fix"></div>
+            </div>
+        </div>
+
+        <p id="popup-notification-msg"></p>
+    </div>
     {% block body %}{% endblock %}
 </main>
 
@@ -64,7 +85,11 @@
         {% if app.user %}
         <div class="right-menu-popup" id="right-menu-popup-account">
             <div id="right-menu-popup-account-informations">
-                <img src="{{ asset('img/profile/unknown.png') }}" alt="">
+                {% set pp_path = 'users/' ~ app.user.getPpPath() %}
+                {% if app.user.getPpPath() is null %}
+                    {% set pp_path = 'unknown.png' %}
+                {% endif %}
+                <img data-value="pp" src="{{ asset("img/profile/#{pp_path}") }}" alt="#">
                 <div>
                     <h3>{{ app.user.username }}</h3>
                     <p>{{ app.user.createdAt|date('d/m/Y') }}</p>

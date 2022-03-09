@@ -34,7 +34,6 @@ class ProjectController extends AbstractController
 
         return $this->render('project/index.html.twig', [
             'project' => $project,
-            'projectContributors' => $project->getProjectContributors()->getValues()
         ]);
     }
 }

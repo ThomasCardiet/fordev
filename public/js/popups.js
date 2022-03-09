@@ -152,3 +152,35 @@ function UpdatePopup(type, message = null) {
 function animatePopup(params, type = true) {
     type ? params.element.css('animation', `${params.in} ${params.duration}s`) : params.element.css('animation', `${params.out} ${params.duration}s`)
 }
+
+//NOTIFICATION POPUP
+let popup_notification = $('#popup-notification');
+let popup_notification_animation = $('.popup-notification-anim');
+
+popup_notification.hide();
+function sendNotification(data) {
+    $('#popup-notification-msg').text(data.value);
+    popup_notification_animation.each(function () {
+        $(this).data('type') === data.type ? $(this).show() : $(this).hide();
+    })
+    popup_notification.show()
+    setTimeout(function () {
+        popup_notification.hide()
+    }, 2500)
+}
+
+//ADVANCED PROPERTIES
+let adv_content = $('.advanced-content');
+adv_content.hide();
+
+body.on('click', '.advanced-properties', e => {
+    let adv_btn = $(e.target);
+    let active = adv_btn.data('active');
+    let content = adv_btn.data('target');
+    let content_element = $(`#${content}`);
+
+    adv_btn.find(">:first-child").toggleClass('active', !active);
+    adv_btn.data('active', !active);
+
+    active ? content_element.hide() : content_element.show();
+})

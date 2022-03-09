@@ -226,6 +226,7 @@ methods = {
             data: {
                 msg: {
                     can_empty: false,
+                    reset: true,
                     error_message: 'Vous devez saisir un message.',
                 },
             }
@@ -281,23 +282,6 @@ $('.relations-img').bind('mousewheel DOMMouseScroll', e => {
     if(e.originalEvent.wheelDelta /120 > 0) element.scrollLeft += 40;
     else element.scrollLeft -= 40;
     return false
-})
-
-/************** ADVANCED PROPERTIES *************/
-
-let adv_content = $('.advanced-content');
-adv_content.hide();
-
-body.on('click', '.advanced-properties', e => {
-    let adv_btn = $(e.target);
-    let active = adv_btn.data('active');
-    let content = adv_btn.data('target');
-    let content_element = $(`#${content}`);
-
-    adv_btn.find(">:first-child").toggleClass('active', !active);
-    adv_btn.data('active', !active);
-
-    active ? content_element.hide() : content_element.show();
 })
 
 /************** USER UPDATE FORM *************/

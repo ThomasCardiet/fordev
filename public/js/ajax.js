@@ -1,4 +1,4 @@
-const url = `${this.location.href}/ajax`;
+const url = `/ajax`;
 
 let models = $('.model');
 models.hide();
@@ -13,6 +13,9 @@ function formatDate(string) {
         `${String(date.getSeconds()).padStart(2, '0')}`;
 }
 
+//DATA STORAGE
+let requests_data = {};
+
 //SECTIONS OF PROFILE
 let sections = {}
 
@@ -21,17 +24,29 @@ let methods = {}
 
 let img_paths = {
     pp: {
-        path: 'img/profile/users/',
-        unknown_path: 'img/profile/unknown.png'
+        path: '../img/profile/users/',
+        unknown_path: '../img/profile/unknown.png'
     },
     image: {
-        path: 'img/profile/projects/',
-        unknown_path: 'img/profile/unknown_project.png'
+        path: '../img/profile/projects/',
+        unknown_path: '../img/profile/unknown_project.png'
     }
 }
 
+//IS OCCUPED
+let is_occuped = false;
+
 function methodsFunctions(name, value, data = {}, containFile = false) {
 
+    //INCREMENT FUNCTIONS DATAS
+    if(value.data !== undefined) {
+        data = {
+            ...data,
+            ...value.data
+        }
+    }
+
+    //PREVENT FILE FORM BEFORE
     if(!(data instanceof FormData)) popup_data = data;
 
     let ajax_request = {
@@ -44,6 +59,11 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
             /*Switch of request type*/
             switch (value.type) {
                 case 'get':
+
+                    //UPDATE REQUESTS STORAGE
+                    if(value.store_data !== undefined && value.store_data) {
+                        requests_data[value.params.data] = response.data.values;
+                    }
 
                     /*Switch of style*/
                     switch (value.style) {
@@ -96,6 +116,52 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                                     let p_field = path.split('_')[0];
                                     html = html.replaceAll("%img%", `<img src='${o[path] ? img_paths[p_field].path + o[path] : img_paths[p_field].unknown_path}' alt='#'>`);
                                 })
+
+                                let fields = html.match(/\%.+?\%/g);
+
+                                //HAS SPECIAL FIELDS
+                                let special_fields = fields.filter(f => f.split('.').length > 1);
+                                if(special_fields.length > 0) {
+                                    special_fields.forEach(sf => {
+
+                                        //SET PARAMS of type: type.data{field1,field2,...}
+                                        sf = sf.replaceAll('%', '');
+                                        let type = sf.split('.')[0];
+                                        let data = sf.split('.')[1];
+                                        let data_params = data.match(/\{.+?\}/g)[0]
+                                        data = data.replaceAll(data_params, '');
+                                        data_params = data_params.replaceAll('{', '').replaceAll('}', '').split(',');
+
+                                        switch (type) {
+
+                                            //SELECT TYPE
+                                            case 'select':
+
+                                                let current_value = {
+                                                    field: data.split('?')[1],
+                                                    value: -1
+                                                };
+                                                data = data.replace(`?${current_value.field}`, '');
+
+                                                current_value['value'] = requests_data[data].find(d => d[data_params[0]] === o[current_value.field]);
+
+                                                //IF HAS NO ROLE
+                                                if(o[current_value.field] === -1) current_value.value = -1;
+
+                                                let sf_html = '';
+
+                                                sf_html += `<option value="${current_value.value === -1 ? -1 : current_value.value[data_params[0]]}">${current_value.value === -1 ? 'Aucun' : current_value.value[data_params[1]]}</option>`
+
+                                                requests_data[data].forEach(d => {
+                                                    if(d[data_params[0]] === o[current_value.field]) return;
+                                                    sf_html += `<option value="${d[data_params[0]]}">${d[data_params[1]]}</option>`
+                                                })
+
+                                                html = html.replace(`%${sf}%`, sf_html)
+                                                break;
+                                        }
+                                    })
+                                }
 
                                 for (const [key, value] of Object.entries(o)) {
                                     html = html.replaceAll(`%${key}%`, key.includes('_at') ? formatDate(value) : value);
@@ -255,10 +321,13 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                     switch (value.style) {
                         case 'message':
 
-                            UpdatePopup(null, {
-                                'type': response.data.status,
-                                'value': response.data.msg
-                            });
+                            let message = {
+                                type: response.data.status,
+                                value: response.data.msg
+                            };
+
+                            current_popup !== null ? UpdatePopup(null, message) : sendNotification(message);
+
                             break;
 
                         default:
@@ -288,13 +357,19 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
 }
 
 function update(all = false) {
+
+    //IF IS OCCUPED
+    if(is_occuped) return;
+
     for (const [key, value] of Object.entries(methods)) {
 
+        //FOR ALL UPDATE FUNCTIONS
         if(all && value.update) {
             methodsFunctions(key, value, current_popup === null ? {} : popup_data);
             continue;
         }
 
+        //IF NOT IN CURRENT SECTION
         if((value.function.section !== current_menu || value.params === undefined)) continue;
 
         if((current_popup === null && value.update)
@@ -321,11 +396,13 @@ body.on('click', '.popup-btn', e => {
     setUpdate();
 })
 
-//AJAX BUTTONS
-body.on('click', '.ajax-btn', e => {
+function useMethodsByElement(e, special_data = {}) {
 
-    let method_name = $(e.target).data('method');
-    let data = $(e.target).clone().data();
+    let method_name = e.data('method');
+    let data = {
+        ...e.data(),
+        ...special_data
+    };
 
     let method = methods[method_name];
     let has_file = false;
@@ -336,7 +413,6 @@ body.on('click', '.ajax-btn', e => {
             if(method.form === undefined) break;
 
             let fields = []
-            let formData = null;
 
             //CREATE FIELDS
             for (const [field, options] of Object.entries(method.form.data)) {
@@ -372,9 +448,25 @@ body.on('click', '.ajax-btn', e => {
 
     delete data.method;
     delete data.target;
+    delete data.field_name;
 
     methodsFunctions(method_name, methods[method_name], data, has_file)
     update();
+
+}
+
+//AJAX BUTTONS
+body.on('click', '.ajax-btn', e => {
+    useMethodsByElement($(e.target))
+});
+
+//AJAX SELECT
+body.on('change', 'select', e => {
+    let element = $(e.target);
+    if(!element.data('method')) return false;
+    let data = {}
+    data[element.data('field_name')] = element.val();
+    useMethodsByElement(element, data);
 });
 
 
@@ -387,6 +479,7 @@ function verifyFile(file, extensions) {
     return extensions.includes(ext.toLowerCase());
 }
 
+//FILE INPUT
 body.on('change', 'input[type=file]', e => {
 
     let data_file_type = $(e.target).data('file_type');
@@ -440,3 +533,15 @@ body.on('change', 'input[type=file]', e => {
         }
     }
 })
+
+//USER OCCUPED
+
+//Enter in select
+body.on('click', 'select', e => {
+    is_occuped = true;
+});
+
+//Exit of select
+body.on('blur', 'select', e => {
+    is_occuped = false;
+});

@@ -1,3 +1,7 @@
+/************** VARS PROPERTIES *************/
+
+let project_id = parseInt(location.href.split('/')[location.href.split('/').length-1]);
+
 /************** LINKS PROPERTIES *************/
 
 menus = {
@@ -6,7 +10,7 @@ menus = {
     roles: 2,
     tools: 3,
 }
-first_menu = menus.roles; //instance de menus
+first_menu = menus.contributors; //instance de menus
 
 resetContent(false);
 
@@ -24,7 +28,28 @@ sections = {
 methods = {
     /*Get methods*/
 
-    /*PROJECT*/
+    /*ROLES*/
+    getRoles: {
+        function: {
+            section: sections.roles,
+        },
+        update: true,
+        type: 'get',
+        style: 'list',
+        params: {
+            target: '#content-roles-list',
+            data: 'roles',
+            count: true,
+            bubble: false,
+            popup: null,
+            popup_update: false,
+            need_popup_data: false,
+        },
+        data: {
+          'project_id': project_id
+        },
+        store_data: true
+    },
 
     /*CONTRIBUTORS*/
     getContributors: {
@@ -35,32 +60,16 @@ methods = {
         type: 'get',
         style: 'list',
         params: {
-            target: '.relation-popup-list-list',
-            data: 'users',
+            target: '#content-contributors-list',
+            data: 'contributors',
             count: true,
             bubble: false,
-            popup: 'relation-list',
-            popup_update: true,
+            popup: null,
+            popup_update: false,
             need_popup_data: false,
-        }
-    },
-
-    /*ROLES*/
-    getRoles: {
-        function: {
-            section: sections.roles,
         },
-        update: true,
-        type: 'get',
-        style: 'list',
-        params: {
-            target: '.relation-popup-list-list',
-            data: 'users',
-            count: true,
-            bubble: false,
-            popup: 'relation-list',
-            popup_update: true,
-            need_popup_data: false,
+        data: {
+            'project_id': project_id
         }
     },
 
@@ -69,9 +78,19 @@ methods = {
     /*PROJECT*/
 
     /*CONTRIBUTORS*/
+    updateContributor: {
+        function: {
+            section: sections.contributors,
+        },
+        update: false,
+        type: 'action',
+        close_popup: false,
+        style: 'message'
+    },
+
     addContributor: {
         function: {
-            section: sections.relations,
+            section: sections.contributors,
         },
         update: false,
         type: 'action',
@@ -81,7 +100,7 @@ methods = {
 
     removeContributor: {
         function: {
-            section: sections.relations,
+            section: sections.contributors,
         },
         update: false,
         type: 'action',
@@ -92,7 +111,7 @@ methods = {
     /*ROLES*/
     createRole: {
         function: {
-            section: sections.projects,
+            section: sections.roles,
         },
         update: false,
         type: 'action',
@@ -103,10 +122,12 @@ methods = {
             data: {
                 name: {
                     can_empty: false,
+                    reset: true,
                     error_message: 'Vous devez saisir un Nom de rôle.',
                 },
                 color: {
                     can_empty: false,
+                    reset: true,
                     error_message: 'Vous devez saisir une couleur.',
                 }
             }
@@ -115,7 +136,7 @@ methods = {
 
     removeRole: {
         function: {
-            section: sections.relations,
+            section: sections.roles,
         },
         update: false,
         type: 'action',

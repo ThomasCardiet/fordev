@@ -146,7 +146,23 @@
 }
 #project-block .menu-info .content-project-block {
   background-color: var(--dark_grey);
-  padding: 15px;
+  padding: 0 15px 20px 15px;
+  position: relative;
+  margin-top: 5px;
+}
+#project-block .menu-info .content-project-block > input {
+  margin: 25px 0;
+}
+#project-block .menu-info .content-project-block .fa-plus-square {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 2.5em;
+  color: white;
+}
+#project-block .menu-info .content-project-block .fa-plus-square:hover {
+  cursor: pointer;
+  color: var(--green);
 }
 #project-block .menu-info .content-project-block #content-contributors-list {
   list-style: none;

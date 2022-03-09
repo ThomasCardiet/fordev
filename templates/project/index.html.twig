@@ -70,30 +70,47 @@
 
                 <div class="content-project-block">
 
+                    <i class="fas fa-plus-square popup-btn" data-target="contributor-add"></i>
+
                     <input type="text" placeholder="Rechercher">
 
                     <ul id="content-contributors-list">
 
-                        {% for projectContributor in projectContributors %}
-                            <li>
-                                {% set pp_path = 'users/' ~ projectContributor.contributor.getPpPath() %}
-                                {% if projectContributor.contributor.getPpPath() is null %}
-                                    {% set pp_path = 'unknown.png' %}
-                                {% endif %}
-                                <img src="{{ asset("img/profile/#{pp_path}") }}" alt="#">
-                                <div>
-                                    <h3>{{ projectContributor.contributor.username }}</h3>
-                                    <p>Depuis le {{ projectContributor.contributor.getCreatedAt | date("m/d/Y à H:i") }}</p>
-                                </div>
-                                <select>
-                                    <option value="">test</option>
-                                </select>
-                                <button class="ajax-btn" data-method="addFriend" data-target_id="%id%">Exclure</button>
-                            </li>
-                        {% endfor %}
+                        <li class="model">
+                            %img%
+                            <div>
+                                <h3>%username%</h3>
+                                <p>Depuis le %accepted_at%</p>
+                            </div>
+                            <select data-method="updateContributor" data-target_id="%id%" data-field_name="role_id">
+                                %select.roles{id,name}?role_id%
+                            </select>
+                            <button class="ajax-btn" data-method="removeContributor" data-target_id="%id%">Exclure</button>
+                        </li>
 
                     </ul>
 
+                </div>
+
+                {#Contributors Popups#}
+
+                {#Contributor Add#}
+                <div class="popup-content" data-popup="contributor-add" data-loader="false">
+                    <h2>Ajouter un contributeur</h2>
+                    <input type="text" placeholder="Rechercher">
+                    <div class="relation-popup-list relation-popup-list-block">
+                        <ul class="relation-popup-list relation-popup-list-list">
+                            <li class="model">
+                                %img%
+                                <div>
+                                    <h3>%username%</h3>
+                                    <p>Amis depuis le %accepted_at%</p>
+                                </div>
+                                <button class="popup-btn ajax-btn" data-target="conversation" data-method="getConversation" data-target_id="%id%">Converser</button>
+                                <button class="ajax-btn" data-method="removeFriend" data-target_id="%id%">Supprimer</button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
             </div>
@@ -101,12 +118,12 @@
             {#ROLES#}
             <div class="menu-info" id="content-roles">
 
-                <h2>Gestion des rôles</h2>
+                <h2>Gestion des rôles <span id="content-roles-list-count"></span></h2>
 
                 <div class="content-project-create">
                     <input id="create-role-name" class="content-project-create-name" type="text" placeholder="Nom du nouveau rôle">
                     <input id="create-role-color" class="content-project-create-color" type="color">
-                    <button class="ajax-btn" data-method="createRole">Créer</button>
+                    <button class="ajax-btn" data-method="createRole" data-project_id="{{ project.id }}">Créer</button>
                 </div>
 
                 <div class="content-project-block">
@@ -115,12 +132,11 @@
 
                     <ul id="content-roles-list">
 
-
-                            <li>
-                                <h3 style="color: #ab2f2f">Développeur Web</h3>
-                                <button class="popup-btn" data-method="getPermissions" data-role_id="%id%">Permissions</button>
-                                <button class="ajax-btn" data-method="addFriend" data-role_id="%id%">Supprimer</button>
-                            </li>
+                        <li class="model">
+                            <h3 style="color: %color%">%name%</h3>
+                            <button class="popup-btn" data-method="getPermissions" data-role_id="%id%">Permissions</button>
+                            <button class="ajax-btn" data-method="removeRole" data-role_id="%id%">Supprimer</button>
+                        </li>
 
                     </ul>
 

@@ -1,12 +1,16 @@
 //FORGET PASSWORD
 let forget_btn = $('#forget-pass');
+let forget_content = $("#forget-content");
 
 forget_btn.click(function () {
-    let content = document.getElementById("forget-content");
-    if (content.style.maxHeight) {
-        content.style.maxHeight = null;
+    if (forget_content[0].style.maxHeight) {
+        forget_content[0].style.maxHeight = null;
+        forget_content.find(">:last-child").remove();
+        forget_content.hide();
     } else {
-        content.style.maxHeight = content.scrollHeight + 1 + "px";
+        forget_content.show();
+        forget_content[0].innerHTML += '<button type="submit" name="forget_submit">Envoyer</button>';
+        forget_content[0].style.maxHeight = forget_content[0].scrollHeight + 1 + "px";
     }
 })
 

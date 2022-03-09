@@ -50,7 +50,7 @@ class Project
     private $projectContributors;
 
     /**
-     * @ORM\OneToMany(targetEntity=ProjectRole::class, mappedBy="project_id")
+     * @ORM\OneToMany(targetEntity=ProjectRole::class, mappedBy="project")
      */
     private $projectRoles;
 
