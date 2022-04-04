@@ -143,11 +143,47 @@ methods = {
         style: 'list',
         params: {
             target: '.project-popup-list-list',
-            data: 'users',
+            data: 'projects',
             count: true,
             bubble: false,
             popup: 'project-list',
             popup_update: true,
+            need_popup_data: false,
+        }
+    },
+
+    getContributorRequests: {
+        function: {
+            section: sections.projects,
+        },
+        update: true,
+        type: 'get',
+        style: 'list',
+        params: {
+            target: '.project-popup-list-requests',
+            data: 'users',
+            count: true,
+            bubble: true,
+            popup: 'project-requests',
+            popup_update: true,
+            need_popup_data: false,
+        }
+    },
+
+    getLastProjects: {
+        function: {
+            section: sections.projects,
+        },
+        update: true,
+        type: 'get',
+        style: 'list',
+        params: {
+            target: '.projects-recents-list-list',
+            data: 'projects',
+            count: false,
+            bubble: false,
+            popup: null,
+            popup_update: false,
             need_popup_data: false,
         }
     },
@@ -285,20 +321,6 @@ $('.relations-img').bind('mousewheel DOMMouseScroll', e => {
 })
 
 /************** USER UPDATE FORM *************/
-
-let account_type_fields = {
-    visitor: 0,
-    professional: 1
-}
-
-let account_professional_content = $('#user-popup-advanced-professional-content');
-account_professional_content.hide();
-
-body.on('change', 'input[name="account-type"]', e => {
-    let account_type = $('input[name="account-type"]:checked').val();
-    account_professional_content = $('#user-popup-advanced-professional-content');
-    parseInt(account_type) === 1 ? account_professional_content.show() : account_professional_content.hide();
-});
 
 /*SKILLS*/
 

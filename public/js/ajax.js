@@ -27,7 +27,7 @@ let img_paths = {
         path: '../img/profile/users/',
         unknown_path: '../img/profile/unknown.png'
     },
-    image: {
+    img: {
         path: '../img/profile/projects/',
         unknown_path: '../img/profile/unknown_project.png'
     }
@@ -76,8 +76,9 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
 
                             //Counter update element (if param count is true)
                             let counter = value.params.count ? $(`${value.params.target}-count`) : null;
-                            let bubble = value.params.bubble ? $(`#relation-${
-                                value.params.target.split('-')[value.params.target.split('-').length-1]
+                            let split_target = value.params.target.split('-');
+                            let bubble = value.params.bubble ? $(`#${split_target[0].substr(1)}-${
+                                split_target[split_target.length-1]
                             }-count`) : null;
 
                             //get li model for list
@@ -105,7 +106,6 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                             //Liste d'amis scrollable
                             let friends_block = $('#relations-img-list');
                             let friends_block_html = '';
-
                             datas.forEach(o => {
 
                                 //Update model
@@ -163,12 +163,17 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                                     })
                                 }
 
-                                for (const [key, value] of Object.entries(o)) {
+                                for (let [key, value] of Object.entries(o)) {
+                                    if(value === null) value = 0;
                                     html = html.replaceAll(`%${key}%`, key.includes('_at') ? formatDate(value) : value);
                                 }
 
                                 let classList = $(model).attr('class').split(' ').filter(v => v !== 'model').toString().replaceAll(',', ' ');
-                                list[0].innerHTML += `<li ${classList.length ? `class="${classList}"` : ''}>${html}</li>`;
+                                list[0].innerHTML +=
+                                    `<li ${classList.length ? `class="${classList}"` : ''}>
+                                        ${o['owner'] !== undefined && o['owner'] === '1' ? '<i class="fas fa-crown"></i>' : ''}
+                                        ${html}
+                                    </li>`;
 
                                 //Liste d'amis scrollable
                                 if(name === "getFriends") {
@@ -358,7 +363,7 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
 
 function update(all = false) {
 
-    //IF IS OCCUPED
+    //IF IS OCCUPIED
     if(is_occuped) return;
 
     for (const [key, value] of Object.entries(methods)) {
@@ -370,12 +375,15 @@ function update(all = false) {
         }
 
         //IF NOT IN CURRENT SECTION
-        if((value.function.section !== current_menu || value.params === undefined)) continue;
+        if(value.function !== undefined && (value.function.section !== current_menu || value.params === undefined)) continue;
 
         if((current_popup === null && value.update)
             || (value.params.popup !== null && value.params.popup === current_popup && value.params.popup_update)) {
 
-            if(value.params.need_popup_data && Object.keys(popup_data).length === 0) continue;
+            if(value.params.need_popup_data && Object.keys(popup_data).length === 0
+
+            //HAS FILTER
+            || (value.params.target !== undefined && $(value.params.target).data('filter') !== undefined && $(value.params.target).data('filter') !== key)) continue;
 
             methodsFunctions(key, value, current_popup === null ? {} : popup_data);
         }
@@ -469,6 +477,19 @@ body.on('change', 'select', e => {
     useMethodsByElement(element, data);
 });
 
+//AJAX TEXT INPUT
+body.on('input', '.ajax-search', e => {
+    setTimeout(function () {
+        popup_data.search = e.target.value;
+        update();
+    }, 1);
+})
+
+//AJAX SELECT FILTER
+body.on('change', '.ajax-filter', e => {
+    $($(e.target).data('target')).data('filter', e.target.value)
+    update();
+})
 
 //FILES
 function verifyFile(file, extensions) {
@@ -538,6 +559,7 @@ body.on('change', 'input[type=file]', e => {
 
 //Enter in select
 body.on('click', 'select', e => {
+    if(e.target.classList.contains('ajax-filter')) return;
     is_occuped = true;
 });
 

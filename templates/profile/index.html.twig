@@ -105,8 +105,10 @@
                                     </div>
                                 </div>
 
+                                <div id="account-type-0" class="type-selector-content"></div>
+
                                 {#PROFESSIONAL ACCOUNT FIELDS#}
-                                <div id="user-popup-advanced-professional-content">
+                                <div id="account-type-1" class="type-selector-content">
 
                                     <h3>Liste des compétences</h3>
                                     <div id="professional-content-skills">
@@ -160,7 +162,7 @@
                     {#Relations List#}
                 <div class="popup-content" data-popup="relation-list" data-class="relation-popup" data-loader="true">
                     <h2>Liste des relations <span class="relation-popup-list-list-count"></span></h2>
-                    <input type="text" placeholder="Rechercher">
+                    <input class="ajax-search" type="text" placeholder="Rechercher">
                     <div class="relation-popup-list relation-popup-list-block">
                         <ul class="relation-popup-list relation-popup-list-list">
                             <li class="model">
@@ -169,8 +171,8 @@
                                     <h3>%username%</h3>
                                     <p>Amis depuis le %accepted_at%</p>
                                 </div>
-                                <button class="popup-btn ajax-btn" data-target="conversation" data-method="getConversation" data-target_id="%id%">Converser</button>
-                                <button class="ajax-btn" data-method="removeFriend" data-target_id="%id%">Supprimer</button>
+                                <button class="popup-btn ajax-btn" data-target="conversation" data-method="getConversation" data-target_id="%target_id%">Converser</button>
+                                <button class="ajax-btn" data-method="removeFriend" data-target_id="%target_id%">Supprimer</button>
                             </li>
                         </ul>
                     </div>
@@ -198,7 +200,7 @@
                     {#Relation Add#}
                 <div class="popup-content" data-popup="relation-add" data-class="relation-popup" data-loader="true">
                     <h2>Ajouter un ami <span class="relation-popup-list-add-count"></span></h2>
-                    <input type="text" placeholder="Rechercher">
+                    <input class="ajax-search" type="text" placeholder="Rechercher">
                     <div class="relation-popup-list-block">
                         <ul class="relation-popup-list relation-popup-list-add">
                             <li class="model">
@@ -241,8 +243,8 @@
 
                     <h2>Projets Récents <span id="projects-block-count"></span> :</h2>
 
-                    <ul id="projects-recents-block model">
-                        <li class="projects-recent">
+                    <ul class="projects-recents-list-list">
+                        <li class="model">
                             %img%
                             <div>
                                 <h3>%title%</h3>
@@ -260,9 +262,9 @@
                 {#Projects List#}
             <div class="popup-content" data-popup="project-list" data-class="project-popup" data-loader="false">
                 <h2>Liste de vos projets <span class="project-popup-list-list-count"></span></h2>
-                <input type="text" placeholder="Rechercher">
-                <div class="project-popup-list project-popup-list-block">
-                    <ul class="project-popup-list project-popup-list-list">
+                <input class="ajax-search" type="text" placeholder="Rechercher">
+                <div class="project-popup-list-block">
+                    <ul class="project-popup-list-list">
                         <li class="project-popup-list-model model">
                             %img%
                             <div>
@@ -279,6 +281,18 @@
                 {#Projects Requests#}
             <div class="popup-content" data-popup="project-requests" data-class="project-popup" data-loader="false">
                 <h2>Requêtes reçues <span class="project-popup-list-requests-count"></span></h2>
+                <div class="project-popup-list-block">
+                    <ul class="project-popup-list-requests">
+                        <li class="project-popup-list-model model">
+                            %img%
+                            <div>
+                                <h3>%title%</h3>
+                                <p>crée le %created_at%</p>
+                            </div>
+                            <button id="send-message-btn" class="ajax-btn" data-method="addContributor" data-target_id="%id%">Accepter</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
                 {#Projects Create#}
@@ -346,12 +360,12 @@
                 <div id="content-stats-values">
                     <div class="gold">
                         <div>
-                            47 <br> Gloires
+                            {{ stats.glories }} <br> Gloire(s)
                         </div>
                     </div>
                     <div class="aqua">
                         <div>
-                            14 <br> Projets
+                            {{ stats.projects }} <br> Projet(s)
                         </div>
                     </div>
                     <div class="red">
@@ -361,7 +375,7 @@
                     </div>
                     <div class="mat_gold">
                         <div>
-                            24 semaines <br> d'ancienneté
+                            {{ stats.weeks }} semaine(s) <br> d'ancienneté
                         </div>
                     </div>
                     <div class="mat_aqua">

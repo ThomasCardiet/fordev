@@ -96,6 +96,26 @@ class User implements UserInterface
      */
     private $contributedProjects;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $public;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $surname;
+
+    /**
+     * @ORM\Column(type="bigint")
+     */
+    private $glory;
+
     public function __construct()
     {
         $this->requestedFriends = new ArrayCollection();
@@ -411,6 +431,54 @@ class User implements UserInterface
                 $contributedProject->setContributor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPublic(): ?bool
+    {
+        return $this->public;
+    }
+
+    public function setPublic(bool $public): self
+    {
+        $this->public = $public;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSurname(): ?string
+    {
+        return $this->surname;
+    }
+
+    public function setSurname(string $surname): self
+    {
+        $this->surname = $surname;
+
+        return $this;
+    }
+
+    public function getGlory(): ?string
+    {
+        return $this->glory;
+    }
+
+    public function setGlory(string $glory): self
+    {
+        $this->glory = $glory;
 
         return $this;
     }

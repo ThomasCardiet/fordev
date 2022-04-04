@@ -10,7 +10,43 @@
   background-color: var(--light_grey);
   padding: 40px 0;
 }
-@keyframes glissement-left-right {
+.auth-block#sign-in {
+  width: 60%;
+  margin-left: 40%;
+}
+.auth-block#sign-in .flex {
+  display: flex;
+  justify-content: space-between;
+}
+.auth-block#sign-in .flex > div {
+  width: 48%;
+}
+.auth-block#sign-in .auth-block-form {
+  width: 80%;
+}
+.auth-block#sign-in .auth-block-form .auth-block-form-input {
+  width: 100%;
+}
+.auth-block#sign-in .auth-block-form .auth-block-form-input input {
+  width: 90%;
+}
+@keyframes glissement-left-right-login {
+  from {
+    margin-left: 40%;
+  }
+  to {
+    margin-left: 100%;
+  }
+}
+@keyframes glissement-right-left-login {
+  from {
+    margin-left: 100%;
+  }
+  to {
+    margin-left: 50%;
+  }
+}
+@keyframes glissement-left-right-register {
   from {
     margin-left: 50%;
   }
@@ -18,12 +54,12 @@
     margin-left: 100%;
   }
 }
-@keyframes glissement-right-left {
+@keyframes glissement-right-left-register {
   from {
     margin-left: 100%;
   }
   to {
-    margin-left: 50%;
+    margin-left: 40%;
   }
 }
 .auth-block img {

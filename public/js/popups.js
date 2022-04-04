@@ -31,9 +31,13 @@ togglePopup();
 
 function togglePopup(active = false, animate = false) {
     active ? overlay.show() : overlay.hide();
+
+    //SHOW POPUP
     if(active) {
         popup.show();
         if(animate) animatePopup(animations_params.popup);
+
+    //HIDE POPUP
     }else {
         if(animate) {
             animatePopup(animations_params.popup, false);
@@ -42,6 +46,7 @@ function togglePopup(active = false, animate = false) {
             }, animations_params.popup.duration*1000 - 50);
         }else popup.hide();
         current_popup = null;
+        popup_data = [];
     }
 }
 
@@ -184,3 +189,20 @@ body.on('click', '.advanced-properties', e => {
 
     active ? content_element.hide() : content_element.show();
 })
+
+//RADIOS TYPE
+body.on('change', 'input[type="radio"]', e => {
+    if(e.target.name === undefined || !e.target.name.includes('-type')) return false;
+    let name = e.target.name;
+    let value = parseInt(e.target.value);
+    let exist = true;
+    let i = 0;
+    while (exist) {
+        let content = $(`#${name}-${i}`);
+        if(content.length <= 0) return exist = false;
+
+        if(i === value) content.show();
+        else content.hide();
+        i++;
+    }
+});

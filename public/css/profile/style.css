@@ -55,6 +55,32 @@ hr {
   color: white;
   font-size: 2.5em;
 }
+#projects-icons i {
+  position: relative;
+  margin: 0 5px;
+}
+#projects-icons i #project-requests-count {
+  position: absolute;
+  background-color: var(--orange);
+  width: 60%;
+  border-radius: 50%;
+  top: -20%;
+  right: -20%;
+}
+#projects-icons i #project-requests-count::after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+#projects-icons i #project-requests-count div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  top: 5%;
+  font-size: 20px;
+  color: white;
+}
 #projects-icons i:hover {
   cursor: pointer;
   color: var(--green);
@@ -76,40 +102,49 @@ hr {
   margin: 20px 0;
 }
 
-.projects-recent, .project-popup-list-model {
+.projects-recents-list-list > li {
+  margin-bottom: 10px;
+}
+
+.project-popup-list-model, .projects-recents-list-list > li {
   display: flex;
   position: relative;
   width: 100%;
   background-color: var(--dark_grey);
   border: solid 1px var(--grey);
   padding: 10px;
-  margin-bottom: 10px;
 }
-.projects-recent img, .project-popup-list-model img {
-  width: 8%;
+.project-popup-list-model img, .projects-recents-list-list > li img {
+  width: 6%;
   border-radius: 50%;
   background-color: white;
   margin-right: 20px;
 }
-.projects-recent div, .project-popup-list-model div {
+.project-popup-list-model div, .projects-recents-list-list > li div {
   color: white;
   transform: translateY(16%);
 }
-.projects-recent div > h3, .project-popup-list-model div > h3 {
+.project-popup-list-model div > h3, .projects-recents-list-list > li div > h3 {
   font-size: 1.8em;
 }
-.projects-recent div > p, .project-popup-list-model div > p {
+.project-popup-list-model div > p, .projects-recents-list-list > li div > p {
   font-size: 1em;
 }
-.projects-recent > i, .project-popup-list-model > i {
+.project-popup-list-model .fa-eye, .projects-recents-list-list > li .fa-eye {
   position: absolute;
   bottom: 10px;
   right: 10px;
   color: var(--grey);
   font-size: 2.5em;
 }
-.projects-recent > i:hover, .project-popup-list-model > i:hover {
+.project-popup-list-model .fa-eye:hover, .projects-recents-list-list > li .fa-eye:hover {
   cursor: pointer;
+  color: var(--green);
+}
+.project-popup-list-model .fa-crown, .projects-recents-list-list > li .fa-crown {
+  position: absolute;
+  top: 10px;
+  right: 10px;
   color: var(--green);
 }
 

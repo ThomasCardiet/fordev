@@ -86,7 +86,8 @@ class AjaxController extends AbstractController
                                                         WHERE friend.friend_id = :user_id)
                                 AND user.id != :user_id";
 
-                $executes = ['user_id' => $fields['user_id'], 'accepted' => true];
+                $executes = ['user_id' => $fields['user_id']];
+
                 break;
             case 'getFriendRequests':
 
@@ -99,30 +100,29 @@ class AjaxController extends AbstractController
                 break;
             case 'getFriends':
 
-                $friends_with = $friends_repo->findBy(['friend' => $fields['user_id'], 'accepted' => true]);
-                $friends_by = $friends_repo->findBy(['user' => $fields['user_id'], 'accepted' => true]);
-                $friends = array_merge($friends_with, $friends_by);
+                $RAW_QUERY = "SELECT *, user.id AS target_id FROM user
+                                LEFT JOIN friend ON (friend.user_id = :user_id AND friend.friend_id = user.id) 
+                                    OR (friend.user_id = user.id AND friend.friend_id = :user_id)
+                                WHERE user.id IN (SELECT friend.friend_id FROM friend
+                                                      WHERE friend.user_id = :user_id
+                                                      AND friend.accepted = :accepted)
+                                OR user.id IN (SELECT friend.user_id FROM friend
+                                                      WHERE friend.friend_id = :user_id
+                                                      AND friend.accepted = :accepted)
+                                AND user.id != :user_id";
 
-                $data = [
-                    'code' => 200,
-                    'status' => 'success',
-                    'values' => []
-                ];
+                $executes = ['user_id' => $fields['user_id'], 'accepted' => true];
 
-                foreach ($friends as $friend) {
-                    $target = $friend->getUser()->getId() === $fields['user_id'] ? $friend->getFriend() : $friend->getUser();
+                break;
 
-                    $data['values'][] =
-                        [
-                            'id' => $target->getId(),
-                            'username' => $target->getUsername(),
-                            'created_at' => $target->getCreatedAt(),
-                            'pp_path' => $target->getPpPath(),
+            case 'getPublicUsers':
 
-                            'requested_at' => $friend->getRequestedAt(),
-                            'accepted_at' => $friend->getAcceptedAt(),
-                        ];
-                }
+                $RAW_QUERY = "SELECT * FROM user
+                                WHERE user.public = :public
+                                AND user.id != :user_id";
+
+                $executes = ['user_id' => $fields['user_id'], 'public' => true];
+
                 break;
 
             case 'getRecentConversations':
@@ -183,29 +183,56 @@ class AjaxController extends AbstractController
             /*PROJECTS*/
             case 'getProjects':
 
-                $projects = $projects_repo->findBy(['owner' => $fields['user_id']]);
+                $RAW_QUERY = "SELECT *, true AS owner FROM project
+                                LEFT JOIN
+                                    (SELECT project_id AS pc_id, COUNT(*) AS contributors
+                                     FROM project_contributor) pc
+                                ON pc.pc_id = project.id
+                                WHERE owner_id = :user_id
+                                UNION
+                                SELECT *, false AS owner FROM project
+                                LEFT JOIN
+                                    (SELECT project_id AS pc_id, COUNT(*) AS contributors
+                                     FROM project_contributor) pc
+                                ON pc.pc_id = project.id
+                                WHERE id IN (SELECT project_id FROM project_contributor
+                                                    WHERE contributor_id = :user_id
+                                                    AND accepted = :accepted)";
 
-                $data = [
-                    'code' => 200,
-                    'status' => 'success',
-                    'values' => []
-                ];
+                $executes = ['user_id' => $fields['user_id'], 'accepted' => true];
 
-                foreach ($projects as $project) {
+                break;
 
-                    $contributors = $contributors_repo->findBy(['project' => $project->getId()]);
+            case 'getContributorRequests':
 
-                    $data['values'][] =
-                        [
-                            'id' => $project->getId(),
-                            'title' => $project->getTitle(),
-                            'description' => $project->getCreatedAt(),
-                            'image_path' => $project->getImgPath(),
-                            'contributors' => count($contributors),
+                $RAW_QUERY = "SELECT * FROM project_contributor
+                                LEFT JOIN (SELECT id as projectId, title, created_at, img_path FROM project) project ON projectId = project_contributor.project_id
+                                WHERE contributor_id = :user_id and accepted = :accepted";
 
-                            'created_at' => $project->getCreatedAt(),
-                        ];
-                }
+                $executes = ['user_id' => $fields['user_id'], 'accepted' => false];
+                break;
+
+            case 'getLastProjects':
+
+                $RAW_QUERY = "SELECT *, true AS owner FROM project
+                                LEFT JOIN
+                                    (SELECT project_id AS pc_id, COUNT(*) AS contributors
+                                     FROM project_contributor) pc
+                                ON pc.pc_id = project.id
+                                WHERE owner_id = :user_id
+                                UNION
+                                SELECT *, false AS owner FROM project
+                                LEFT JOIN
+                                    (SELECT project_id AS pc_id, COUNT(*) AS contributors
+                                     FROM project_contributor) pc
+                                ON pc.pc_id = project.id
+                                WHERE id IN (SELECT project_id FROM project_contributor
+                                                    WHERE contributor_id = :user_id
+                                                    AND accepted = :accepted)
+                                ORDER BY created_at DESC
+                                LIMIT 5";
+
+                $executes = ['user_id' => $fields['user_id'], 'accepted' => true];
 
                 break;
 
@@ -231,7 +258,7 @@ class AjaxController extends AbstractController
                             'id' => $project->getId(),
                             'title' => $project->getTitle(),
                             'description' => $project->getDescription(),
-                            'image_path' => $project->getImgPath(),
+                            'img_path' => $project->getImgPath(),
                             'owner' => [
                                 'id' => $owner->getId(),
                                 'username' => $owner->getUsername()
@@ -268,7 +295,7 @@ class AjaxController extends AbstractController
 
             case 'getContributors':
 
-                $project = $projects_repo->find($fields['project_id']);
+                $contributors = $contributors_repo->findBy(['project' => $fields['project_id'], 'accepted' => true]);
 
                 $data = [
                     'code' => 200,
@@ -276,7 +303,7 @@ class AjaxController extends AbstractController
                     'values' => []
                 ];
 
-                foreach ($project->getProjectContributors()->getValues() as $projectContributor) {
+                foreach ($contributors as $projectContributor) {
 
                     $contributor = $projectContributor->getContributor();
 
@@ -535,7 +562,36 @@ class AjaxController extends AbstractController
                     $data['status'] = 'success';
 
                 }else {
-                    $data['msg'] = "Ce contributeur n'est pas dans le projet";
+                    $data['msg'] = "Ce contributeur n'est pas dans le projet.";
+                }
+
+                break;
+
+            case 'addContributor':
+
+                $data = [
+                    'code' => 200,
+                    'msg' => '',
+                    'status' => 'error'
+                ];
+
+                //CONTRIBUTOR N'EXISTE PAS
+                if(empty($contributors_repo->find($fields['target_id']))) {
+                    $target = $user_repo->find($fields['target_id']);
+                    $projectContributor = new ProjectContributor();
+                    $projectContributor->setRequestedAt(new \DateTimeImmutable())
+                        ->setAccepted(false)
+                        ->setContributor($target)
+                        ->setProject($projects_repo->find($fields['project_id']));
+
+                    $em->persist($projectContributor);
+                    $em->flush();
+
+                    $data['msg'] = 'Une invitation a été envoyée à ' . $target->getUsername() . '.';
+                    $data['status'] = 'success';
+
+                }else {
+                    $data['msg'] = "Ce contributeur est déjà dans le projet.";
                 }
 
                 break;
@@ -546,6 +602,19 @@ class AjaxController extends AbstractController
         }
 
         if($RAW_QUERY !== null) {
+
+            //LIST FILTER
+            if(isset($fields['filter'])) {
+                switch ($fields['filter']) {
+                    case 'contributors':
+                        $RAW_QUERY .= " AND user.id NOT IN (SELECT id FROM project_contributor WHERE user.id = project_contributor.id)";
+                        break;
+                }
+            }
+
+            //SEARCH
+            if(isset($fields['search'])) $RAW_QUERY .= " AND user.username LIKE '%" . $fields['search'] . "%'";
+
             $statement = $em->getConnection()->prepare($RAW_QUERY);
             $statement->execute($executes);
             $results = $statement->fetchAll();

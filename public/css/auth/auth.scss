@@ -10,7 +10,55 @@
     background-color: var(--light_grey);
     padding: 40px 0;
 
-    @keyframes glissement-left-right {
+    &#sign-in {
+        width: 60%;
+        margin-left: 40%;
+
+        .flex {
+            display: flex;
+            justify-content: space-between;
+
+            > div {
+                width: 48%;
+            }
+        }
+
+        .auth-block-form {
+            width: 80%;
+
+            .auth-block-form-input {
+                width: 100%;
+
+                input {
+                    width: 90%;
+                }
+            }
+        }
+    }
+
+    //LOGIN ANIMATION
+    @keyframes glissement-left-right-login {
+        from {
+            margin-left: 40%;
+        }
+
+        to {
+            margin-left: 100%;
+        }
+    }
+
+    @keyframes glissement-right-left-login {
+        from {
+            margin-left: 100%;
+        }
+
+        to {
+            margin-left: 50%;
+        }
+    }
+
+    //REGISTER ANIMATION
+    @keyframes glissement-left-right-register {
         from {
             margin-left: 50%;
         }
@@ -20,13 +68,13 @@
         }
     }
 
-    @keyframes glissement-right-left {
+    @keyframes glissement-right-left-register {
         from {
             margin-left: 100%;
         }
 
         to {
-            margin-left: 50%;
+            margin-left: 40%;
         }
     }
 

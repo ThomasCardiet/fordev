@@ -71,45 +71,85 @@
 
             <form action="{{ path('auth') }}" class="auth-block-form" method="post">
 
-                <div class="auth-block-form-input">
-                    <i class="fas fa-user"></i>
-                    <input type="text" name="user_username" placeholder="Identifiant" value="">
-                </div>
-                {% if errors['username'] is defined and errors['type'] == 'register' %}
-                    {% for msg in errors['username'] %}
-                        <p class="error_msg">*{{ msg }}</p>
-                    {% endfor %}
-                {% endif %}
+                <input type="hidden" name="project_id" value="{% if params['p'] is defined %}{{ params['p'] }}{% endif %}">
 
-                <div class="auth-block-form-input">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" name="user_email" placeholder="Email" value="">
-                </div>
-                {% if errors['email'] is defined and errors['type'] == 'register' %}
-                    {% for msg in errors['email'] %}
-                        <p class="error_msg">*{{ msg }}</p>
-                    {% endfor %}
-                {% endif %}
+                <div class="flex">
+                    <div>
+                        <div class="auth-block-form-input">
+                            <i class="fas fa-user"></i>
+                            <input type="text" name="user_username" placeholder="Identifiant" value="{% if params['username'] is defined %}{{ params['username'] }}{% endif %}">
+                        </div>
+                        {% if errors['username'] is defined and errors['type'] == 'register' %}
+                            {% for msg in errors['username'] %}
+                                <p class="error_msg">*{{ msg }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
 
-                <div class="auth-block-form-input">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" name="user_password" placeholder="Mot de passe">
+                    <div>
+                        <div class="auth-block-form-input">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" name="user_email" placeholder="Email" value="{% if params['email'] is defined %}{{ params['email'] }}{% endif %}">
+                        </div>
+                        {% if errors['email'] is defined and errors['type'] == 'register' %}
+                            {% for msg in errors['email'] %}
+                                <p class="error_msg">*{{ msg }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                 </div>
-                {% if errors['password'] is defined and errors['type'] == 'register' %}
-                    {% for msg in errors['password'] %}
-                        <p class="error_msg">*{{ msg }}</p>
-                    {% endfor %}
-                {% endif %}
 
-                <div class="auth-block-form-input">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" name="user_confirm_password" placeholder="Confirmation de mot de passe">
+                <div class="flex">
+                    <div>
+                        <div class="auth-block-form-input">
+                            <i class="fas fa-user"></i>
+                            <input type="text" name="user_name" placeholder="Prénom" value="{% if params['name'] is defined %}{{ params['name'] }}{% endif %}">
+                        </div>
+                        {% if errors['name'] is defined and errors['type'] == 'register' %}
+                            {% for msg in errors['name'] %}
+                                <p class="error_msg">*{{ msg }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <div class="auth-block-form-input">
+                            <i class="fas fa-user"></i>
+                            <input type="text" name="user_surname" placeholder="Nom" value="{% if params['surname'] is defined %}{{ params['surname'] }}{% endif %}">
+                        </div>
+                        {% if errors['surname'] is defined and errors['type'] == 'register' %}
+                            {% for msg in errors['surname'] %}
+                                <p class="error_msg">*{{ msg }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                 </div>
-                {% if errors['confirm_password'] is defined and errors['type'] == 'register' %}
-                    {% for msg in errors['confirm_password'] %}
-                        <p class="error_msg">*{{ msg }}</p>
-                    {% endfor %}
-                {% endif %}
+
+                <div class="flex">
+                    <div>
+                        <div class="auth-block-form-input">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" name="user_password" placeholder="Mot de passe">
+                        </div>
+                        {% if errors['password'] is defined and errors['type'] == 'register' %}
+                            {% for msg in errors['password'] %}
+                                <p class="error_msg">*{{ msg }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <div class="auth-block-form-input">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" name="user_confirm_password" placeholder="Confirmation de mot de passe">
+                        </div>
+                        {% if errors['confirm_password'] is defined and errors['type'] == 'register' %}
+                            {% for msg in errors['confirm_password'] %}
+                                <p class="error_msg">*{{ msg }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
 
                 <button type="submit" name="register_submit">S'inscrire</button>
 

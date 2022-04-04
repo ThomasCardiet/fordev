@@ -53,7 +53,7 @@ select:-webkit-autofill:focus {
   box-sizing: border-box;
 }
 
-.model {
+.model, .type-selector-content {
   display: none;
 }
 
