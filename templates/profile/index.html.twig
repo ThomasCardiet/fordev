@@ -287,9 +287,11 @@
                             %img%
                             <div>
                                 <h3>%title%</h3>
+                                <p>%contributors% contributeurs</p>
                                 <p>crée le %created_at%</p>
                             </div>
-                            <button id="send-message-btn" class="ajax-btn" data-method="addContributor" data-target_id="%id%">Accepter</button>
+                            <button class="ajax-btn" data-method="removeContributor" data-target_id="%id%">Refuser</button>
+                            <button class="ajax-btn" data-method="addContributor" data-target_id="%id%">Accepter</button>
                         </li>
                     </ul>
                 </div>

@@ -69,6 +69,7 @@
 
 .project-popup-list-model, .projects-recents-list-list > li {
     display: flex;
+    justify-content: space-between;
     position: relative;
     width: 100%;
     background-color: var(--dark_grey);
@@ -84,6 +85,7 @@
     }
 
     div {
+        width: 100%;
         color: white;
         transform: translateY(16%);
 
@@ -114,6 +116,23 @@
         top: 10px;
         right: 10px;
         color: var(--green);
+    }
+
+    button {
+        border: solid var(--grey) 1px;
+        background-color: var(--dark_grey);
+        color: var(--green);
+        padding: 0 1%;
+        height: 40px;
+        font-size: 1em;
+        transform: translateY(45%);
+        width: 15%;
+        margin-right: 10px;
+
+        &:hover {
+            color: white;
+            cursor: pointer;
+        }
     }
 
 }

@@ -108,6 +108,7 @@ hr {
 
 .project-popup-list-model, .projects-recents-list-list > li {
   display: flex;
+  justify-content: space-between;
   position: relative;
   width: 100%;
   background-color: var(--dark_grey);
@@ -121,6 +122,7 @@ hr {
   margin-right: 20px;
 }
 .project-popup-list-model div, .projects-recents-list-list > li div {
+  width: 100%;
   color: white;
   transform: translateY(16%);
 }
@@ -146,6 +148,21 @@ hr {
   top: 10px;
   right: 10px;
   color: var(--green);
+}
+.project-popup-list-model button, .projects-recents-list-list > li button {
+  border: solid var(--grey) 1px;
+  background-color: var(--dark_grey);
+  color: var(--green);
+  padding: 0 1%;
+  height: 40px;
+  font-size: 1em;
+  transform: translateY(45%);
+  width: 15%;
+  margin-right: 10px;
+}
+.project-popup-list-model button:hover, .projects-recents-list-list > li button:hover {
+  color: white;
+  cursor: pointer;
 }
 
 /*POPUPS*/
@@ -488,7 +505,7 @@ hr {
   padding: 0 1%;
   height: 40px;
   font-size: 1em;
-  transform: translateY(45%);
+  transform: translateY(60%);
   width: 9%;
 }
 .relation-popup .relation-popup-list-block .relation-popup-list li button:hover {

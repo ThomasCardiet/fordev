@@ -301,6 +301,26 @@ methods = {
             }
         }
     },
+
+    addContributor: {
+        function: {
+            section: sections.contributors,
+        },
+        update: false,
+        type: 'action',
+        close_popup: false,
+        style: 'message'
+    },
+
+    removeContributor: {
+        function: {
+            section: sections.contributors,
+        },
+        update: false,
+        type: 'action',
+        close_popup: false,
+        style: 'message'
+    },
 }
 
 setUpdate();

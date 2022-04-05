@@ -135,10 +135,10 @@ class Project
 
     public function isInProject($user) {
 
-        if($this->owner->getId() === $user->getId()) return true;
+        if($this->owner->getId() === (is_int($user) ? $user : $user->getId())) return true;
 
         foreach ($this->projectContributors->getValues() as $projectContributor) {
-            if($projectContributor->getContributor()->getId() === $user->getId()) return true;
+            if($projectContributor->getContributor()->getId() === (is_int($user) ? $user : $user->getId())) return true;
         }
 
         return false;
@@ -146,7 +146,7 @@ class Project
 
     public function isOwner($user) {
 
-        if($this->owner->getId() === $user->getId()) return true;
+        if($this->owner->getId() === (is_int($user) ? $user : $user->getId())) return true;
 
         return false;
     }

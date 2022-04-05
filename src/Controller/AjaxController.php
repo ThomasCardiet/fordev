@@ -207,6 +207,7 @@ class AjaxController extends AbstractController
 
                 $RAW_QUERY = "SELECT * FROM project_contributor
                                 LEFT JOIN (SELECT id as projectId, title, created_at, img_path FROM project) project ON projectId = project_contributor.project_id
+                                LEFT JOIN (SELECT project_id AS pc_id, COUNT(*) AS contributors FROM project_contributor) pc ON pc.pc_id = project.projectId
                                 WHERE contributor_id = :user_id and accepted = :accepted";
 
                 $executes = ['user_id' => $fields['user_id'], 'accepted' => false];
@@ -239,6 +240,13 @@ class AjaxController extends AbstractController
             case 'getProject':
 
                 $project = $projects_repo->find($fields['project_id']);
+
+                // NO PERMISSION
+                if(!$project->isInProject($fields['user_id'])) return $this->json([
+                    'code' => 403,
+                    'message' => 'Pas la permission.'
+                ], 403);
+
                 $owner = $project->getOwner();
 
                 $contributors = [];
@@ -275,6 +283,12 @@ class AjaxController extends AbstractController
 
                 $project = $projects_repo->find($fields['project_id']);
 
+                // NO PERMISSION
+                if(!$project->isInProject($fields['user_id'])) return $this->json([
+                    'code' => 403,
+                    'message' => 'Pas la permission.'
+                ], 403);
+
                 $data = [
                     'code' => 200,
                     'status' => 'success',
@@ -294,6 +308,15 @@ class AjaxController extends AbstractController
                 break;
 
             case 'getContributors':
+
+                $project = $projects_repo->find($fields['project_id']);
+
+                // NO PERMISSION
+                if(!$project->isInProject($fields['user_id'])) return $this->json([
+                    'code' => 403,
+                    'message' => 'Pas la permission.'
+                ], 403);
+
 
                 $contributors = $contributors_repo->findBy(['project' => $fields['project_id'], 'accepted' => true]);
 
@@ -484,12 +507,20 @@ class AjaxController extends AbstractController
 
             case 'createRole':
 
+                $project = $projects_repo->find($fields['project_id']);
+
+                // NO PERMISSION
+                if(!$project->isOwner($fields['user_id'])) return $this->json([
+                    'code' => 403,
+                    'message' => 'Pas la permission.'
+                ], 403);
+
                 $role = new ProjectRole();
 
                 $role->setName($fields['name'])
                     ->setColor($fields['color'])
                     ->setPermissions('')
-                    ->setProject($projects_repo->find($fields['project_id']));
+                    ->setProject($project);
 
                 $em->persist($role);
                 $em->flush();
@@ -515,6 +546,13 @@ class AjaxController extends AbstractController
 
                 //ROLE EXISTE
                 if(!empty($role)) {
+
+                    // NO PERMISSION
+                    if(!$role->getProject()->isOwner($fields['user_id'])) return $this->json([
+                        'code' => 403,
+                        'message' => 'Pas la permission.'
+                    ], 403);
+
                     $em->remove($role);
                     $em->flush();
 
@@ -530,6 +568,12 @@ class AjaxController extends AbstractController
             case 'updateContributor':
 
                 $projectContributor = $contributors_repo->find($fields['target_id']);
+
+                // NO PERMISSION
+                if(!$projectContributor->getProject()->isOwner($fields['user_id'])) return $this->json([
+                    'code' => 403,
+                    'message' => 'Pas la permission.'
+                ], 403);
 
                 $projectContributor->setRole($roles_repo->find($fields['role_id']));
 
@@ -547,6 +591,12 @@ class AjaxController extends AbstractController
 
                 $projectContributor = $contributors_repo->find($fields['target_id']);
 
+                // NO PERMISSION
+                if(!$projectContributor->getProject()->isOwner($fields['user_id'])) return $this->json([
+                    'code' => 403,
+                    'message' => 'Pas la permission.'
+                ], 403);
+
                 $data = [
                     'code' => 200,
                     'msg' => '',
@@ -558,7 +608,7 @@ class AjaxController extends AbstractController
                     $em->remove($projectContributor);
                     $em->flush();
 
-                    $data['msg'] = 'Le contributeur ' . $projectContributor->getContributor()->getUsername() . ' a été exclu.';
+                    $data['msg'] = $projectContributor->getAccepted() ? 'Le contributeur ' . $projectContributor->getContributor()->getUsername() . ' a été exclu.' : 'Invitation refusée.';
                     $data['status'] = 'success';
 
                 }else {
@@ -568,6 +618,14 @@ class AjaxController extends AbstractController
                 break;
 
             case 'addContributor':
+
+                $project = $projects_repo->find($fields['project_id']);
+
+                // NO PERMISSION
+                if(!$project->isOwner($fields['user_id'])) return $this->json([
+                    'code' => 403,
+                    'message' => 'Pas la permission.'
+                ], 403);
 
                 $data = [
                     'code' => 200,
@@ -582,17 +640,31 @@ class AjaxController extends AbstractController
                     $projectContributor->setRequestedAt(new \DateTimeImmutable())
                         ->setAccepted(false)
                         ->setContributor($target)
-                        ->setProject($projects_repo->find($fields['project_id']));
+                        ->setProject($project);
 
                     $em->persist($projectContributor);
                     $em->flush();
 
                     $data['msg'] = 'Une invitation a été envoyée à ' . $target->getUsername() . '.';
                     $data['status'] = 'success';
+                    break;
 
-                }else {
-                    $data['msg'] = "Ce contributeur est déjà dans le projet.";
                 }
+
+                $projectContributor = $contributors_repo->find($fields['target_id']);
+                if(!$projectContributor->getAccepted()) {
+
+                    $projectContributor->setAccepted(true);
+
+                    $em->persist($projectContributor);
+                    $em->flush();
+
+                    $data['msg'] = 'Vous êtes maintenant contributeur du projet ' . $projectContributor->getProject()->getTitle() . '.';
+                    $data['status'] = 'success';
+                    break;
+                }
+
+                $data['msg'] = "Ce contributeur est déjà dans le projet.";
 
                 break;
 
@@ -607,7 +679,9 @@ class AjaxController extends AbstractController
             if(isset($fields['filter'])) {
                 switch ($fields['filter']) {
                     case 'contributors':
-                        $RAW_QUERY .= " AND user.id NOT IN (SELECT id FROM project_contributor WHERE user.id = project_contributor.id)";
+                        $RAW_QUERY .= " AND user.id NOT IN (SELECT contributor_id FROM project_contributor WHERE project_contributor.project_id = :project_id)
+                                        AND user.id NOT IN (SELECT owner_id FROM project WHERE project.id = :project_id)";
+                        $executes['project_id'] = $fields['project_id'];
                         break;
                 }
             }
