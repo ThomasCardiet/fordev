@@ -911,4 +911,21 @@ header, main, footer {
   cursor: pointer;
 }
 
+button {
+  background: none;
+  padding: 16px 12px;
+  font-size: 14px;
+  color: #fff;
+  border: 3px solid var(--green);
+  box-sizing: border-box;
+  border-radius: 16px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: bold;
+}
+button:hover {
+  background: #00FFC3;
+  transition: 400ms;
+}
+
 /*# sourceMappingURL=style.css.map */

@@ -1,8 +1,52 @@
 #home {
-  background: url("../../img/home/background_1.png") no-repeat;
+  font-family: "Roboto-Regular", sans-serif;
+}
+#home .hero {
+  background: url("../../img/home/background_1.png") no-repeat fixed;
   background-size: cover;
   width: 100%;
   height: 500px;
+  border: 3px solid #00FFC3;
+}
+#home .hero button {
+  margin-left: 30%;
+}
+#home .hero .hero-search .hero-search__wrapper {
+  text-align: left;
+  margin: 6% auto;
+  width: 40%;
+}
+#home .hero .hero-search .hero-search__wrapper input, #home .hero .hero-search .hero-search__wrapper label {
+  display: block;
+}
+#home .hero .hero-search .hero-search__wrapper label {
+  color: #fff;
+  font-size: 48px;
+  padding: 2% 0;
+}
+#home .hero .hero-search .hero-search__wrapper .hero-search__bar {
+  display: flex;
+  align-items: center;
+  border-bottom: 3px solid #00FFC3;
+}
+#home .hero .hero-search .hero-search__wrapper .hero-search__bar input {
+  font-size: 34px;
+  border: none;
+  color: #fff;
+  background: none;
+  width: 100%;
+}
+#home .hero .hero-search .hero-search__wrapper .hero-search__bar input:focus {
+  outline: none;
+}
+#home .hero .hero-search .hero-search__wrapper .hero-search__bar i {
+  padding: 5px;
+  font-size: 34px;
+  color: #fff;
+  cursor: pointer;
+}
+#home .hero .hero-search .hero-search__wrapper .hero-search__bar i:hover {
+  color: var(--green);
 }
 
 /*# sourceMappingURL=style.css.map */
