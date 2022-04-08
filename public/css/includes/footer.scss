@@ -1,112 +1,185 @@
-.footer-dark {
-    padding:50px 0;
-    color:#f0f9ff;
-    background-color:#282d32;
-    font-family: "Roboto-Regular", sans-serif;
+.footer {
+    background-color: var(--dark_grey);
+    color: var(--white);
+    padding: 2.5rem 6.5rem;
+    text-align: center;
 
-}
-.container {
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.row{
-    display: flex;
-}
-
-.links {
-    width: 20%;
-}
-
-.about {
-    width: 20%;
-}
-
-.presentation {
-    width: 50%;
-}
-
-.footer-dark h3 {
-    margin-top:0;
-    margin-bottom:12px;
-    font-weight:bold;
-    font-size:16px;
-}
-
-.footer-dark ul {
-    padding:0;
-    list-style:none;
-    line-height:1.6;
-    font-size:14px;
-    margin-bottom:0;
-}
-
-.footer-dark ul a {
-    color:inherit;
-    text-decoration:none;
-    opacity:0.6;
-}
-
-.footer-dark ul a:hover {
-    opacity:0.8;
-}
-
-@media (max-width:767px) {
-    .footer-dark .item:not(.social) {
-        text-align:center;
-        padding-bottom:20px;
+    .container {
+        @include breakpoint-up(large) {
+            display: grid;
+            grid-template-columns: 0.5fr 0.5fr 1.1fr;
+            grid-template-rows: 1fr auto;
+            grid-template-areas:
+        ' links1 links2 social copyright'
+        ' links1 links2 social copyright';
+            gap: 1rem;
+            justify-items: start;
+        }
+        @include breakpoint-down(medium) {
+            grid-template-columns: 1fr;
+        }
     }
-}
 
-.footer-dark .item.text {
-    margin-bottom:36px;
-}
-
-@media (max-width:767px) {
-    .footer-dark .item.text {
-        margin-bottom:0;
+    a {
+        color: var(--white);
     }
-}
 
-.footer-dark .item.text p {
-    opacity:0.6;
-    margin-bottom:0;
-}
+    &__social {
+        @include breakpoint-down(medium) {
+            margin-bottom: 1.875rem;
+        }
 
-.footer-dark .item.social {
-    text-align:center;
-}
+        .wrapper {
+            display: flex;
+        }
 
-@media (max-width:991px) {
-    .footer-dark .item.social {
-        text-align:center;
-        margin-top:20px;
+        .wrapper .icon {
+            position: relative;
+            background-color: #ffffff;
+            border-radius: 50%;
+            padding: 15px;
+            margin: 10px;
+            width: 30px;
+            height: 0px;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            color: var(--dark_grey);
+        }
+
+        .wrapper .tooltip {
+            position: absolute;
+            top: 0;
+            font-size: 14px;
+            background-color: #ffffff;
+            color: #ffffff;
+            padding: 5px 8px;
+            border-radius: 5px;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .wrapper .tooltip::before {
+            position: absolute;
+            content: '';
+            height: 8px;
+            width: 8px;
+            background-color: #ffffff;
+            bottom: -3px;
+            left: 50%;
+            transform: translate(-50%) rotate(45deg);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .wrapper .icon:hover .tooltip {
+            top: -45px;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .wrapper .icon:hover span,
+        .wrapper .icon:hover .tooltip {
+            text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .wrapper .facebook:hover,
+        .wrapper .facebook:hover .tooltip,
+        .wrapper .facebook:hover .tooltip::before {
+            background-color: #3b5999;
+            color: #ffffff;
+        }
+
+        .wrapper .twitter:hover,
+        .wrapper .twitter:hover .tooltip,
+        .wrapper .twitter:hover .tooltip::before {
+            background-color: #46c1f6;
+            color: #ffffff;
+        }
+
+        .wrapper .instagram:hover,
+        .wrapper .instagram:hover .tooltip,
+        .wrapper .instagram:hover .tooltip::before {
+            background-color: #e1306c;
+            color: #ffffff;
+        }
+
+        .wrapper .github:hover,
+        .wrapper .github:hover .tooltip,
+        .wrapper .github:hover .tooltip::before {
+            background-color: #333333;
+            color: #ffffff;
+        }
+
+        .wrapper .youtube:hover,
+        .wrapper .youtube:hover .tooltip,
+        .wrapper .youtube:hover .tooltip::before {
+            background-color: #de463b;
+            color: #ffffff;
+        }
+
+        a:not(:last-child) {
+            margin-right: 1rem;
+        }
     }
-}
 
-.footer-dark .item.social > a {
-    font-size:20px;
-    width:36px;
-    height:36px;
-    line-height:36px;
-    display:inline-block;
-    text-align:center;
-    border-radius:50%;
-    box-shadow:0 0 0 1px rgba(255,255,255,0.4);
-    margin:0 8px;
-    color:#fff;
-    opacity:0.75;
-}
+    &__links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 0.9375rem;
 
-.footer-dark .item.social > a:hover {
-    opacity:0.9;
-}
+        @include breakpoint-up(large) {
+            justify-content: space-between;
+            align-items: start;
+        }
 
-.footer-dark .copyright {
-    text-align:center;
-    padding-top:24px;
-    opacity:0.3;
-    font-size:13px;
-    margin-bottom:0;
+        &.col1 {
+            @include breakpoint-up(large) {
+                grid-area: links1;
+            }
+        }
+
+        &.col2 {
+            @include breakpoint-down(medium) {
+                margin-bottom: 1.875rem;
+            }
+
+            @include breakpoint-up(large) {
+                grid-area: links2;
+            }
+        }
+
+        a {
+            line-height: 2.25;
+            transition: color 150ms ease-in-out;
+
+            &:hover {
+                color: var(--blue);
+            }
+        }
+    }
+
+    &__copyright {
+        font-size: 0.8125rem;
+        color: var(----light_grey);
+
+        @include breakpoint-up(large) {
+            grid-area: copyright;
+            align-self: end;
+            justify-self: end;
+        }
+    }
+
+    .attribution {
+        margin-top: 4rem;
+        font-size: 0.875rem;
+    }
 }
