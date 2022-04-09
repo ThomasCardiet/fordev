@@ -47,7 +47,7 @@ class AppExtension extends AbstractExtension
     public function getField($field)
     {
         $fields_repo = $this->em->getRepository(Fields::class);
-        return !empty($field) ? $fields_repo->findOneBy(['name' => $field]) : null;
+        return $fields_repo->findOneBy(['name' => $field])->getValue();
     }
 
     public function isType($value, $type)
