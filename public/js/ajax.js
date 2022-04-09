@@ -1,4 +1,4 @@
-const url = `/ajax`;
+let url = `/ajax`;
 
 let models = $('.model');
 models.hide();
@@ -27,7 +27,7 @@ let img_paths = {
         path: '../img/profile/users/',
         unknown_path: '../img/profile/unknown.png'
     },
-    image: {
+    img: {
         path: '../img/profile/projects/',
         unknown_path: '../img/profile/unknown_project.png'
     }
@@ -76,8 +76,9 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
 
                             //Counter update element (if param count is true)
                             let counter = value.params.count ? $(`${value.params.target}-count`) : null;
-                            let bubble = value.params.bubble ? $(`#relation-${
-                                value.params.target.split('-')[value.params.target.split('-').length-1]
+                            let split_target = value.params.target.split('-');
+                            let bubble = value.params.bubble ? $(`#${split_target[0].substr(1)}-${
+                                split_target[split_target.length-1]
                             }-count`) : null;
 
                             //get li model for list
@@ -105,7 +106,6 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                             //Liste d'amis scrollable
                             let friends_block = $('#relations-img-list');
                             let friends_block_html = '';
-
                             datas.forEach(o => {
 
                                 //Update model
@@ -163,12 +163,17 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                                     })
                                 }
 
-                                for (const [key, value] of Object.entries(o)) {
+                                for (let [key, value] of Object.entries(o)) {
+                                    if(value === null) value = 0;
                                     html = html.replaceAll(`%${key}%`, key.includes('_at') ? formatDate(value) : value);
                                 }
 
                                 let classList = $(model).attr('class').split(' ').filter(v => v !== 'model').toString().replaceAll(',', ' ');
-                                list[0].innerHTML += `<li ${classList.length ? `class="${classList}"` : ''}>${html}</li>`;
+                                list[0].innerHTML +=
+                                    `<li ${classList.length ? `class="${classList}"` : ''}>
+                                        ${o['owner'] !== undefined && o['owner'] === '1' ? '<i class="fas fa-crown"></i>' : ''}
+                                        ${html}
+                                    </li>`;
 
                                 //Liste d'amis scrollable
                                 if(name === "getFriends") {
@@ -226,6 +231,135 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                                     })
 
                                     if(is_end_scroll) block_element[0].scrollTop = block_element[0].scrollHeight
+                                    break;
+
+                                // Get Fields Categories
+                                case 'getFieldCategories':
+                                case 'getFields':
+
+                                    $(`[data-update="${name}"]`).each(function (){
+
+                                        const el = $(this);
+                                        switch (el.prop('nodeName').toLowerCase()) {
+
+                                            // SELECT INCREMENT
+                                            case 'select':
+
+                                                // INCREMENT MISSING
+                                                let missings = values.filter(v => Object.values(this.children).filter(child => v.id === child.value).length <= 0);
+                                                if(missings.length > 0) {
+                                                    missings.forEach(miss => {
+                                                        this.innerHTML += `<option value="${miss.id}">${miss.name}</option>`
+                                                    });
+                                                }
+
+                                                // INCREMENT REMOVED
+                                                let removed = Object.values(this.children).filter(child => values.filter(v => child.value === v.id).length <= 0 && child.value !== '-1');
+                                                if(removed.length > 0) {
+                                                    removed.forEach(rem => {
+                                                        rem.remove();
+                                                    });
+                                                }
+
+                                                break;
+
+                                        }
+                                    });
+
+                                    //Update values block
+                                    let fieldCategoryColumns = document.querySelectorAll('[data-fieldCategory_id]');
+                                    switch (name) {
+                                        case 'getFieldCategories':
+
+                                            // INCREMENT MISSING
+                                            let missings = values.filter(v => Object.values(fieldCategoryColumns).filter(column => v.id === column.dataset.fieldcategory_id).length <= 0);
+                                            if(missings.length > 0) {
+                                                missings.forEach(miss => {
+
+                                                    let others = fieldCategoryColumns[fieldCategoryColumns.length-1];
+                                                    let newFieldCategoryColumn = document.createElement('div');
+
+                                                    newFieldCategoryColumn.dataset.fieldcategory_id = miss.id;
+                                                    newFieldCategoryColumn.classList.add('col-lg-4');
+                                                    newFieldCategoryColumn.innerHTML +=
+                                                        '            <div class="card shadow mb-4">' +
+                                                        '                <div class="card-header py-3">' +
+                                                        `                    <h6 class="m-1 font-weight-bold text-primary">${miss.name}</h6>` +
+                                                        `                    <button class="ajax-btn btn btn-danger" type="button" data-method="removeFieldCategory" data-category_id="${miss.id}">` +
+                                                        '                        Supprimer' +
+                                                        '                    </button>' +
+                                                        '                </div>' +
+                                                        '                <div class="card-body"></div>' +
+                                                        '            </div>'
+
+                                                    others.parentElement.insertBefore(newFieldCategoryColumn, others)
+                                                });
+                                            }
+
+                                            // INCREMENT REMOVED
+                                            let removed = Object.values(fieldCategoryColumns).filter(column => values.filter(v => column.dataset.fieldcategory_id === v.id).length <= 0 && column.dataset.fieldcategory_id !== '-1');
+                                            if(removed.length > 0) {
+                                                removed.forEach(rem => {
+                                                    rem.remove();
+                                                });
+                                            }
+
+                                            break;
+                                        case 'getFields':
+
+                                            fieldCategoryColumns.forEach(column => {
+                                                let columnFields = values.filter(v => v.category_id === null ? column.dataset.fieldcategory_id === '-1' : v.category_id === column.dataset.fieldcategory_id)
+                                                let fieldsBlock = column.querySelector('.card-body');
+                                                let fieldLines = fieldsBlock.children;
+
+                                                // INCREMENT MISSING
+                                                let missings = columnFields.filter(v => Object.values(fieldLines).filter(child => child.dataset.field_id !== undefined && v.id === child.dataset.field_id).length <= 0);
+                                                if(missings.length > 0) {
+                                                    missings.forEach(miss => {
+                                                        fieldsBlock.innerHTML +=
+                                                            `         <div class="input-group mb-3" data-field_id="${miss.id}">` +
+                                                            `              <i class="fas fa-info-circle info-bubble" data-toggle="tooltip" data-placement="top" title="Modification du champ ${miss.name} | édité le ${formatDate(miss.edited_at)} par ${miss.last_user_edit_username}"></i>` +
+                                                            `              <input id="update-field-field_value_${miss.id}" type="text" class="form-control bg-light border-0 small" placeholder="${miss.name}" value="${miss.value}">` +
+                                                            `              <button class="ajax-btn btn btn-primary h-25" type="button" data-method="updateField" data-field_id="${miss.id}">` +
+                                                            '                   Modifier' +
+                                                            '              </button>' +
+                                                            `              <button class="ajax-btn btn btn-danger h-25" type="button" data-method="removeField" data-field_id="${miss.id}">` +
+                                                            '                   Supprimer' +
+                                                            '              </button>' +
+                                                            '          </div>'
+                                                    });
+                                                }
+
+                                                let removed = Object.values(fieldLines).filter(child => child.dataset.field_id !== undefined && values.filter(v => child.dataset.field_id === v.id).length <= 0);
+                                                if(removed.length > 0) {
+                                                    removed.forEach(rem => {
+                                                        rem.remove();
+                                                    });
+                                                }
+
+                                            })
+
+                                            break;
+                                    }
+
+                                    break;
+
+                                //GET FILE CONTENT
+                                case 'getFile':
+
+                                    let template_editor_textarea = $('#template-editor-textarea');
+                                    template_editor_textarea.next().remove();
+                                    template_editor_textarea.remove();
+
+                                    let template_editor_block = $('#template-editor-block');
+                                    let new_textarea = document.createElement('textarea');
+                                    new_textarea.id = 'template-editor-textarea';
+                                    new_textarea.value = values;
+
+                                    template_editor_block.append(new_textarea);
+
+                                    editor = CodeMirror.fromTextArea(new_textarea, editor.options)
+
                                     break;
 
                                 //WITH MODEL
@@ -358,10 +492,12 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
 
 function update(all = false) {
 
-    //IF IS OCCUPED
+    //IF IS OCCUPIED
     if(is_occuped) return;
 
     for (const [key, value] of Object.entries(methods)) {
+
+        if(value.type === 'action') continue;
 
         //FOR ALL UPDATE FUNCTIONS
         if(all && value.update) {
@@ -369,13 +505,16 @@ function update(all = false) {
             continue;
         }
 
-        //IF NOT IN CURRENT SECTION
-        if((value.function.section !== current_menu || value.params === undefined)) continue;
+        //IF NOT IN CURRENT SECTION AND GET METHOD
+        if((value.section !== undefined && value.section !== current_menu) || value.params === undefined) continue;
 
         if((current_popup === null && value.update)
             || (value.params.popup !== null && value.params.popup === current_popup && value.params.popup_update)) {
 
-            if(value.params.need_popup_data && Object.keys(popup_data).length === 0) continue;
+            if(value.params.need_popup_data && Object.keys(popup_data).length === 0
+
+            //HAS FILTER
+            || (value.params.target !== undefined && $(value.params.target).data('filter') !== undefined && $(value.params.target).data('filter') !== key)) continue;
 
             methodsFunctions(key, value, current_popup === null ? {} : popup_data);
         }
@@ -384,9 +523,9 @@ function update(all = false) {
 
 //SET UPDATE
 let update_interval = null;
-function setUpdate(m = null) {
+function setUpdate(all = true) {
     if(update_interval !== null) clearInterval(update_interval);
-    else update(true);
+    else update(all);
     update_interval = setInterval(update, 5000);
 }
 
@@ -405,6 +544,8 @@ function useMethodsByElement(e, special_data = {}) {
     };
 
     let method = methods[method_name];
+
+    // HAS FORM
     let has_file = false;
     switch (data.method) {
 
@@ -417,14 +558,26 @@ function useMethodsByElement(e, special_data = {}) {
             //CREATE FIELDS
             for (const [field, options] of Object.entries(method.form.data)) {
 
+                // MANUALLY INCREMENT IN DATA
+                if(e.data(field) !== undefined) {
+                    fields[field] = e.data(field);
+                    continue;
+                }
+
+                // IS FILE
                 if(options.file) has_file = true;
 
-                let input = $(`#${method.form.name}-${field}`);
+                let input = $(`#${method.form.name}-${field}${options.need_id !== undefined ? `_${data[options.need_id]}` : ''}`);
                 let value = input.val();
-                if(value.length === 0 && !options.can_empty) return UpdatePopup(null, {
-                    'type': 'error',
-                    'value': options.error_message
-                });
+                if(value.length === 0 && !options.can_empty) {
+
+                    let message = {
+                        'type': 'error',
+                        'value': options.error_message
+                    };
+
+                    return current_popup !== null ? UpdatePopup(null, message) : sendNotification(message);
+                }
 
                 if(options.file) {
                     has_file = true;
@@ -441,14 +594,11 @@ function useMethodsByElement(e, special_data = {}) {
                 has_file ? data.append(field, value) : data[field] = value;
             }
 
-
-
             break;
     }
 
     delete data.method;
     delete data.target;
-    delete data.field_name;
 
     methodsFunctions(method_name, methods[method_name], data, has_file)
     update();
@@ -469,6 +619,19 @@ body.on('change', 'select', e => {
     useMethodsByElement(element, data);
 });
 
+//AJAX TEXT INPUT
+body.on('input', '.ajax-search', e => {
+    setTimeout(function () {
+        popup_data.search = e.target.value;
+        update();
+    }, 1);
+})
+
+//AJAX SELECT FILTER
+body.on('change', '.ajax-filter', e => {
+    $($(e.target).data('target')).data('filter', e.target.value)
+    update();
+})
 
 //FILES
 function verifyFile(file, extensions) {
@@ -538,6 +701,7 @@ body.on('change', 'input[type=file]', e => {
 
 //Enter in select
 body.on('click', 'select', e => {
+    if(e.target.classList.contains('ajax-filter')) return;
     is_occuped = true;
 });
 

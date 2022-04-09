@@ -11,7 +11,6 @@
     <script src="https://kit.fontawesome.com/dc883addae.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('scss/main.css') }}">
 </head>
-<body>
 
 <header>
 
@@ -20,8 +19,8 @@
         <div class="header-top-logo">
             <img src="{{ asset('img/logo.png') }}" alt="#">
             <div class="header-top-logo-desc">
-                <p>For me, For you,</p>
-                <h1>FOR DEV</h1>
+                <p>{{ getField('slogan') }}</p>
+                <h1>{{ getField('title') }}</h1>
                 <hr>
             </div>
         </div>
@@ -42,36 +41,11 @@
     </section>
 
 </header>
-
 <main>
-    <div id="overlay"></div>
-    <div id="popup" data-has_value=false>
-        <div class="popup-message success">
-            <p id="popup-message-content"></p>
-        </div>
-        <i class="fas fa-times popup-btn" id="popup-close"></i>
-        <div id="popup-loader">
-            <img src="{{ asset('img/gif/loader.gif') }}" alt="#">
-        </div>
-    </div>
-    <div id="popup-notification">
-        <div class="success-checkmark popup-notification-anim" data-type="success">
-            <div class="check-icon">
-                <span class="icon-line line-tip"></span>
-                <span class="icon-line line-long"></span>
-                <div class="icon-circle"></div>
-                <div class="icon-fix"></div>
-            </div>
-        </div>
 
-        <div class="error-checkmark popup-notification-anim" data-type="error">
-            <div class="check-icon">
-                <span class="icon-line line-tip"></span>
-                <span class="icon-line line-long"></span>
-                <div class="icon-circle"></div>
-                <div class="icon-fix"></div>
-            </div>
-        </div>
+    <!-- POPUP NEEDS -->
+    {% include 'includes/popups.html.twig' %}
+
 
         <p id="popup-notification-msg"></p>
     </div>
@@ -140,6 +114,10 @@
     </li>
 </ul>
 
+
+</main>
+
+{% include 'includes/right-menu.html.twig' %}
 <footer class="footer">
     <div class="container">
         <div class="footer__social">

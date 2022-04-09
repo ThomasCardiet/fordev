@@ -1,0 +1,116 @@
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Liste d'utilisateurs</h6>
+    </div>
+    <div class="card-body">
+
+        {#FILTERS#}
+        <div class="row mb-3">
+            <div class="col-sm-12 col-md-1">
+                <div class="dataTables_length" id="dataTable_length">
+                    <select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <div id="dataTable_filter" class="dataTables_filter">
+                    <input type="search" class="form-control form-control-sm" placeholder="Rechercher..." aria-controls="dataTable">
+                </div>
+            </div>
+        </div>
+
+        {#TABLE#}
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Pseudo</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Gloires</th>
+                    <th>Publique</th>
+                    <th>Image_path</th>
+                    <th>Création</th>
+                    <th>Rôles</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>ID</th>
+                    <th>Pseudo</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Gloires</th>
+                    <th>Publique</th>
+                    <th>Image_path</th>
+                    <th>Création</th>
+                    <th>Rôles</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                {% for user in datas.users.values %}
+                    <tr class="table-users-line" data-user_id="{{ user.id }}">
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.surname }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.glory }}</td>
+                        <td>{{ user.public ? 'Oui' : 'Non' }}</td>
+                        <td>{{ user.getPpPath() }}</td>
+                        <td>{{ user.createdAt|date("d/m/Y à h:i") }}</td>
+                        <td>{{ user.roles|join }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {#LEGEND#}
+        <div class="row">
+            <div class="col-sm-12 col-md-4">
+                <div class="dataTables_info mt-2" id="dataTable_info" role="status" aria-live="polite">
+                    10 sur 57 entrées
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                    <ul class="pagination">
+                        <li class="paginate_button page-item previous disabled" id="dataTable_previous">
+                            <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Précédent</a>
+                        </li>
+                        <li class="paginate_button page-item active">
+                            <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+                        </li>
+                        <li class="paginate_button page-item ">
+                            <a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a>
+                        </li>
+                        <li class="paginate_button page-item ">
+                            <a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a>
+                        </li>
+                        <li class="paginate_button page-item ">
+                            <a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">4</a>
+                        </li><li class="paginate_button page-item ">
+                            <a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">5</a>
+                        </li>
+                        <li class="paginate_button page-item ">
+                            <a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">6</a>
+                        </li>
+                        <li class="paginate_button page-item next" id="dataTable_next">
+                            <a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Suivant</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

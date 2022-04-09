@@ -11,6 +11,8 @@ hidePopups();
 
 // HOVERS
 icons.mouseenter(function () {
+    if($(this).data('popup') !== undefined && $(this).data('popup') === false) return;
+
     let target = $(this).data('target');
     hidePopups();
     $(`#right-menu-popup-${target}`).show();

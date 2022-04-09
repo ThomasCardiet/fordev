@@ -92,22 +92,79 @@
                 {#Contributors Popups#}
 
                 {#Contributor Add#}
-                <div class="popup-content" data-popup="contributor-add" data-loader="false">
+                <div class="popup-content" data-popup="contributor-add" data-class="project-popup" data-loader="false">
                     <h2>Ajouter un contributeur</h2>
-                    <input type="text" placeholder="Rechercher">
-                    <div class="relation-popup-list relation-popup-list-block">
-                        <ul class="relation-popup-list relation-popup-list-list">
-                            <li class="model">
-                                %img%
-                                <div>
-                                    <h3>%username%</h3>
-                                    <p>Amis depuis le %accepted_at%</p>
-                                </div>
-                                <button class="popup-btn ajax-btn" data-target="conversation" data-method="getConversation" data-target_id="%id%">Converser</button>
-                                <button class="ajax-btn" data-method="removeFriend" data-target_id="%id%">Supprimer</button>
-                            </li>
-                        </ul>
+
+                    <div class="contributor-add-radios">
+                        <h3>Type d'invitation</h3>
+                        <div>
+                            <input type="radio" id="has-account" name="invitation-type" value=0 checked>
+                            <label for="has-account">Possède un compte</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="hasNo-account" name="invitation-type" value=1>
+                            <label for="hasNo-account">Ne possède pas de compte</label>
+                        </div>
                     </div>
+
+                    {#HAS ACCOUNT#}
+                    <div id="invitation-type-0">
+
+                        {#ADVANCED BUTTON#}
+                        <p class="advanced-properties" data-active="false" data-target="contributor-add-filter"><i class="fas fa-caret-right"></i> Filtrer la liste</p>
+                        <input class="ajax-search contributor-add-search" type="text" placeholder="Rechercher">
+
+                        {#ADVANCED CONTENT#}
+                        <div class="advanced-content" id="contributor-add-filter">
+                            <select class="ajax-filter" data-target=".contributor-add-list-list">
+                                <option value="getFriends">Liste de relations</option>
+                                <option value="getUnfriendUsers">Liste non en relation</option>
+                                <option value="getPublicUsers">Tous les utilisateurs (publics)</option>
+                            </select>
+                        </div>
+
+                        <div class="contributor-add-list-block">
+                            <ul class="contributor-add-list-list" data-filter="getFriends">
+                                <li class="model">
+                                    %img%
+                                    <div class="unique-btn">
+                                        <h3>%username%</h3>
+                                        <p>Depuis le %created_at%</p>
+                                    </div>
+                                    <button class="ajax-btn" data-method="addContributor" data-target_id="%target_id%">Inviter</button>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    {#HAS NO ACCOUNT#}
+                    <div id="invitation-type-1" class="type-selector-content">
+                        <div class="flex">
+                            <div class="contributor-add-new-input">
+                                <i class="fas fa-user"></i>
+                                <input class="contributor-add-new-name" type="text" name="user_login" placeholder="Prénom" value="">
+                            </div>
+                            <div class="contributor-add-new-input">
+                                <i class="fas fa-user"></i>
+                                <input class="contributor-add-new-surname" type="text" name="user_login" placeholder="Nom" value="">
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="contributor-add-new-input">
+                                <i class="fas fa-envelope"></i>
+                                <input class="contributor-add-new-email" type="text" name="user_login" placeholder="Email" value="">
+                            </div>
+                            <select class="update-share-btn contributor-add-new-select" data-target="contributor-add-share">
+                                <option value=null>---Type de partage---</option>
+                                <option value="email">Par email</option>
+                                <option value="own_means">Par vos propres moyens</option>
+                            </select>
+                        </div>
+
+                        <button class="share-btn" id="contributor-add-share" data-form="contributor-add-new">Inviter</button>
+                    </div>
+
                 </div>
 
             </div>

@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Project;
+use App\Entity\ProjectContributor;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -69,6 +71,8 @@ class AuthController extends AbstractController
                 $fields = [
                     'username' => ['value' => $p->get('user_username'), 'foreign' => true],
                     'email' => ['value' => $p->get('user_email'), 'foreign' => true],
+                    'name' => ['value' => $p->get('user_name'), 'foreign' => false],
+                    'surname' => ['value' => $p->get('user_surname'), 'foreign' => false],
                     'password' => ['value' => $p->get('user_password'), 'foreign' => false],
                     'confirm_password' => ['value' => $p->get('user_confirm_password'), 'foreign' => false],
                 ];
@@ -100,13 +104,33 @@ class AuthController extends AbstractController
                 /*ADD USER*/
 
                 if (sizeof($errors) === 1) {
-                    $user->setUsername($fields['username']['value']);
-                    $user->setEmail($fields['email']['value']);
-                    $encoded = $encoder->encodePassword($user, $fields['password']['value']);
-                    $user->setPassword($encoded);
-                    $user->setCreatedAt(new \DateTimeImmutable());
+                    $user->setUsername($fields['username']['value'])
+                        ->setEmail($fields['email']['value'])
+                        ->setName($fields['name']['value'])
+                        ->setSurname($fields['surname']['value'])
+                        ->setPassword($encoder->encodePassword($user, $fields['password']['value']))
+                        ->setCreatedAt(new \DateTimeImmutable())
+                        ->setPublic(false)
+                        ->setGlory(0);
 
                     $em->persist($user);
+
+                    //PROJECT INVITATION
+                    if(!empty($p->get('project_id'))) {
+                        $project_repo = $em->getRepository(Project::class);
+                        $project = $project_repo->find($p->get('project_id'));
+                        if($project !== null) {
+                            $contributor = new ProjectContributor();
+                            $contributor->setProject($project)
+                                ->setContributor($user)
+                                ->setAccepted(true)
+                                ->setAcceptedAt(new \DateTimeImmutable())
+                                ->setRequestedAt(new \DateTimeImmutable());
+
+                            $em->persist($contributor);
+                        }
+                    }
+
                     $em->flush();
 
                     $this->loginUser($user);
@@ -118,7 +142,17 @@ class AuthController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('auth/index.html.twig', ['errors' => $errors]);
+        //Generate Username
+        if(isset($_GET['name'], $_GET['surname'])) {
+            $name = substr($_GET['name'], 0, round(strlen($_GET['name'])/2));
+            $surname = substr($_GET['surname'], 0, round(strlen($_GET['surname'])/2));
+            $_GET['username'] = $name . $surname . rand(10, 1000);
+        }
+
+        return $this->render('auth/index.html.twig', [
+            'errors' => $errors,
+            'params' => $_GET
+        ]);
     }
 
     /**

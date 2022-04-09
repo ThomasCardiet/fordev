@@ -6,7 +6,7 @@ menus = {
     projects: 2,
     statistics: 3,
 }
-first_menu = menus.projects; //instance de menus
+first_menu = menus.profile; //instance de menus
 
 resetContent(false);
 
@@ -27,9 +27,7 @@ methods = {
 
     /*USER*/
     getUserInformations: {
-        function: {
-            section: sections.user,
-        },
+        section: sections.user,
         update: true,
         type: 'get',
         style: null,
@@ -46,9 +44,7 @@ methods = {
 
     /*RELATIONS*/
     getFriends: {
-        function: {
-            section: sections.relations,
-        },
+        section: sections.relations,
         update: true,
         type: 'get',
         style: 'list',
@@ -63,9 +59,7 @@ methods = {
         }
     },
     getFriendRequests: {
-        function: {
-            section: sections.relations,
-        },
+        section: sections.relations,
         update: true,
         type: 'get',
         style: 'list',
@@ -80,9 +74,7 @@ methods = {
         }
     },
     getUnfriendUsers: {
-        function: {
-            section: sections.relations,
-        },
+        section: sections.relations,
         update: false,
         type: 'get',
         style: 'list',
@@ -98,9 +90,7 @@ methods = {
     },
 
     getRecentConversations: {
-        function: {
-            section: sections.relations,
-        },
+        section: sections.relations,
         update: true,
         type: 'get',
         style: 'list',
@@ -116,9 +106,7 @@ methods = {
     },
 
     getConversation: {
-        function: {
-            section: sections.relations,
-        },
+        section: sections.relations,
         update: false,
         type: 'get',
         style: null,
@@ -135,15 +123,13 @@ methods = {
 
     /*PROJECTS*/
     getProjects: {
-        function: {
-            section: sections.projects,
-        },
+        section: sections.projects,
         update: false,
         type: 'get',
         style: 'list',
         params: {
             target: '.project-popup-list-list',
-            data: 'users',
+            data: 'projects',
             count: true,
             bubble: false,
             popup: 'project-list',
@@ -152,10 +138,40 @@ methods = {
         }
     },
 
+    getContributorRequests: {
+        section: sections.projects,
+        update: true,
+        type: 'get',
+        style: 'list',
+        params: {
+            target: '.project-popup-list-requests',
+            data: 'users',
+            count: true,
+            bubble: true,
+            popup: 'project-requests',
+            popup_update: true,
+            need_popup_data: false,
+        }
+    },
+
+    getLastProjects: {
+        section: sections.projects,
+        update: true,
+        type: 'get',
+        style: 'list',
+        params: {
+            target: '.projects-recents-list-list',
+            data: 'projects',
+            count: false,
+            bubble: false,
+            popup: null,
+            popup_update: false,
+            need_popup_data: false,
+        }
+    },
+
     getProject: {
-        function: {
-            section: sections.projects,
-        },
+        section: sections.projects,
         update: false,
         type: 'get',
         style: null,
@@ -174,9 +190,6 @@ methods = {
 
     /*USER*/
     updateUser: {
-        function: {
-            section: sections.user,
-        },
         update: false,
         type: 'action',
         close_popup: true,
@@ -196,28 +209,16 @@ methods = {
 
     /*RELATIONS*/
     addFriend: {
-        function: {
-            section: sections.relations,
-        },
-        update: false,
         type: 'action',
         close_popup: false,
         style: 'message'
     },
     removeFriend: {
-        function: {
-            section: sections.relations,
-        },
-        update: false,
         type: 'action',
         close_popup: false,
         style: 'message'
     },
     sendMessage: {
-        function: {
-            section: sections.relations,
-        },
-        update: false,
         type: 'action',
         close_popup: false,
         style: null,
@@ -235,10 +236,6 @@ methods = {
 
     /*PROJECTS*/
     createProject: {
-        function: {
-            section: sections.projects,
-        },
-        update: false,
         type: 'action',
         close_popup: true,
         style: 'message',
@@ -265,6 +262,18 @@ methods = {
             }
         }
     },
+
+    addContributor: {
+        type: 'action',
+        close_popup: false,
+        style: 'message'
+    },
+
+    removeContributor: {
+        type: 'action',
+        close_popup: false,
+        style: 'message'
+    },
 }
 
 setUpdate();
@@ -285,20 +294,6 @@ $('.relations-img').bind('mousewheel DOMMouseScroll', e => {
 })
 
 /************** USER UPDATE FORM *************/
-
-let account_type_fields = {
-    visitor: 0,
-    professional: 1
-}
-
-let account_professional_content = $('#user-popup-advanced-professional-content');
-account_professional_content.hide();
-
-body.on('change', 'input[name="account-type"]', e => {
-    let account_type = $('input[name="account-type"]:checked').val();
-    account_professional_content = $('#user-popup-advanced-professional-content');
-    parseInt(account_type) === 1 ? account_professional_content.show() : account_professional_content.hide();
-});
 
 /*SKILLS*/
 
