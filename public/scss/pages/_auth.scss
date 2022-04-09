@@ -1,0 +1,219 @@
+#auth {
+    background: url("../../img/home/background_1.png") no-repeat fixed;
+    background-size: cover;
+    position: relative;
+}
+
+.auth-block {
+    width: 50%;
+    margin-left: 50%;
+    background-color: var(--light_grey);
+    padding: 40px 0;
+
+    &#sign-in {
+        width: 60%;
+        margin-left: 40%;
+
+        .flex {
+            display: flex;
+            justify-content: space-between;
+
+            > div {
+                width: 48%;
+            }
+        }
+
+        .auth-block-form {
+            width: 80%;
+
+            .auth-block-form-input {
+                width: 100%;
+
+                input {
+                    width: 90%;
+                }
+            }
+        }
+    }
+
+    //LOGIN ANIMATION
+    @keyframes glissement-left-right-login {
+        from {
+            margin-left: 40%;
+        }
+
+        to {
+            margin-left: 100%;
+        }
+    }
+
+    @keyframes glissement-right-left-login {
+        from {
+            margin-left: 100%;
+        }
+
+        to {
+            margin-left: 50%;
+        }
+    }
+
+    //REGISTER ANIMATION
+    @keyframes glissement-left-right-register {
+        from {
+            margin-left: 50%;
+        }
+
+        to {
+            margin-left: 100%;
+        }
+    }
+
+    @keyframes glissement-right-left-register {
+        from {
+            margin-left: 100%;
+        }
+
+        to {
+            margin-left: 40%;
+        }
+    }
+
+    img {
+        width: 15%;
+        display: block;
+        margin: auto;
+        border-radius: 50%;
+        background-color: var(--dark_grey);
+        border: solid 3px white;
+    }
+
+    h2 {
+        margin-top: 10px;
+        text-align: center;
+        color: white;
+        font-family: var(--title_font);
+    }
+}
+
+/*ERROR MSG*/
+.error_msg {
+    background-color: var(--red);
+    color: white;
+    padding: 10px;
+}
+
+/*FORM*/
+.auth-block-form {
+    width: 70%;
+    margin: 70px auto 0 auto;
+
+    .auth-block-form-input {
+        border-bottom: solid 1px var(--grey);
+        margin-top: 50px;
+
+        i {
+            color: var(--green);
+            font-size: 1.6em;
+            margin-right: 10px;
+        }
+
+        input {
+            border: none;
+            outline: none;
+            font-size: 1.6em;
+            width: 70%;
+            background-color: transparent;
+            color: white;
+        }
+        ::placeholder {
+             opacity: 0.3;
+        }
+    }
+
+    .auth-block-form-remember {
+        margin-top: 10px;
+        color: white;
+
+        input[type=checkbox]:checked {
+            background-color: var(--green);
+        }
+    }
+
+    #auth-block-forget {
+        margin-top: 30px;
+        text-align: right;
+        font-size: 1.1em;
+        color: white;
+
+        a {
+            color: var(--green);
+        }
+    }
+
+    #forget-pass {
+        color: var(--green);
+        text-decoration: underline;
+    }
+
+    #forget-pass:hover {
+        cursor: pointer;
+        color: var(--light_green);
+    }
+
+    #forget-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease-out;
+        width: 80%;
+        margin: auto;
+
+        #forget-content-msg {
+            width: 100%;
+            background-color: #d6d6d6;
+            color: #666666;
+            padding: 10px;
+            margin: 20px 0 -30px 0;
+        }
+
+        button {
+            padding: 10px 0;
+            width: 60%;
+            display: block;
+            margin: 20px auto;
+            border: none;
+        }
+
+        button:hover {
+            cursor: pointer;
+            background-color: var(--green);
+            color: white;
+        }
+    }
+
+    > button {
+        width: 100%;
+        padding: 20px 0;
+        background-color: var(--green);
+        border: none;
+        color: black;
+        font-size: 1.8em;
+        margin: 30px 0;
+    }
+
+    > button:hover {
+        cursor: pointer;
+        background-color: var(--light_green);
+    }
+}
+
+#auth-block-type {
+    text-align: center;
+    font-size: 1.25em;
+    color: white;
+
+    .auth-toggle {
+        color: var(--green);
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}

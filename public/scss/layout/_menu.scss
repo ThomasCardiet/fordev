@@ -1,0 +1,176 @@
+header, main, footer {
+    width: 96%;
+}
+
+#right-menu {
+    position: fixed;
+    width: var(--right_menu_size);
+    height: 100%;
+    right: 0;
+    top: 0;
+    background-color: black;
+    color: white;
+    list-style: none;
+    z-index: 11;
+}
+
+/*Icons*/
+
+#right-menu > li
+{
+    text-align: center;
+    font-size: 2em;
+    position: relative;
+}
+
+#right-menu> li > i:hover
+{
+    background-color: var(--dark_grey);
+    cursor: pointer;
+}
+
+#right-menu > li > i
+{
+    width: 100%;
+    padding: 12px 0;
+}
+
+/*****Popups*****/
+.right-menu-popup {
+    position: absolute;
+    width: 580%;
+    min-height: 120px;
+    background-color: var(--dark_grey);
+    top: 0;
+    left: -580%;
+}
+
+/*USER CONTENT*/
+#right-menu-popup-account {
+    display: flex;
+    justify-content: space-between;
+    padding: 100px 20px 20px 20px;
+}
+
+#right-menu-popup-account-informations {
+    display: flex;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 0.6em;
+}
+
+#right-menu-popup-account-informations h3 {
+    text-align: left;
+}
+
+#right-menu-popup-account-informations > img {
+    width: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+#right-menu-popup-account-icons {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 0.8em;
+}
+
+#right-menu-popup-account-icons > i:hover {
+    cursor: pointer;
+    color: var(--green);
+}
+
+.right-menu-popup-account-stat {
+    position: relative;
+    background-color: red;
+    width: calc((100% - 10%)/3);
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.right-menu-popup-account-stat::after {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+}
+
+.right-menu-popup-account-stat > div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    top: 26%;
+    font-size: 1.2vw;
+    color: white;
+}
+
+.right-menu-popup-account-stat.yellow {
+    background-color: var(--gold);
+}
+.right-menu-popup-account-stat.blue {
+    background-color: var(--aqua);
+}
+.right-menu-popup-account-stat.red {
+    background-color: var(--red);
+}
+
+/*SEARCH CONTENT*/
+#right-menu-popup-search {
+    padding: 20px 0;
+}
+
+#right-menu-popup-search > h3 {
+    font-size: 1.5vw;
+    text-align: left;
+    width: 90%;
+    display: block;
+    margin: 0 auto 15px auto;
+}
+
+#right-menu-popup-search > div {
+    display: flex;
+    width: 90%;
+    margin: auto;
+    height: 30px;
+    justify-content: space-between;
+}
+
+#right-menu-popup-search > div > input {
+    height: 100%;
+    width: 82%;
+    border: solid 1px white;
+    background-color: black;
+    color: white;
+    padding: 0 10px;
+    border-radius: 15px;
+    font-size: 1.4vw;
+}
+
+#right-menu-popup-search > div > div {
+    font-size: 1.6vw;
+    border-radius: 15px;
+    color: black;
+    width: 15%;
+    height: 100%;
+    background-color: var(--grey);
+    border: white 1px solid;
+    padding-top: 2.5%;
+    position: relative;
+}
+
+#right-menu-popup-search > div > div:hover {
+    cursor: pointer;
+    color: var(--green);
+    background-color: white;
+}
+
+#right-menu-popup-search > div > div > i {
+    position: absolute;
+    left: 0;
+    top: 20%;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
