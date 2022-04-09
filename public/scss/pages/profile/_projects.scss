@@ -1,0 +1,76 @@
+#content-projects {
+  position: relative;
+}
+
+/*Icons*/
+#projects-icons {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  color: white;
+  font-size: 2.5em;
+}
+
+#projects-icons > i:hover {
+  cursor: pointer;
+  color: var(--green);
+}
+/*Projects*/
+#projects-recents {
+  width: 95%;
+  margin: 20px auto auto auto;
+}
+
+#projects-recents > h2 {
+  width: 35%;
+  text-align: center;
+  padding: 10px 0;
+  background-color: var(--green);
+  border-radius: 10px;
+  font-size: 1.3em;
+  font-family: var(--title_font);
+  margin: 20px 0;
+}
+
+.projects-recent {
+  display: flex;
+  position: relative;
+  width: 100%;
+  background-color: var(--dark_grey);
+  border: solid 1px var(--grey);
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.projects-recent > img {
+  width: 8%;
+  border-radius: 50%;
+  background-color: white;
+  margin-right: 20px;
+}
+
+.projects-recent > div {
+  color: white;
+  transform: translateY(16%);
+}
+
+.projects-recent > div > h3 {
+  font-size: 1.8em;
+}
+
+.projects-recent > div > p {
+  font-size: 1em;
+}
+
+.projects-recent > i {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: var(--grey);
+  font-size: 2.5em;
+}
+
+.projects-recent > i:hover {
+  cursor: pointer;
+  color: var(--green);
+}

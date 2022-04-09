@@ -1199,6 +1199,51 @@ input[type=radio]:checked + label::after {
   color: var(--green);
 }
 
+#profile {
+  margin-top: 180px;
+  padding: 50px 0;
+  background-color: #30333F;
+}
+
+#profile-content {
+  width: 85%;
+  margin: auto;
+  display: flex;
+}
+
+/*Links*/
+#profile-content-left {
+  width: 15%;
+  background-color: #252633;
+}
+
+.profile-btn {
+  color: white;
+  width: 100%;
+  padding: 30px 0;
+  text-align: center;
+  font-size: 1.5em;
+  font-family: var(--text_font);
+}
+
+.profile-btn:hover, .profile-btn.active {
+  color: #00FFC3;
+  background-color: #363743;
+  cursor: pointer;
+}
+
+hr {
+  border: #FFE700 solid 4px;
+}
+
+/*Content*/
+.menu-info {
+  min-height: 500px;
+  width: 85%;
+  background-color: #363743;
+  padding: 120px 0;
+}
+
 #content-projects {
   position: relative;
 }
@@ -1211,33 +1256,8 @@ input[type=radio]:checked + label::after {
   color: white;
   font-size: 2.5em;
 }
-#projects-icons i {
-  position: relative;
-  margin: 0 5px;
-}
-#projects-icons i #project-requests-count {
-  position: absolute;
-  background-color: var(--orange);
-  width: 60%;
-  border-radius: 50%;
-  top: -20%;
-  right: -20%;
-}
-#projects-icons i #project-requests-count::after {
-  content: "";
-  display: block;
-  padding-bottom: 100%;
-}
-#projects-icons i #project-requests-count div {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  top: 5%;
-  font-size: 20px;
-  color: white;
-}
-#projects-icons i:hover {
+
+#projects-icons > i:hover {
   cursor: pointer;
   color: var(--green);
 }
@@ -1247,7 +1267,8 @@ input[type=radio]:checked + label::after {
   width: 95%;
   margin: 20px auto auto auto;
 }
-#projects-recents h2 {
+
+#projects-recents > h2 {
   width: 35%;
   text-align: center;
   padding: 10px 0;
@@ -1258,54 +1279,239 @@ input[type=radio]:checked + label::after {
   margin: 20px 0;
 }
 
-.projects-recents-list-list > li {
-  margin-bottom: 10px;
-}
-
-.project-popup-list-model, .projects-recents-list-list > li {
+.projects-recent {
   display: flex;
-  justify-content: space-between;
   position: relative;
   width: 100%;
   background-color: var(--dark_grey);
   border: solid 1px var(--grey);
   padding: 10px;
+  margin-bottom: 10px;
 }
-.project-popup-list-model img, .projects-recents-list-list > li img {
-  width: 6%;
+
+.projects-recent > img {
+  width: 8%;
   border-radius: 50%;
   background-color: white;
   margin-right: 20px;
 }
-.project-popup-list-model div, .projects-recents-list-list > li div {
-  width: 100%;
+
+.projects-recent > div {
   color: white;
   transform: translateY(16%);
 }
-.project-popup-list-model div > h3, .projects-recents-list-list > li div > h3 {
+
+.projects-recent > div > h3 {
   font-size: 1.8em;
 }
-.project-popup-list-model div > p, .projects-recents-list-list > li div > p {
+
+.projects-recent > div > p {
   font-size: 1em;
 }
-.project-popup-list-model .fa-eye, .projects-recents-list-list > li .fa-eye {
+
+.projects-recent > i {
   position: absolute;
   bottom: 10px;
   right: 10px;
   color: var(--grey);
   font-size: 2.5em;
 }
-.project-popup-list-model .fa-eye:hover, .projects-recents-list-list > li .fa-eye:hover {
+
+.projects-recent > i:hover {
   cursor: pointer;
   color: var(--green);
 }
-.project-popup-list-model .fa-crown, .projects-recents-list-list > li .fa-crown {
+
+#content-relations {
+  position: relative;
+}
+
+/*Icons*/
+#relations-icons {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  right: 20px;
+  top: 20px;
+  color: white;
+  font-size: 2.5em;
+}
+#relations-icons i {
+  position: relative;
+  margin: 0 5px;
+}
+#relations-icons i #relation-requests-count {
+  position: absolute;
+  background-color: var(--orange);
+  width: 60%;
+  border-radius: 50%;
+  top: -20%;
+  right: -20%;
+}
+#relations-icons i #relation-requests-count::after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+#relations-icons i #relation-requests-count div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  top: 5%;
+  font-size: 25px;
+  color: white;
+}
+#relations-icons i:hover {
+  cursor: pointer;
   color: var(--green);
 }
-.project-popup-list-model button, .projects-recents-list-list > li button {
+
+/*Friends-list*/
+#relations-img-list {
+  display: flex;
+  width: 88%;
+  margin: auto;
+  overflow-x: scroll;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.relations-img {
+  width: 9%;
+  position: relative;
+  margin-right: 50px;
+  user-select: none;
+}
+
+.relations-img > img {
+  max-width: 100%;
+  display: block;
+  margin: auto;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.relations-img > i {
+  position: absolute;
+  right: 5px;
+  top: 55%;
+  color: red;
+  font-size: 1.5em;
+}
+
+.relations-img > i.online {
+  color: green;
+}
+
+.relations-img > h3 {
+  font-family: var(--text_font);
+  font-size: 1.3em;
+  text-align: center;
+  color: white;
+}
+
+/*Conversations*/
+#relations-conversations {
+  width: 95%;
+  margin: 20px auto auto auto;
+}
+#relations-conversations h2 {
+  display: inline-block;
+  text-align: center;
+  padding: 10px 15px;
+  background-color: var(--green);
+  border-radius: 10px;
+  font-size: 1.3em;
+  font-family: var(--title_font);
+  margin: 20px 0;
+}
+
+#relations-conversations-block li {
+  display: flex;
+  background-color: var(--dark_grey);
+  border: solid 1px var(--grey);
+  margin-top: 10px;
+  padding: 10px 15px;
+}
+#relations-conversations-block li img {
+  width: 3.2em;
+  border-radius: 50%;
+  border: #707070 solid 1px;
+  margin-right: 18px;
+}
+#relations-conversations-block li p {
+  width: 90%;
+  text-align: left;
+  color: var(--green);
+  font-family: sans-serif;
+  font-size: 1.6em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 2.5%;
+  transform: translateY(25%);
+}
+#relations-conversations-block li i {
+  color: var(--grey);
+  font-size: 2.3em;
+  margin-top: 8px;
+  text-align: right;
+  width: 3%;
+}
+#relations-conversations-block li i:hover {
+  cursor: pointer;
+  color: var(--green);
+}
+
+/*POPUPS*/
+.relation-popup {
+  /*MANAGE RELATIONS POPUP*/
+  /*CONVERSATION POPUP*/
+}
+.relation-popup h2 {
+  color: var(--green);
+  font-size: 2em;
+}
+.relation-popup input {
+  margin: 10px 0;
+  border: none;
+  outline: none;
+  padding: 5px;
+  font-size: 1.2em;
+}
+.relation-popup .relation-popup-list-block {
+  background-color: var(--dark_grey);
+  height: 87%;
+  overflow-y: auto;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list {
+  list-style: none;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 2%;
+  border: solid var(--dark_grey) 1px;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li img {
+  width: 5%;
+  border-radius: 50%;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li div {
+  transform: translateY(25%);
+  width: 72%;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li div h3 {
+  color: var(--green);
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li div p {
+  color: white;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li div.unique-btn {
+  width: 84%;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li button {
   border: solid var(--grey) 1px;
   background-color: var(--dark_grey);
   color: var(--green);
@@ -1313,156 +1519,172 @@ input[type=radio]:checked + label::after {
   height: 40px;
   font-size: 1em;
   transform: translateY(45%);
-  width: 15%;
-  margin-right: 10px;
+  width: 9%;
 }
-.project-popup-list-model button:hover, .projects-recents-list-list > li button:hover {
+.relation-popup .relation-popup-list-block .relation-popup-list li button:hover {
+  color: white;
+  cursor: pointer;
+}
+.relation-popup .relation-popup-list-block .relation-popup-list li:hover {
+  border: solid var(--grey) 1px;
+  background-color: var(--medium_grey);
+}
+.relation-popup .relation-popup-conversation-block {
+  background-color: var(--dark_grey);
+  margin-top: 20px;
+  height: 82%;
+  padding: 20px;
+  overflow-y: auto;
+  width: 100%;
+}
+.relation-popup .relation-popup-conversation-block .relation-popup-conversation-message-block {
+  display: flex;
+  width: 45%;
+  margin-bottom: 20px;
+  clear: right;
+  position: relative;
+}
+.relation-popup .relation-popup-conversation-block .relation-popup-conversation-message-block img {
+  width: 3vw;
+  border-radius: 50%;
+  height: 100%;
+}
+.relation-popup .relation-popup-conversation-block .relation-popup-conversation-message-block div {
+  margin: 0.8vw 10px;
+  background-color: var(--green);
+  color: white;
+  border-radius: 5px;
+  padding: 6px 10px;
+  height: fit-content;
+}
+.relation-popup .relation-popup-conversation-block .relation-popup-conversation-message-block div .relation-popup-conversation-message-content {
+  display: inline;
+}
+.relation-popup .relation-popup-conversation-block .relation-popup-conversation-message-block div .relation-popup-conversation-message-date {
+  position: absolute;
+  left: 3.8vw;
+  bottom: -10px;
+  font-size: 0.8em;
+  color: var(--grey);
+}
+.relation-popup .relation-popup-conversation-block .relation-popup-conversation-message-block.owned {
+  float: right;
+  justify-content: right;
+}
+.relation-popup .relation-popup-conversation-block .relation-popup-conversation-message-block.owned div {
+  background-color: var(--light_green);
+}
+.relation-popup .relation-popup-conversation-block .relation-popup-conversation-message-block.owned div > .relation-popup-conversation-message-date {
+  width: 100%;
+  text-align: right;
+  left: -3.8vw;
+}
+.relation-popup .relation-popup-conversation-send-block {
+  height: 8%;
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+.relation-popup .relation-popup-conversation-send-block textarea {
+  height: 100%;
+  width: 84%;
+  margin: 0;
+  background-color: var(--dark_grey);
+  color: white;
+  padding: 5px 5px 0 5px;
+  resize: none;
+  outline: none;
+  border: none;
+}
+.relation-popup .relation-popup-conversation-send-block textarea::placeholder {
+  opacity: 0.5;
+}
+.relation-popup .relation-popup-conversation-send-block button {
+  height: 100%;
+  border: solid var(--grey) 1px;
+  background-color: var(--dark_grey);
+  color: var(--green);
+  padding: 0 1%;
+  font-size: 1em;
+  width: 15%;
+}
+.relation-popup .relation-popup-conversation-send-block button:hover {
   color: white;
   cursor: pointer;
 }
 
-/*POPUPS*/
-.project-popup h2 {
-  color: var(--green);
-  font-size: 2em;
-}
-.project-popup h2 span {
-  color: white;
-}
-.project-popup input {
-  margin: 10px 0;
-  border: none;
-  outline: none;
-  padding: 5px;
-  font-size: 1.2em;
-}
-.project-popup .project-popup-preview-block {
-  background-color: var(--dark_grey);
-  margin-top: 15px;
-  height: 92%;
-  overflow-y: auto;
-}
-.project-popup .project-popup-preview-block img {
-  width: 8%;
-  border-radius: 50%;
-}
-.project-popup .project-popup-list-block {
-  background-color: var(--dark_grey);
-  height: 87%;
-  overflow-y: auto;
-}
-.project-popup .project-popup-list-block li {
-  margin: 0;
-}
-.project-popup .project-popup-list-block li:hover {
-  border: solid var(--grey) 1px;
-  background-color: var(--medium_grey);
-}
-.project-popup .project-popup-block {
-  background-color: var(--dark_grey);
-  margin-top: 15px;
-  height: 92%;
-  overflow-y: auto;
-  position: relative;
-  padding: 50px 25px 25px 25px;
-}
-.project-popup .project-popup-block .upload {
-  width: 100px;
-  position: absolute;
-  right: 25px;
-  top: 25px;
-}
-.project-popup .project-popup-block .upload img {
-  border-radius: 50%;
-  border: 6px solid #eaeaea;
-}
-.project-popup .project-popup-block .upload .round {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background: #00B4FF;
-  width: 32px;
-  height: 32px;
-  line-height: 33px;
-  text-align: center;
-  border-radius: 50%;
-  overflow: hidden;
-}
-.project-popup .project-popup-block .upload .round input[type=file] {
-  position: absolute;
-  transform: scale(2);
-  opacity: 0;
-}
-.project-popup .project-popup-block input[type=file]::-webkit-file-upload-button {
-  cursor: pointer;
-}
-.project-popup .project-popup-block .project-popup-input {
-  border-bottom: solid 1px var(--grey);
-  margin: 0 30px 45px 0;
-  width: 45%;
-}
-.project-popup .project-popup-block .project-popup-input i {
-  color: var(--green);
-  font-size: 1.6em;
-  margin-right: 10px;
-}
-.project-popup .project-popup-block .project-popup-input input {
-  border: none;
-  outline: none;
-  font-size: 1.6em;
+#content-stats-values {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   width: 80%;
-  background-color: transparent;
+  margin: auto;
+}
+#content-stats-values div {
+  position: relative;
+  width: calc((100% - 20%)/3);
+  border-radius: 50%;
+  margin-bottom: 40px;
+}
+#content-stats-values div::after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+#content-stats-values div div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  top: 35%;
+  font-size: 2vw;
   color: white;
 }
-.project-popup .project-popup-block .project-popup-input input::placeholder {
-  opacity: 0.3;
+#content-stats-values div.gold {
+  background-color: var(--gold);
 }
-.project-popup .project-popup-block .project-popup-input textarea {
-  resize: none;
-  height: 200px;
+#content-stats-values div.aqua {
+  background-color: var(--aqua);
 }
-.project-popup .project-popup-block .project-popup-textarea {
-  border-bottom: solid 1px var(--grey);
-  margin: 30px 0 45px 0;
-  width: 100%;
-  position: relative;
+#content-stats-values div.red {
+  background-color: var(--red);
 }
-.project-popup .project-popup-block .project-popup-textarea i {
-  color: var(--green);
-  font-size: 1.6em;
-  margin-right: 10px;
-  position: absolute;
-  top: 0;
-  left: 0;
+#content-stats-values div.mat_gold {
+  background-color: var(--mat_gold);
 }
-.project-popup .project-popup-block .project-popup-textarea textarea {
-  margin-left: 1.6em;
+#content-stats-values div.mat_aqua {
+  background-color: var(--mat_aqua);
+}
+#content-stats-values div.mat_red {
+  background-color: var(--mat_red);
+}
+
+#content-user {
+  text-align: center;
+  color: white;
+}
+#content-user img {
+  max-width: 12%;
+  border-radius: 50%;
+}
+#content-user button {
+  text-decoration: none;
+  color: black;
+  background-color: var(--green);
+  padding: 10px 0;
+  width: 15%;
+  display: block;
+  margin: 40px auto 0 auto;
+  font-size: 1em;
+  font-weight: bold;
   border: none;
   outline: none;
-  font-size: 1.6em;
-  width: 95%;
-  background-color: transparent;
-  color: white;
-  resize: none;
-  height: 150px;
+  transform: scale(1);
+  transition: transform 0.5s;
 }
-.project-popup .project-popup-block .project-popup-textarea textarea::placeholder {
-  opacity: 0.3;
-}
-.project-popup .project-popup-block button {
-  width: 20%;
-  margin: auto;
-  display: block;
-  color: var(--dark_grey);
-  background-color: var(--green);
-  font-size: 1.4em;
-  border: none;
-  padding: 10px 0;
-  text-align: center;
-}
-.project-popup .project-popup-block button:hover {
+#content-user button:hover {
   cursor: pointer;
-  background-color: var(--light_green);
+  transform: scale(1.15);
 }
 
 .advanced-properties {
