@@ -1,0 +1,107 @@
+<div class="menu-info" id="content-user" data-id="{{ app.user.id }}" >
+
+    {% set pp_path = 'users/' ~ app.user.getPpPath() %}
+    {% if app.user.getPpPath() is null %}
+        {% set pp_path = 'unknown.png' %}
+    {% endif %}
+    <img data-value="pp" src="{{ asset("img/profile/#{pp_path}") }}" alt="#">
+    <h1 data-value="username" id="menu-info-username">{{ app.user.username }}</h1>
+    <h2 data-value="email">{{ app.user.email }}</h2>
+    <h2>Date de création: {{ app.user.createdAt | date("d/m/Y à H:i") }}</h2>
+    <button id="user-update-btn" class="popup-btn" data-target="user-update">Modifier</button>
+
+    {#User Popup#}
+    <div class="popup-content" data-popup="user-update" data-class="user-popup" data-loader="false">
+
+        <h2>Modification du profil</h2>
+        <div class="user-popup-block">
+            <div class="upload">
+                <img id="update-user-file-visual" src="{{ asset("img/profile/#{pp_path}") }}" width = 100 height = 100 alt="">
+                <div class="round">
+                    <input id="update-user-file" type="file" data-file_type="image">
+                    <i class = "fa fa-camera" style = "color: #fff;"></i>
+                </div>
+            </div>
+
+            <div class="user-popup-input">
+                <i class="fas fa-user"></i>
+                <input type="text" name="user_username" placeholder="Identifiant" value="{{ app.user.username }}">
+            </div>
+
+            <div class="user-popup-input">
+                <i class="fas fa-envelope"></i>
+                <input type="text" name="user_email" placeholder="Email" value="{{ app.user.email }}">
+            </div>
+
+            {#ADVANCED BUTTON#}
+            <p class="advanced-properties" data-active="false" data-target="user-popup-password-change"><i class="fas fa-caret-right"></i> Modifier le mot de passe</p>
+
+            {#ADVANCED CONTENT#}
+            <div class="advanced-content" id="user-popup-password-change">
+
+                <div class="user-popup-input">
+                    <i class="fas fa-lock"></i>
+                    <input type="text" name="user_old_password" placeholder="Ancien mot de passe">
+                </div>
+
+                <div class="flex-wrap">
+                    <div class="user-popup-input">
+                        <i class="fas fa-lock"></i>
+                        <input type="text" name="user_new_password" placeholder="Nouveau mot de passe">
+                    </div>
+
+                    <div class="user-popup-input">
+                        <i class="fas fa-lock"></i>
+                        <input type="text" name="user_new_password" placeholder="Confirmer le mot de passe">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="user-popup-textarea">
+                <i class="fas fa-align-justify"></i>
+                <textarea name="user_description" placeholder="Décrivez-vous"></textarea>
+            </div>
+
+            {#ADVANCED BUTTON#}
+            <p class="advanced-properties" data-active="false" data-target="user-popup-advanced"><i class="fas fa-caret-right"></i> Paramètres avancés</p>
+
+            {#ADVANCED CONTENT#}
+            <div class="advanced-content" id="user-popup-advanced">
+
+                <div class="user-popup-advanced-input">
+                    <h3>Type de compte</h3>
+                    <div>
+                        <input type="radio" id="visitor-account" name="account-type" value=0 checked>
+                        <label for="visitor-account">Visiteur</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="professional-account" name="account-type" value=1>
+                        <label for="professional-account">Professionnel</label>
+                    </div>
+                </div>
+
+                <div id="account-type-0" class="type-selector-content"></div>
+
+                {#PROFESSIONAL ACCOUNT FIELDS#}
+                <div id="account-type-1" class="type-selector-content">
+
+                    <h3>Liste des compétences</h3>
+                    <div id="professional-content-skills">
+                        <ul id="professional-content-skills-list">
+                            {% for i in 0..30 %}
+                                <li class="professional-content-skill-list">Compétence {{ i }}</li>
+                            {% endfor %}
+                        </ul>
+                        <ul id="professional-content-skills-owned"></ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button class="ajax-btn" data-method="updateUser">Confirmer</button>
+        </div>
+    </div>
+
+</div>

@@ -116,6 +116,11 @@ class User implements UserInterface
      */
     private $glory;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Fields::class, mappedBy="lastUserEdit")
+     */
+    private $lastEditedFields;
+
     public function __construct()
     {
         $this->requestedFriends = new ArrayCollection();
@@ -124,6 +129,7 @@ class User implements UserInterface
         $this->fReceivedMessages = new ArrayCollection();
         $this->ownedProjects = new ArrayCollection();
         $this->contributedProjects = new ArrayCollection();
+        $this->lastEditedFields = new ArrayCollection();
     }
 
 
@@ -295,11 +301,15 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getFriends(): array
+    public function getFriends(): Array
     {
         $friends = [];
-        $friends[] = $this->requestedFriends;
-        $friends[] = $this->acceptedFriends;
+        foreach (array_merge($this->requestedFriends->getValues(), $this->acceptedFriends->getValues()) as $request) {
+            if(!$request->getAccepted()) continue;
+            $friends[] = $request->getUser()->getId() === $this->id ? $request->getFriend() : $request->getUser();
+        }
+
+
         return $friends;
     }
 
@@ -479,6 +489,36 @@ class User implements UserInterface
     public function setGlory(string $glory): self
     {
         $this->glory = $glory;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Fields[]
+     */
+    public function getLastEditedFields(): Collection
+    {
+        return $this->lastEditedFields;
+    }
+
+    public function addLastEditedField(Fields $lastEditedField): self
+    {
+        if (!$this->lastEditedFields->contains($lastEditedField)) {
+            $this->lastEditedFields[] = $lastEditedField;
+            $lastEditedField->setLastUserEdit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLastEditedField(Fields $lastEditedField): self
+    {
+        if ($this->lastEditedFields->removeElement($lastEditedField)) {
+            // set the owning side to null (unless already changed)
+            if ($lastEditedField->getLastUserEdit() === $this) {
+                $lastEditedField->setLastUserEdit(null);
+            }
+        }
 
         return $this;
     }

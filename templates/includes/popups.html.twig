@@ -1,0 +1,31 @@
+<div id="overlay"></div>
+<div id="popup" data-has_value=false>
+    <div class="popup-message success">
+        <p id="popup-message-content"></p>
+    </div>
+    <i class="fas fa-times popup-btn" id="popup-close"></i>
+    <div id="popup-loader">
+        <img src="{{ asset('img/gif/loader.gif') }}" alt="#">
+    </div>
+</div>
+<div id="popup-notification">
+    <div class="success-checkmark popup-notification-anim" data-type="success">
+        <div class="check-icon">
+            <span class="icon-line line-tip"></span>
+            <span class="icon-line line-long"></span>
+            <div class="icon-circle"></div>
+            <div class="icon-fix"></div>
+        </div>
+    </div>
+
+    <div class="error-checkmark popup-notification-anim" data-type="error">
+        <div class="check-icon">
+            <span class="icon-line line-tip"></span>
+            <span class="icon-line line-long"></span>
+            <div class="icon-circle"></div>
+            <div class="icon-fix"></div>
+        </div>
+    </div>
+
+    <p id="popup-notification-msg"></p>
+</div>

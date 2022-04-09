@@ -1,0 +1,184 @@
+<!-- Circle Buttons -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Informations Globales</h6>
+    </div>
+    <div class="card-body">
+
+        <div class="row">
+
+            {% for key, value in user|cast_to_array %}
+                {% set key = key|replace({'\x00': ''}) %}
+                {% if key in update_fields %}
+                    <div class="input-group mb-3 col-lg-4">
+                        <i class="fas fa-info-circle info-bubble" data-toggle="tooltip" data-placement="top" title="Modification du champ {{ key }}"></i>
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="{{ key }}" value="{{ isType(value, 'boolean') ? value ? 'Oui' : 'Non' : value}}">
+                        <button class="ml-1 mr-1 ajax-btn btn btn-primary">
+                            Modifier
+                        </button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+        </div>
+
+    </div>
+</div>
+
+<!-- Graphs -->
+<div class="row">
+
+    <!-- Area Chart -->
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Augmentation des Statistiques</h6>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                         aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-header">Dropdown Header:</div>
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="chart-area">
+                    <canvas id="myAreaChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+            <!-- Stats Upgrade -->
+            <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Total des Statistiques</h6>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                         aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-header">Dropdown Header:</div>
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats compare -->
+            <div class="card-body">
+                <div class="chart-pie pt-4 pb-2">
+                    <canvas id="myPieChart"></canvas>
+                </div>
+                <div class="mt-4 text-center small">
+                    <span class="mr-2">
+                        <i class="fas fa-circle text-primary"></i> Gloires
+                    </span>
+                    <span class="mr-2">
+                        <i class="fas fa-circle text-success"></i> Projets
+                    </span>
+                    <span class="mr-2">
+                        <i class="fas fa-circle text-info"></i> Relations
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Content Row -->
+<div class="row">
+
+    <!-- Relations Column -->
+    <div class="col-lg-4">
+
+        <!-- Custom Text Color Utilities -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-1 font-weight-bold text-primary">Relations</h6>
+            </div>
+            <div class="card-body">
+
+                <!-- Relation modif fields -->
+                {% for friend in user.friends %}
+                    <div class="input-group mb-3">
+                        <p class="col-lg-4">{{ friend.username }}</p>
+                        <button class="ml-1 mr-2 btn btn-primary h-25">
+                            Conversations
+                        </button>
+                        <button class="btn btn-danger h-25">
+                            Supprimer
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Owned Projects Column -->
+    <div class="col-lg-4">
+
+        <!-- Custom Text Color Utilities -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-1 font-weight-bold text-primary">Projets (Créateur)</h6>
+            </div>
+            <div class="card-body">
+
+                <!-- Relation modif fields -->
+                {% for project in user.ownedProjects %}
+                    <div class="input-group mb-3">
+                        <p class="col-lg-9">{{ project.title }}</p>
+                        <button class="btn btn-danger h-25">
+                            Supprimer
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Contributed Projects Column -->
+    <div class="col-lg-4">
+
+        <!-- Custom Text Color Utilities -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-1 font-weight-bold text-primary">Projets (Contributeur)</h6>
+            </div>
+            <div class="card-body">
+
+                <!-- Relation modif fields -->
+                {% for contributedProject in user.contributedProjects.values %}
+                    <div class="input-group mb-3">
+                        <p class="col-lg-9">{{ contributedProject.project.title }}</p>
+                        <button class="btn btn-danger h-25">
+                            {{ contributedProject.accepted ? 'Quitter' : 'Refuser' }}
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,21 @@
+<ul class="arbo-nav">
+    {% for file, childs in childs %}
+        {% if childs is iterable %}
+            {% set id = getRandomInt(99, 999) %}
+            <li>
+                <a href="#" data-toggle="collapse" data-target="#collapse-folder-{{ file }}{{ id }}">
+                    <i class="fas fa-fw fa-folder"></i> {{ file }}
+                </a>
+                <div id="collapse-folder-{{ file }}{{ id }}" class="collapse">
+
+                    {% include 'admin/includes/sections/template/template.html.twig' with {'childs' : childs} only %}
+
+                </div>
+            </li>
+        {% else %}
+            <li>
+                <span class="ajax-btn arbo-file" data-method="getFile" data-file="{{ file }}" data-path="{{ childs }}/{{ file }}"><i class="fas fa-file"></i> {{ file }}</span>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>

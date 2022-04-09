@@ -1,0 +1,68 @@
+<ul id="right-menu">
+
+    {#USER MENU#}
+    <li>
+        <i data-path="{{ path('auth') }}" data-target="account" class="link fas fa-user right-menu-icon"></i>
+        {% if app.user %}
+            <div class="right-menu-popup" id="right-menu-popup-account">
+                <div id="right-menu-popup-account-informations">
+                    {% set pp_path = 'users/' ~ app.user.getPpPath() %}
+                    {% if app.user.getPpPath() is null %}
+                        {% set pp_path = 'unknown.png' %}
+                    {% endif %}
+                    <img data-value="pp" src="{{ asset("img/profile/#{pp_path}") }}" alt="#">
+                    <div>
+                        <h3>{{ app.user.username }}</h3>
+                        <p>{{ app.user.createdAt|date('d/m/Y') }}</p>
+                    </div>
+                </div>
+                <div id="right-menu-popup-account-icons">
+                    <i data-path="{{ path('security_logout') }}" class="link fas fa-sign-out-alt"></i>
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="right-menu-popup-account-stat yellow">
+                    <div>
+                        47 <br> Gloires
+                    </div>
+                </div>
+                <div class="right-menu-popup-account-stat blue">
+                    <div>
+                        14 <br> Projets
+                    </div>
+                </div>
+                <div class="right-menu-popup-account-stat red">
+                    <div>
+                        64 <br> Posts
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </li>
+
+    {#SEARCH MENU#}
+    <li>
+        <i data-target="search" class="fas fa-search right-menu-icon"></i>
+        <div class="right-menu-popup" id="right-menu-popup-search">
+            <h3>Rechercher sur le Forum</h3>
+            <div>
+                <input type="text" placeholder="Recherche à effectuer...">
+                <div>
+                    <i class="fas fa-paper-plane"></i>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    {#ADMIN MENU#}
+    <li>
+        <i data-popup="false" data-path="{{ path('admin') }}" data-target="settings" class="link fas fa-hammer right-menu-icon"></i>
+    </li>
+
+    {#SETTINGS MENU#}
+    <li>
+        <i data-target="settings" class="fas fa-cog right-menu-icon"></i>
+        <div class="right-menu-popup" id="right-menu-popup-settings">
+
+        </div>
+    </li>
+</ul>

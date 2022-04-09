@@ -1,0 +1,95 @@
+<div class="menu-info" id="content-relations">
+    <div id="relations-icons">
+        <i class="fas fa-user-friends popup-btn" data-target="relation-list" data-method="getFriends"></i>
+        <i class="fas fa-user-clock popup-btn" data-target="relation-requests" data-method="getFriendRequests">
+            <div id="relation-requests-count">
+                <div></div>
+            </div>
+        </i>
+        <i class="fas fa-user-plus popup-btn" data-target="relation-add" data-method="getUnfriendUsers"></i>
+    </div>
+
+    <div id="relations-img-list"></div>
+
+    <div id="relations-conversations">
+
+        <h2>Conversations Récentes <span id="relations-conversations-block-count"></span> :</h2>
+
+        <ul id="relations-conversations-block">
+            <li class="model">
+                %img%
+                <p>%content%</p>
+                <i class="fas fa-paper-plane popup-btn ajax-btn" data-target="conversation" data-method="getConversation" data-target_id="%id%"></i>
+            </li>
+        </ul>
+    </div>
+
+    {#Relations Popups#}
+
+    {#Relations List#}
+    <div class="popup-content" data-popup="relation-list" data-class="relation-popup" data-loader="true">
+        <h2>Liste des relations <span class="relation-popup-list-list-count"></span></h2>
+        <input class="ajax-search" type="text" placeholder="Rechercher">
+        <div class="relation-popup-list relation-popup-list-block">
+            <ul class="relation-popup-list relation-popup-list-list">
+                <li class="model">
+                    %img%
+                    <div>
+                        <h3>%username%</h3>
+                        <p>Amis depuis le %accepted_at%</p>
+                    </div>
+                    <button class="popup-btn ajax-btn" data-target="conversation" data-method="getConversation" data-target_id="%target_id%">Converser</button>
+                    <button class="ajax-btn" data-method="removeFriend" data-target_id="%target_id%">Supprimer</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    {#Relation Requests#}
+    <div class="popup-content" data-popup="relation-requests" data-class="relation-popup" data-loader="true">
+        <h2>Requêtes reçues <span class="relation-popup-list-requests-count"></span></h2>
+        <br><br><br>
+        <div class="relation-popup-list-block">
+            <ul class="relation-popup-list relation-popup-list-requests">
+                <li class="model">
+                    %img%
+                    <div>
+                        <h3>%username%</h3>
+                        <p>Envoyée le %requested_at%</p>
+                    </div>
+                    <button class="ajax-btn" data-method="addFriend" data-target_id="%id%">Accepter</button>
+                    <button class="ajax-btn" data-method="removeFriend" data-target_id="%id%">Refuser</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    {#Relation Add#}
+    <div class="popup-content" data-popup="relation-add" data-class="relation-popup" data-loader="true">
+        <h2>Ajouter un ami <span class="relation-popup-list-add-count"></span></h2>
+        <input class="ajax-search" type="text" placeholder="Rechercher">
+        <div class="relation-popup-list-block">
+            <ul class="relation-popup-list relation-popup-list-add">
+                <li class="model">
+                    %img%
+                    <div class="unique-btn">
+                        <h3>%username%</h3>
+                        <p>Depuis le %created_at%</p>
+                    </div>
+                    <button class="ajax-btn" data-method="addFriend" data-target_id="%id%">Ajouter</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    {#Relation Conversation#}
+    <div class="popup-content" data-popup="conversation" data-class="relation-popup" data-loader="true">
+        <h2>Conversation avec <span class="relation-popup-conversation-target"></span></h2>
+        <div class="relation-popup-conversation-block" data-loading="true"></div>
+        <div class="relation-popup-conversation-send-block">
+            <textarea id="send-message-msg" placeholder="Écrivez votre message"></textarea>
+            <button id="send-message-btn" class="ajax-btn" data-method="sendMessage" data-target_id="0">Envoyer</button>
+        </div>
+    </div>
+
+</div>

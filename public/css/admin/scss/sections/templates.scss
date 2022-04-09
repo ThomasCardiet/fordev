@@ -1,0 +1,31 @@
+.arbo-block {
+  .arbo-nav {
+    list-style: none;
+    width: 100%;
+
+    .arbo-file {
+
+      &:hover {
+        color: var(--light_green);
+        cursor: pointer;
+      }
+    }
+
+    li {
+      margin-left: 15px;
+    }
+  }
+
+  .arbo-file {
+    color: green;
+  }
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+      color: grey;
+    }
+  }
+}

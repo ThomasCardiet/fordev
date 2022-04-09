@@ -1,0 +1,126 @@
+<!-- Circle Buttons -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Création</h6>
+    </div>
+    <div class="card-body">
+
+        <!-- Create Field Category -->
+        <p class="m-0 font-weight-bold text-primary">Options Catégories</p>
+        <div class="d-flex mb-2">
+            <i class="fas fa-info-circle info-bubble" data-toggle="tooltip" data-placement="top" title="Créer une catégorie de champ"></i>
+            <input id="create-field-category-category_name" type="text" class="form-control bg-light border-1 small col-md-2 mr-1" placeholder="Nom">
+            <button class="ajax-btn btn btn-primary" data-method="createFieldCategory">
+                Créer
+            </button>
+        </div>
+
+        <!-- Remove Field Category -->
+        <div class="d-flex mb-2">
+            <i class="fas fa-info-circle info-bubble" data-toggle="tooltip" data-placement="top" title="Supprimer une catégorie de champ"></i>
+            <select id="remove-field-category-category_id" class="form-select col-md-2 ml-1 mr-1" aria-label="Default select example" data-update="getFieldCategories">
+                {% for field_category in field_categories %}
+                    {% if field_category.id is not same as(-1) %}
+                        <option value="{{ field_category.id }}">{{ field_category.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <button class="ajax-btn btn btn-primary" data-method="removeFieldCategory">
+                Supprimer
+            </button>
+        </div>
+
+        <hr>
+
+        <!-- Create Field -->
+        <p class="m-0 font-weight-bold text-primary">Options Champs</p>
+        <div class="d-flex mb-2">
+            <i class="fas fa-info-circle info-bubble" data-toggle="tooltip" data-placement="top" title="Créer un champ"></i>
+            <input id="create-field-field_name" type="text" class="form-control bg-light border-1 small col-md-2" placeholder="Nom">
+            <input id="create-field-field_value" type="text" class="form-control bg-light border-1 small ml-1 mr-1" placeholder="Valeur">
+            <select id="create-field-category_id" class="form-select col-md-2 ml-1 mr-1" data-update="getFieldCategories">
+                <option selected value="-1">Others</option>
+                {% for field_category in field_categories %}
+                    {% if field_category.id is not same as(-1) %}
+                        <option value="{{ field_category.id }}">{{ field_category.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <button class="ajax-btn btn btn-primary" data-method="createField">
+                Créer
+            </button>
+        </div>
+
+        <!-- Remove Field -->
+        <div class="d-flex mb-2">
+            <i class="fas fa-info-circle info-bubble" data-toggle="tooltip" data-placement="top" title="Supprimer un champ"></i>
+            <select id="remove-field-field_id" class="form-select col-md-2 ml-1 mr-1" data-update="getFields">
+                {% for field in fields %}
+                    <option value="{{ field.id }}">{{ field.name }}</option>
+                {% endfor %}
+            </select>
+            <button class="ajax-btn btn btn-primary" data-method="removeField">
+                Supprimer
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<!-- Content Row -->
+<div class="row">
+
+    {% for field_category in field_categories %}
+        <!-- Field Column -->
+        <div class="col-lg-4" data-fieldcategory_id="{{ field_category.id }}">
+
+            <!-- Custom Text Color Utilities -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-1 font-weight-bold text-primary">{{ field_category.name }}</h6>
+                    <button class="ajax-btn btn btn-danger" type="button" data-method="removeFieldCategory" data-category_id="{{ field_category.id }}">
+                        Supprimer
+                    </button>
+                </div>
+                <div class="card-body">
+
+                    {% if field_category.name is same as("Identity") %}
+                        {#SITE LOGO#}
+                        <div class="input-group mb-3">
+                            <i class="fas fa-info-circle info-bubble" data-toggle="tooltip" data-placement="top" title="Modification du Logo du site"></i>
+                            <div class="btn-file ml-3 mr-3">
+                                <img src="{{ asset("img/logo.png") }}" alt="">
+                                <div class="round">
+                                    <input type="file" data-file_type="image">
+                                    <i class = "fa fa-camera"></i>
+                                </div>
+                            </div>
+                            <button class="ajax-btn btn btn-primary h-25" type="button" data-method="updateField" data-target_id="0">
+                                Modifier
+                            </button>
+                            <button class="ajax-btn btn btn-danger h-25" type="button" data-method="removeField" data-field_id="0">
+                                Supprimer
+                            </button>
+                        </div>
+                    {% endif %}
+
+                    <!-- Fields modif inputs -->
+                    {% for field in field_category.fields.values %}
+                        <div class="input-group mb-3" data-field_id="{{ field.id }}">
+                            <i class="fas fa-info-circle info-bubble" data-toggle="tooltip" data-placement="top" title="Modification du champ {{ field.name }} | édité le {{ field.editedAt|date("d/m/Y à h:i") }} par {{ field.lastUserEdit.username }}"></i>
+                            <input id="update-field-field_value_{{ field.id }}" type="text" class="form-control bg-light border-0 small" placeholder="{{ field.name }}" value="{{ field.value }}">
+                            <button class="ml-1 mr-1 ajax-btn btn btn-primary h-25" type="button" data-method="updateField" data-field_id="{{ field.id }}">
+                                Modifier
+                            </button>
+                            <button class="ajax-btn btn btn-danger h-25" type="button" data-method="removeField" data-field_id="{{ field.id }}">
+                                Supprimer
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    {% endfor %}
+
+</div>

@@ -6,7 +6,7 @@ menus = {
     projects: 2,
     statistics: 3,
 }
-first_menu = menus.projects; //instance de menus
+first_menu = menus.profile; //instance de menus
 
 resetContent(false);
 
@@ -27,9 +27,7 @@ methods = {
 
     /*USER*/
     getUserInformations: {
-        function: {
-            section: sections.user,
-        },
+        section: sections.user,
         update: true,
         type: 'get',
         style: null,
@@ -46,9 +44,7 @@ methods = {
 
     /*RELATIONS*/
     getFriends: {
-        function: {
-            section: sections.relations,
-        },
+        section: sections.relations,
         update: true,
         type: 'get',
         style: 'list',
@@ -63,9 +59,7 @@ methods = {
         }
     },
     getFriendRequests: {
-        function: {
-            section: sections.relations,
-        },
+        section: sections.relations,
         update: true,
         type: 'get',
         style: 'list',
@@ -80,9 +74,7 @@ methods = {
         }
     },
     getUnfriendUsers: {
-        function: {
-            section: sections.relations,
-        },
+        section: sections.relations,
         update: false,
         type: 'get',
         style: 'list',
@@ -98,9 +90,7 @@ methods = {
     },
 
     getRecentConversations: {
-        function: {
-            section: sections.relations,
-        },
+        section: sections.relations,
         update: true,
         type: 'get',
         style: 'list',
@@ -116,9 +106,7 @@ methods = {
     },
 
     getConversation: {
-        function: {
-            section: sections.relations,
-        },
+        section: sections.relations,
         update: false,
         type: 'get',
         style: null,
@@ -135,9 +123,7 @@ methods = {
 
     /*PROJECTS*/
     getProjects: {
-        function: {
-            section: sections.projects,
-        },
+        section: sections.projects,
         update: false,
         type: 'get',
         style: 'list',
@@ -153,9 +139,7 @@ methods = {
     },
 
     getContributorRequests: {
-        function: {
-            section: sections.projects,
-        },
+        section: sections.projects,
         update: true,
         type: 'get',
         style: 'list',
@@ -171,9 +155,7 @@ methods = {
     },
 
     getLastProjects: {
-        function: {
-            section: sections.projects,
-        },
+        section: sections.projects,
         update: true,
         type: 'get',
         style: 'list',
@@ -189,9 +171,7 @@ methods = {
     },
 
     getProject: {
-        function: {
-            section: sections.projects,
-        },
+        section: sections.projects,
         update: false,
         type: 'get',
         style: null,
@@ -210,9 +190,6 @@ methods = {
 
     /*USER*/
     updateUser: {
-        function: {
-            section: sections.user,
-        },
         update: false,
         type: 'action',
         close_popup: true,
@@ -232,28 +209,16 @@ methods = {
 
     /*RELATIONS*/
     addFriend: {
-        function: {
-            section: sections.relations,
-        },
-        update: false,
         type: 'action',
         close_popup: false,
         style: 'message'
     },
     removeFriend: {
-        function: {
-            section: sections.relations,
-        },
-        update: false,
         type: 'action',
         close_popup: false,
         style: 'message'
     },
     sendMessage: {
-        function: {
-            section: sections.relations,
-        },
-        update: false,
         type: 'action',
         close_popup: false,
         style: null,
@@ -271,10 +236,6 @@ methods = {
 
     /*PROJECTS*/
     createProject: {
-        function: {
-            section: sections.projects,
-        },
-        update: false,
         type: 'action',
         close_popup: true,
         style: 'message',
@@ -303,20 +264,12 @@ methods = {
     },
 
     addContributor: {
-        function: {
-            section: sections.contributors,
-        },
-        update: false,
         type: 'action',
         close_popup: false,
         style: 'message'
     },
 
     removeContributor: {
-        function: {
-            section: sections.contributors,
-        },
-        update: false,
         type: 'action',
         close_popup: false,
         style: 'message'

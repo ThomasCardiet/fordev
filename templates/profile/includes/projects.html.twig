@@ -1,0 +1,128 @@
+<div class="menu-info" id="content-projects">
+    <div id="projects-icons">
+        <i class="fas fa-list popup-btn" data-target="project-list" data-method="getProjects"></i>
+        <i class="fas fa-clock popup-btn" data-target="project-requests" data-method="getProjectRequests">
+            <div id="project-requests-count">
+                <div></div>
+            </div>
+        </i>
+        <i class="fas fa-plus-square popup-btn" data-target="project-create"></i>
+    </div>
+
+    <div id="projects-recents">
+
+        <h2>Projets Récents <span id="projects-block-count"></span> :</h2>
+
+        <ul class="projects-recents-list-list">
+            <li class="model">
+                %img%
+                <div>
+                    <h3>%title%</h3>
+                    <p>%contributors% contributeurs</p>
+                    <p>crée le %created_at%</p>
+                </div>
+                <i class="fas fa-eye popup-btn ajax-btn" data-target="project-preview" data-method="getProject" data-project_id="%id%"></i>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{#Projects Popups#}
+
+                {#Projects List#}
+<div class="popup-content" data-popup="project-list" data-class="project-popup" data-loader="false">
+    <h2>Liste de vos projets <span class="project-popup-list-list-count"></span></h2>
+    <input class="ajax-search" type="text" placeholder="Rechercher">
+    <div class="project-popup-list-block">
+        <ul class="project-popup-list-list">
+            <li class="project-popup-list-model model">
+                %img%
+                <div>
+                    <h3>%title%</h3>
+                    <p>%contributors% contributeur(s)</p>
+                    <p>crée le %created_at%</p>
+                </div>
+                <i class="fas fa-eye popup-btn ajax-btn" data-target="project-preview" data-method="getProject" data-project_id="%id%"></i>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{#Projects Requests#}
+<div class="popup-content" data-popup="project-requests" data-class="project-popup" data-loader="false">
+    <h2>Requêtes reçues <span class="project-popup-list-requests-count"></span></h2>
+    <div class="project-popup-list-block">
+        <ul class="project-popup-list-requests">
+            <li class="project-popup-list-model model">
+                %img%
+                <div>
+                    <h3>%title%</h3>
+                    <p>%contributors% contributeurs</p>
+                    <p>crée le %created_at%</p>
+                </div>
+                <button class="ajax-btn" data-method="removeContributor" data-target_id="%id%">Refuser</button>
+                <button class="ajax-btn" data-method="addContributor" data-target_id="%id%">Accepter</button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{#Projects Create#}
+<div class="popup-content" data-popup="project-create" data-class="project-popup" data-loader="false">
+    <h2>Créer un projet <span class="project-popup-list-create-count"></span></h2>
+    <div class="project-popup-block">
+        <div class="upload">
+            <img id="create-project-file-visual" src="{{ asset("img/profile/unknown_project.png") }}" width = 100 height = 100 alt="">
+            <div class="round">
+                <input id="create-project-file" type="file" data-file_type="image">
+                <i class = "fa fa-camera" style = "color: #fff;"></i>
+            </div>
+        </div>
+
+        <div class="project-popup-input">
+            <i class="fas fa-pen"></i>
+            <input id="create-project-title" type="text" placeholder="Nom du projet">
+        </div>
+
+        <div class="project-popup-textarea">
+            <i class="fas fa-align-justify"></i>
+            <textarea id="create-project-description" placeholder="Décrivez votre projet"></textarea>
+        </div>
+
+        <button class="ajax-btn" data-method="createProject">Créer</button>
+    </div>
+</div>
+
+{#Project Preview#}
+<div class="popup-content" data-popup="project-preview" data-class="project-popup project-popup-preview" data-loader="true">
+    <h2>Projet '<span data-value="title"></span>'</h2>
+    <div class="project-popup-preview-block">
+        <img data-value="image" src="{{ asset("img/profile/unknown_project.png") }}" alt="#">
+        <p data-value="description"></p>
+        <p data-value="owner.username"></p>
+
+        {#ADVANCED BUTTON#}
+        <p class="advanced-properties" data-active="false" data-target="project-popup-preview-members"><i class="fas fa-caret-right"></i> Gestion des contributeurs</p>
+
+        {#ADVANCED CONTENT#}
+        <div class="advanced-content" id="project-popup-preview-members">
+
+            <div id="project-popup-preview-members-add">
+                <h3>Ajouter des contributeurs</h3>
+                <div data-value="$getFriends">
+
+                </div>
+            </div>
+
+            <div id="project-popup-preview-members-manage">
+                <h3>Liste des contributeurs</h3>
+                <ul data-value="contributors|list">
+
+                </ul>
+            </div>
+
+        </div>
+
+        <a data-param="project/%project_id%|href" href="">Voir le projet</a>
+    </div>
+</div>

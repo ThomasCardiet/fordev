@@ -30,9 +30,7 @@ methods = {
 
     /*ROLES*/
     getRoles: {
-        function: {
-            section: sections.roles,
-        },
+        section: sections.roles,
         update: true,
         type: 'get',
         style: 'list',
@@ -53,9 +51,7 @@ methods = {
 
     /*CONTRIBUTORS*/
     getContributors: {
-        function: {
-            section: sections.contributors,
-        },
+        section: sections.contributors,
         update: true,
         type: 'get',
         style: 'list',
@@ -75,9 +71,7 @@ methods = {
 
     /*RELATIONS*/
     getFriends: {
-        function: {
-            section: sections.contributors,
-        },
+        section: sections.contributors,
         update: false,
         type: 'get',
         style: 'list',
@@ -96,9 +90,7 @@ methods = {
     },
 
     getUnfriendUsers: {
-        function: {
-            section: sections.contributors,
-        },
+        section: sections.contributors,
         update: false,
         type: 'get',
         style: 'list',
@@ -117,9 +109,7 @@ methods = {
     },
 
     getPublicUsers: {
-        function: {
-            section: sections.contributors,
-        },
+        section: sections.contributors,
         update: false,
         type: 'get',
         style: 'list',
@@ -144,20 +134,12 @@ methods = {
 
     /*CONTRIBUTORS*/
     updateContributor: {
-        function: {
-            section: sections.contributors,
-        },
-        update: false,
         type: 'action',
         close_popup: false,
         style: 'message'
     },
 
     addContributor: {
-        function: {
-            section: sections.contributors,
-        },
-        update: false,
         type: 'action',
         close_popup: false,
         style: 'message',
@@ -167,10 +149,6 @@ methods = {
     },
 
     removeContributor: {
-        function: {
-            section: sections.contributors,
-        },
-        update: false,
         type: 'action',
         close_popup: false,
         style: 'message'
@@ -178,10 +156,6 @@ methods = {
 
     /*ROLES*/
     createRole: {
-        function: {
-            section: sections.roles,
-        },
-        update: false,
         type: 'action',
         close_popup: true,
         style: 'message',
@@ -203,10 +177,6 @@ methods = {
     },
 
     removeRole: {
-        function: {
-            section: sections.roles,
-        },
-        update: false,
         type: 'action',
         close_popup: false,
         style: 'message'

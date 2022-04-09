@@ -1,0 +1,109 @@
+{% block stylesheets %}
+    <!-- Code Mirror -->
+    <link rel="stylesheet" href="{{ asset('css/plugins/codemirror/codemirror.css') }}">
+
+    <!-- Addons -->
+    <link rel="stylesheet" href="{{ asset('css/plugins/codemirror/addons/dialog.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/plugins/codemirror/addons/show-hint.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/plugins/codemirror/addons/fullscreen.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/plugins/codemirror/themes/abcdef.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/codemirror/themes/dracula.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/codemirror/themes/material-darker.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/codemirror/themes/base16-dark.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/plugins/codemirror/addons/foldgutter.css') }}">
+
+{% endblock %}
+
+<!-- Circle Buttons -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Modification des templates</h6>
+    </div>
+    <div class="card-body">
+
+        <div class="arbo-block">
+
+            <a href="#" data-toggle="collapse" data-target="#collapse-folder-templates">
+                <i class="fas fa-fw fa-folder"></i> Templates
+            </a>
+            <div id="collapse-folder-templates" class="collapse">
+
+                {% include 'admin/includes/sections/template/template.html.twig' with {'childs' : templates} only %}
+
+            </div>
+
+            <hr>
+
+            <div id="template-editor-block">
+                <p>Fichier sélectionné:
+                    <span id="arbo-current-file" class="arbo-file" data-path="null"><i class="fas fa-file"></i> Aucun</span>
+                </p>
+
+                <div class="d-flex justify-content-between">
+                    <p>
+                        Thème:
+                        <select id=template-editor-theme>
+                            <option>dracula</option>
+                            <option>abcdef</option>
+                            <option>material-darker</option>
+                            <option>base16-dark</option>
+                        </select>
+                    </p>
+
+                    <p>
+                        Type d'éditeur:
+
+                        <select id="template-editor-type">
+                            <option value="0">Développeur</option>
+                            <option value="1">Commercial</option>
+                        </select>
+                    </p>
+                </div>
+
+                <textarea id="template-editor-textarea"></textarea>
+            </div>
+
+            <button id="template-validate-btn" class="btn btn-success mt-2 h-25 float-right" data-toggle="modal" data-target="#updateFileModal">
+                Modifier
+            </button>
+        </div>
+
+    </div>
+</div>
+
+{% block javascripts %}
+
+    <!-- Code Mirror -->
+    <script src="{{ asset("js/plugins/codemirror/codemirror.js") }}"></script>
+
+    <!-- Addons -->
+    <script src="{{ asset("js/plugins/codemirror/addons/xml.js") }}"></script>
+
+    <script src="{{ asset("js/plugins/codemirror/addons/hint/show-hint.js") }}"></script>
+    <script src="{{ asset("js/plugins/codemirror/addons/hint/javascript-hint.js") }}"></script>
+    <script src="{{ asset("js/plugins/codemirror/addons/javascript.js") }}"></script>
+    <script src="{{ asset("js/plugins/codemirror/addons/markdown.js") }}"></script>
+
+    <script src="{{ asset("js/plugins/codemirror/addons/hint/html-hint.js") }}"></script>
+    <script src="{{ asset("js/plugins/codemirror/addons/hint/xml-hint.js") }}"></script>
+
+    <script src="{{ asset("js/plugins/codemirror/addons/search/search.js") }}"></script>
+    <script src="{{ asset("js/plugins/codemirror/addons/search/searchcursor.js") }}"></script>
+    <script src="{{ asset("js/plugins/codemirror/addons/dialog.js") }}"></script>
+    <script src="{{ asset("js/plugins/codemirror/addons/jump-to-line.js") }}"></script>
+
+    <script src="{{ asset("js/plugins/codemirror/addons/fullscreen.js") }}"></script>
+
+    <script src="{{ asset("js/plugins/codemirror/addons/folding/foldcode.js") }}"></script>
+    <script src="{{ asset("js/plugins/codemirror/addons/folding/foldgutter.js") }}"></script>
+    <script src="{{ asset("js/plugins/codemirror/addons/folding/brace-fold.js") }}"></script>
+    <script src="{{ asset("js/plugins/codemirror/addons/folding/xml-fold.js") }}"></script>
+    <script src="{{ asset("js/plugins/codemirror/addons/folding/indent-fold.js") }}"></script>
+    <script src="{{ asset("js/plugins/codemirror/addons/folding/markdown-fold.js") }}"></script>
+    <script src="{{ asset("js/plugins/codemirror/addons/folding/comment-fold.js") }}"></script>
+
+{% endblock %}

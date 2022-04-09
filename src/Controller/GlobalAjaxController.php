@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AjaxController extends AbstractController
+class GlobalAjaxController extends AbstractController
 {
 
     /**
@@ -58,6 +58,7 @@ class AjaxController extends AbstractController
 
         $user = $user_repo->find($fields['user_id']);
 
+        // METHODS
         switch ($m) {
 
             //GET METHODS
@@ -386,7 +387,7 @@ class AjaxController extends AbstractController
                 $data = [
                     'code' => 200,
                     'msg' => '',
-                    'status' => 'success'
+                    'status' => 'error'
                 ];
 
                 //ENVOIS DE REQUÊTE

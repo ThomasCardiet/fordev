@@ -21,8 +21,8 @@
         <div class="header-top-logo">
             <img src="{{ asset('img/logo.png') }}" alt="#">
             <div class="header-top-logo-desc">
-                <p>For me, For you,</p>
-                <h1>FOR DEV</h1>
+                <p>{{ getField('slogan') }}</p>
+                <h1>{{ getField('title') }}</h1>
                 <hr>
             </div>
         </div>
@@ -44,101 +44,14 @@
 </header>
 
 <main>
-    <div id="overlay"></div>
-    <div id="popup" data-has_value=false>
-        <div class="popup-message success">
-            <p id="popup-message-content"></p>
-        </div>
-        <i class="fas fa-times popup-btn" id="popup-close"></i>
-        <div id="popup-loader">
-            <img src="{{ asset('img/gif/loader.gif') }}" alt="#">
-        </div>
-    </div>
-    <div id="popup-notification">
-        <div class="success-checkmark popup-notification-anim" data-type="success">
-            <div class="check-icon">
-                <span class="icon-line line-tip"></span>
-                <span class="icon-line line-long"></span>
-                <div class="icon-circle"></div>
-                <div class="icon-fix"></div>
-            </div>
-        </div>
 
-        <div class="error-checkmark popup-notification-anim" data-type="error">
-            <div class="check-icon">
-                <span class="icon-line line-tip"></span>
-                <span class="icon-line line-long"></span>
-                <div class="icon-circle"></div>
-                <div class="icon-fix"></div>
-            </div>
-        </div>
+    <!-- POPUP NEEDS -->
+    {% include 'includes/popups.html.twig' %}
 
-        <p id="popup-notification-msg"></p>
-    </div>
     {% block body %}{% endblock %}
 </main>
 
-<ul id="right-menu">
-    {#USER MENU#}
-    <li>
-        <i data-path="{{ path('auth') }}" data-target="account" class="link fas fa-user right-menu-icon"></i>
-        {% if app.user %}
-        <div class="right-menu-popup" id="right-menu-popup-account">
-            <div id="right-menu-popup-account-informations">
-                {% set pp_path = 'users/' ~ app.user.getPpPath() %}
-                {% if app.user.getPpPath() is null %}
-                    {% set pp_path = 'unknown.png' %}
-                {% endif %}
-                <img data-value="pp" src="{{ asset("img/profile/#{pp_path}") }}" alt="#">
-                <div>
-                    <h3>{{ app.user.username }}</h3>
-                    <p>{{ app.user.createdAt|date('d/m/Y') }}</p>
-                </div>
-            </div>
-            <div id="right-menu-popup-account-icons">
-                <i data-path="{{ path('security_logout') }}" class="link fas fa-sign-out-alt"></i>
-                <i class="fas fa-bell"></i>
-            </div>
-            <div class="right-menu-popup-account-stat yellow">
-                <div>
-                    47 <br> Gloires
-                </div>
-            </div>
-            <div class="right-menu-popup-account-stat blue">
-                <div>
-                    14 <br> Projets
-                </div>
-            </div>
-            <div class="right-menu-popup-account-stat red">
-                <div>
-                    64 <br> Posts
-                </div>
-            </div>
-        </div>
-        {% endif %}
-    </li>
-    {#SEARCH MENU#}
-    <li>
-        <i data-target="search" class="fas fa-search right-menu-icon"></i>
-        <div class="right-menu-popup" id="right-menu-popup-search">
-            <h3>Rechercher sur le Forum</h3>
-            <div>
-                <input type="text" placeholder="Recherche à effectuer...">
-                <div>
-                    <i class="fas fa-paper-plane"></i>
-                </div>
-            </div>
-        </div>
-    </li>
-    {#SETTINGS MENU#}
-    <li>
-        <i data-target="settings" class="fas fa-cog right-menu-icon"></i>
-        <div class="right-menu-popup" id="right-menu-popup-settings">
-
-        </div>
-    </li>
-</ul>
-
+{% include 'includes/right-menu.html.twig' %}
 <div class="footer-dark">
     <footer>
         <div class="container">
@@ -160,13 +73,13 @@
                     </ul>
                 </div>
                 <div class="presentation item text">
-                    <h3>Fordev</h3>
+                    <h3>{{ getField('title') }}</h3>
                     <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
                 </div>
             </div>
             <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a></div>
 
-            <p class="copyright">Fordev © 2021</p>
+            <p class="copyright">{{ getField('Title') }} © {{ getField('copyright_year') }}</p>
         </div>
     </footer>
 </div>
