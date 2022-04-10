@@ -637,13 +637,14 @@ header, main, footer {
   color: var(--white);
   padding: 2.5rem 6.5rem;
   text-align: center;
+  font-family: sans-serif;
 }
 @media (min-width: 64em) {
   .footer .container {
     display: grid;
-    grid-template-columns: 0.5fr 0.5fr 1.1fr;
+    grid-template-columns: 0.5fr 0.5fr 1.3fr;
     grid-template-rows: 1fr auto;
-    grid-template-areas: " links1 links2 social copyright" " links1 links2 social copyright";
+    grid-template-areas: " links1 links2 social" " links1 links2 social";
     gap: 1rem;
     justify-items: start;
   }
@@ -781,7 +782,7 @@ header, main, footer {
   transition: color 150ms ease-in-out;
 }
 .footer__links a:hover {
-  color: var(--blue);
+  color: var(--green);
 }
 .footer__copyright {
   font-size: 0.8125rem;
@@ -1155,15 +1156,14 @@ input[type=radio]:checked + label::after {
   background: url("../../img/home/hero.png") no-repeat fixed;
   background-size: cover;
   width: 100%;
-  height: 500px;
-  border: 3px solid #00FFC3;
+  padding: 10em 0;
 }
 #home .hero button {
   margin-left: 30%;
 }
 #home .hero .hero-search .hero-search__wrapper {
   text-align: left;
-  margin: 6% auto;
+  margin: 0 auto 6% auto;
   width: 40%;
 }
 #home .hero .hero-search .hero-search__wrapper input, #home .hero .hero-search .hero-search__wrapper label {
@@ -1197,6 +1197,22 @@ input[type=radio]:checked + label::after {
 }
 #home .hero .hero-search .hero-search__wrapper .hero-search__bar i:hover {
   color: var(--green);
+}
+#home .tags {
+  background-color: var(--dark_grey);
+  height: 192px;
+}
+#home .large1 {
+  background-color: var(--light_grey);
+  height: 709px;
+}
+#home .short1 {
+  background-color: var(--dark_grey);
+  height: 192px;
+}
+#home .large2 {
+  background-color: var(--light_grey);
+  height: 1464px;
 }
 
 #profile {

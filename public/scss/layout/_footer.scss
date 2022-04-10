@@ -3,15 +3,16 @@
     color: var(--white);
     padding: 2.5rem 6.5rem;
     text-align: center;
+    font-family: sans-serif;
 
     .container {
         @include breakpoint-up(large) {
             display: grid;
-            grid-template-columns: 0.5fr 0.5fr 1.1fr;
+            grid-template-columns: 0.5fr 0.5fr 1.3fr;
             grid-template-rows: 1fr auto;
             grid-template-areas:
-        ' links1 links2 social copyright'
-        ' links1 links2 social copyright';
+        ' links1 links2 social'
+        ' links1 links2 social';
             gap: 1rem;
             justify-items: start;
         }
@@ -161,8 +162,9 @@
             line-height: 2.25;
             transition: color 150ms ease-in-out;
 
+
             &:hover {
-                color: var(--blue);
+                color: var(--green);
             }
         }
     }
