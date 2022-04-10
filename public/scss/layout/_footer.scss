@@ -4,6 +4,9 @@
     padding: 2.5rem 6.5rem;
     text-align: center;
     font-family: sans-serif;
+    border-top: 8px solid var(--yellow);
+
+
 
     .container {
         @include breakpoint-up(large) {
@@ -30,7 +33,7 @@
             margin-bottom: 1.875rem;
         }
         grid-column-start: 2;
-        margin: 3em auto 0 auto;
+        margin:  0 auto;
 
         .wrapper {
             display: flex;
@@ -139,10 +142,14 @@
         align-items: center;
         font-size: 0.9375rem;
 
-
+        &__title {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 11px;
+        }
 
         @include breakpoint-up(large) {
-            justify-content: space-between;
             align-items: start;
         }
 
@@ -167,6 +174,7 @@
             transition: color 150ms ease-in-out;
             color: var(--grey);
             text-decoration: none;
+            font-size:16px;
 
             &:hover {
                 color: var(--green);
@@ -179,17 +187,17 @@
 
         @include breakpoint-up(large) {
             grid-area: copyright;
-            align-self: end;
-            justify-self: end;
+
         }
 
         &__title {
             font-size: 26px;
             font-weight: 700;
             color: var(--white);
+            margin-bottom: 11px;
+
         }
         &__text {
-            margin-top: 0.5rem;
             font-size: 16px;
             font-weight: 500;
             color: var(--grey);
@@ -200,6 +208,6 @@
     .attribution {
         color: var(--grey);
         margin-top: 23px;
-        font-size: 0.875rem;
+        font-size: 16px;
     }
 }
