@@ -119,6 +119,7 @@
 
 {% include 'includes/right-menu.html.twig' %}
 <footer class="footer">
+    <div class="yellow"></div>
     <div class="container">
         <div class="footer__social">
             <div class="wrapper">
@@ -158,14 +159,14 @@
         </div>
 
         <div class="footer__copyright">
-            &copy; Sev7n2507. All Rights Reserved.
+            <p class="footer__copyright__title">Fordev</p>
+            <p class="footer__copyright__text">
+                Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.
+            </p>
         </div>
     </div>
     <div class="attribution">
-        Challenge by
-        <a href="https://profcitron.fr/" target="_blank">Alexis Sensei</a>.
-        Coded by
-        <a href="https://github.com/Sev7n2507" target="_blank">Seven2507</a>.
+        Fordev © {{ getField('copyright_year') }} Tous droits réservés.
     </div>
 </footer>
 </div>

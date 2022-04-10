@@ -4,8 +4,9 @@
         background: url("../../img/home/hero.png") no-repeat fixed;
         background-size: cover;
         width: 100%;
-        height: 500px;
-        border: 3px solid #00FFC3;
+        padding: 10em 0;
+
+
         button {
             margin-left: 30%;
         }
@@ -13,7 +14,7 @@
         .hero-search {
             .hero-search__wrapper {
                 text-align:left;
-                margin: 6% auto;
+                margin: 0 auto 6% auto;
                 width: 40%;
 
 
@@ -66,5 +67,28 @@
         }
 
 
+
+
     }
+
+    .tags {
+        background-color: var(--dark_grey);
+        height: 192px;
+    }
+
+    .large1 {
+        background-color: var(--light_grey);
+        height: 709px;
+    }
+    .short1 {
+        background-color: var(--dark_grey);
+        height: 192px;
+    }
+
+    .large2 {
+        background-color: var(--light_grey);
+        height: 1464px;
+    }
+
+
 }

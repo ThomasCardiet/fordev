@@ -3,15 +3,16 @@
     color: var(--white);
     padding: 2.5rem 6.5rem;
     text-align: center;
+    font-family: sans-serif;
 
     .container {
         @include breakpoint-up(large) {
             display: grid;
-            grid-template-columns: 0.5fr 0.5fr 1.1fr;
+            grid-template-columns: repeat(3, 1fr);
             grid-template-rows: 1fr auto;
             grid-template-areas:
-        ' links1 links2 social copyright'
-        ' links1 links2 social copyright';
+        ' links1 links2 copyright '
+        ' social social social ';
             gap: 1rem;
             justify-items: start;
         }
@@ -28,6 +29,8 @@
         @include breakpoint-down(medium) {
             margin-bottom: 1.875rem;
         }
+        grid-column-start: 2;
+        margin: 3em auto 0 auto;
 
         .wrapper {
             display: flex;
@@ -136,6 +139,8 @@
         align-items: center;
         font-size: 0.9375rem;
 
+
+
         @include breakpoint-up(large) {
             justify-content: space-between;
             align-items: start;
@@ -160,26 +165,41 @@
         a {
             line-height: 2.25;
             transition: color 150ms ease-in-out;
+            color: var(--grey);
+            text-decoration: none;
 
             &:hover {
-                color: var(--blue);
+                color: var(--green);
             }
         }
     }
 
     &__copyright {
-        font-size: 0.8125rem;
-        color: var(----light_grey);
+        text-align:left;
 
         @include breakpoint-up(large) {
             grid-area: copyright;
             align-self: end;
             justify-self: end;
         }
+
+        &__title {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--white);
+        }
+        &__text {
+            margin-top: 0.5rem;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--grey);
+            width: 40rem;
+        }
     }
 
     .attribution {
-        margin-top: 4rem;
+        color: var(--grey);
+        margin-top: 23px;
         font-size: 0.875rem;
     }
 }
