@@ -1917,6 +1917,188 @@ hr {
   transform: scale(1.15);
 }
 
+.user-popup h2 {
+  color: var(--green);
+  font-size: 2em;
+}
+.user-popup .user-popup-block {
+  background-color: var(--dark_grey);
+  margin-top: 15px;
+  height: 92%;
+  overflow-y: auto;
+  position: relative;
+  padding: 25px;
+}
+.user-popup .user-popup-block .upload {
+  width: 100px;
+  position: absolute;
+  right: 25px;
+  top: 25px;
+}
+.user-popup .user-popup-block .upload img {
+  border-radius: 50%;
+  border: 6px solid #eaeaea;
+}
+.user-popup .user-popup-block .upload .round {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #00B4FF;
+  width: 32px;
+  height: 32px;
+  line-height: 33px;
+  text-align: center;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.user-popup .user-popup-block .upload .round input[type=file] {
+  position: absolute;
+  transform: scale(2);
+  opacity: 0;
+}
+.user-popup .user-popup-block input[type=file]::-webkit-file-upload-button {
+  cursor: pointer;
+}
+.user-popup .user-popup-block .user-popup-input {
+  border-bottom: solid 1px var(--grey);
+  margin: 0 30px 45px 0;
+  width: 45%;
+}
+.user-popup .user-popup-block .user-popup-input i {
+  color: var(--green);
+  font-size: 1.6em;
+  margin-right: 10px;
+}
+.user-popup .user-popup-block .user-popup-input input {
+  border: none;
+  outline: none;
+  font-size: 1.6em;
+  width: 80%;
+  background-color: transparent;
+  color: white;
+}
+.user-popup .user-popup-block .user-popup-input input::placeholder {
+  opacity: 0.3;
+}
+.user-popup .user-popup-block .user-popup-input textarea {
+  resize: none;
+  height: 200px;
+}
+.user-popup .user-popup-block .user-popup-textarea {
+  border-bottom: solid 1px var(--grey);
+  margin: 30px 0 45px 0;
+  width: 100%;
+  position: relative;
+}
+.user-popup .user-popup-block .user-popup-textarea i {
+  color: var(--green);
+  font-size: 1.6em;
+  margin-right: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.user-popup .user-popup-block .user-popup-textarea textarea {
+  margin-left: 1.6em;
+  border: none;
+  outline: none;
+  font-size: 1.6em;
+  width: 95%;
+  background-color: transparent;
+  color: white;
+  resize: none;
+  height: 150px;
+}
+.user-popup .user-popup-block .user-popup-textarea textarea::placeholder {
+  opacity: 0.3;
+}
+.user-popup .user-popup-block #user-popup-advanced {
+  color: white;
+  margin: 20px 0;
+}
+.user-popup .user-popup-block #user-popup-advanced .user-popup-advanced-input {
+  color: var(--grey);
+  display: flex;
+  justify-content: space-evenly;
+  width: 40%;
+  margin: auto;
+}
+.user-popup .user-popup-block #user-popup-advanced .user-popup-advanced-input h3 {
+  font-size: 1.4em;
+  margin-top: -5px;
+}
+.user-popup .user-popup-block #user-popup-advanced .user-popup-advanced-input label {
+  font-size: 1em;
+}
+.user-popup .user-popup-block #user-popup-advanced #professional-content-skills {
+  display: flex;
+  width: 100%;
+  background-color: var(--light_grey);
+}
+.user-popup .user-popup-block #user-popup-advanced #professional-content-skills #professional-content-skills-list {
+  list-style: none;
+  height: 200px;
+  overflow-y: auto;
+  color: var(--green);
+  display: inline-block;
+  border-right: solid 1px white;
+}
+.user-popup .user-popup-block #user-popup-advanced #professional-content-skills #professional-content-skills-list li {
+  padding: 10px;
+  border: var(--light_grey) solid 1px;
+}
+.user-popup .user-popup-block #user-popup-advanced #professional-content-skills #professional-content-skills-list li:hover {
+  cursor: pointer;
+  border: grey solid 1px;
+  background-color: var(--dark_grey);
+}
+.user-popup .user-popup-block #user-popup-advanced #professional-content-skills #professional-content-skills-owned {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  height: 200px;
+  overflow-y: auto;
+  color: var(--green);
+  max-width: 80%;
+}
+.user-popup .user-popup-block #user-popup-advanced #professional-content-skills #professional-content-skills-owned li {
+  padding: 10px;
+  display: inline-block;
+  height: calc(100% / 5);
+}
+.user-popup .user-popup-block #user-popup-advanced #professional-content-skills #professional-content-skills-owned li i {
+  color: white;
+}
+.user-popup .user-popup-block #user-popup-advanced #professional-content-skills #professional-content-skills-owned li i:hover {
+  cursor: pointer;
+  color: var(--error);
+}
+.user-popup .user-popup-block #user-popup-password-change {
+  margin-top: 20px;
+}
+.user-popup .user-popup-block #user-popup-password-change .flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.user-popup .user-popup-block #user-popup-password-change .flex-wrap .user-popup-input {
+  margin-bottom: 10px;
+}
+.user-popup .user-popup-block button {
+  width: 20%;
+  margin: auto;
+  display: block;
+  color: var(--dark_grey);
+  background-color: var(--green);
+  font-size: 1.4em;
+  border: none;
+  padding: 10px 0;
+  text-align: center;
+}
+.user-popup .user-popup-block button:hover {
+  cursor: pointer;
+  background-color: var(--light_green);
+}
+
 .advanced-properties {
   -moz-user-select: none;
   /* Firefox */
@@ -2045,6 +2227,7 @@ hr {
 #project-block .menu-info {
   background-color: white;
   padding: 10px;
+  width: 100%;
 }
 #project-block .menu-info h2 {
   color: var(--green);
