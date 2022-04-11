@@ -22,5 +22,37 @@
 
 {% block javascripts %}
     <script src="{{ asset("js/ajax.js") }}"></script>
+
+    {% if page_name is same as('templates') %}
+        <!-- Code Mirror -->
+        <script src="{{ asset("js/plugins/codemirror/codemirror.js") }}"></script>
+
+        <!-- Addons -->
+        <script src="{{ asset("js/plugins/codemirror/addons/xml.js") }}"></script>
+
+        <script src="{{ asset("js/plugins/codemirror/addons/hint/show-hint.js") }}"></script>
+        <script src="{{ asset("js/plugins/codemirror/addons/hint/javascript-hint.js") }}"></script>
+        <script src="{{ asset("js/plugins/codemirror/addons/javascript.js") }}"></script>
+        <script src="{{ asset("js/plugins/codemirror/addons/markdown.js") }}"></script>
+
+        <script src="{{ asset("js/plugins/codemirror/addons/hint/html-hint.js") }}"></script>
+        <script src="{{ asset("js/plugins/codemirror/addons/hint/xml-hint.js") }}"></script>
+
+        <script src="{{ asset("js/plugins/codemirror/addons/search/search.js") }}"></script>
+        <script src="{{ asset("js/plugins/codemirror/addons/search/searchcursor.js") }}"></script>
+        <script src="{{ asset("js/plugins/codemirror/addons/dialog.js") }}"></script>
+        <script src="{{ asset("js/plugins/codemirror/addons/jump-to-line.js") }}"></script>
+
+        <script src="{{ asset("js/plugins/codemirror/addons/fullscreen.js") }}"></script>
+
+        <script src="{{ asset("js/plugins/codemirror/addons/folding/foldcode.js") }}"></script>
+        <script src="{{ asset("js/plugins/codemirror/addons/folding/foldgutter.js") }}"></script>
+        <script src="{{ asset("js/plugins/codemirror/addons/folding/brace-fold.js") }}"></script>
+        <script src="{{ asset("js/plugins/codemirror/addons/folding/xml-fold.js") }}"></script>
+        <script src="{{ asset("js/plugins/codemirror/addons/folding/indent-fold.js") }}"></script>
+        <script src="{{ asset("js/plugins/codemirror/addons/folding/markdown-fold.js") }}"></script>
+        <script src="{{ asset("js/plugins/codemirror/addons/folding/comment-fold.js") }}"></script>
+    {% endif %}
+
     <script src="{{ asset("js/admin/admin.js") }}"></script>
 {% endblock %}

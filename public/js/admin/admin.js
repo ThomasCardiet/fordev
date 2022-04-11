@@ -150,8 +150,10 @@ setUpdate(false);
 
 // TEMPLATES GLOBAL VARIABLES
 let editor = null;
+const editor_block = $('#template-editor-block');
+const editor_loader = $('#template-editor-block-loader');
 
-switch (page) {
+switch (page.replaceAll('#', '')) {
 
     /************** USER TABLE REDIRECTION *************/
     case 'users':
@@ -171,31 +173,7 @@ switch (page) {
         files_btn.click(function () {
             current_file.html(`<i class="fas fa-file"></i> ${$(this).data('file')}`);
             current_file_path = $(this).data('path')
-        })
-
-        //CREATE CODE MIRROR
-        $(document).ready(function () {
-            const template_editor_textarea = document.querySelector('#template-editor-textarea');
-            editor = CodeMirror.fromTextArea(template_editor_textarea, {
-                mode: "text/html",
-                lineNumbers : true,
-                lineWrapping: true,
-                theme: 'dracula',
-                foldGutter: true,
-                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-                extraKeys: {
-                    "F11": function(cm) {
-                        cm.setOption("fullScreen", !cm.getOption("fullScreen"));
-                    },
-                    "Esc": function(cm) {
-                        if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
-                    },
-                    "Ctrl-Q": function(cm){
-                        cm.foldCode(cm.getCursor());
-                    },
-                    "Ctrl-Space": "autocomplete"
-                },
-            })
+            editor_loader.show();
         })
 
         //UPDATE CODE THEME
@@ -216,10 +194,37 @@ switch (page) {
 
         //UPDATE EDITOR TYPE
         const editor_type_select = $('#template-editor-type');
-        let current_editor_type = 0;
-        editor_type_select.change(function () {
-            editor.setOption("theme", this.options[this.selectedIndex].textContent);
+
+        let editor_types = {
+            developer: {
+                value: 0,
+                name: 'Développeur'
+            },
+            Commercial: {
+                value: 1,
+                name: 'Commercial'
+            }
+        }
+
+        Object.values(editor_types).forEach(type => {
+            editor_type_select.html(editor_type_select.html() + `<option value="${type.value}">${type.name}</option>`)
         })
+
+        function showEditor(editor_type) {
+            let template_editor_type = $('.template-editor-type');
+            template_editor_type.hide();
+            $(`.template-editor-type[data-type="${editor_type.value}"]`).show()
+        }
+
+        let current_editor_type = editor_types.developer;
+        editor_type_select.change(function () {
+            current_editor_type = editor_types[Object.keys(editor_types).find(key => editor_types[key].value === parseInt(this.value))];
+            showEditor(current_editor_type);
+        })
+
+        showEditor(current_editor_type);
+
+        editor_block.hide();
 
         break;
 }

@@ -44,10 +44,12 @@ class AppExtension extends AbstractExtension
         ];
     }
 
-    public function getField($field)
+    public function getField($field_name)
     {
         $fields_repo = $this->em->getRepository(Fields::class);
-        return $fields_repo->findOneBy(['name' => $field])->getValue();
+        $field = $fields_repo->findOneBy(['name' => $field_name]);
+        $field = $field ?? $fields_repo->findOneBy(['name' => str_replace('_', ' ', $field_name)]);
+        return $field ? $field->getValue() : '';
     }
 
     public function isType($value, $type)

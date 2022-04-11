@@ -347,18 +347,129 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                                 //GET FILE CONTENT
                                 case 'getFile':
 
+                                    editor_block.show();
+                                    editor_loader.hide();
+
                                     let template_editor_textarea = $('#template-editor-textarea');
                                     template_editor_textarea.next().remove();
                                     template_editor_textarea.remove();
 
-                                    let template_editor_block = $('#template-editor-block');
+                                    let template_editor_block_developer = $('#template-editor-block-developer');
                                     let new_textarea = document.createElement('textarea');
                                     new_textarea.id = 'template-editor-textarea';
                                     new_textarea.value = values;
 
-                                    template_editor_block.append(new_textarea);
+                                    template_editor_block_developer.append(new_textarea);
 
-                                    editor = CodeMirror.fromTextArea(new_textarea, editor.options)
+                                    editor = CodeMirror.fromTextArea(new_textarea, {
+                                        mode: "text/html",
+                                        lineNumbers : true,
+                                        lineWrapping: true,
+                                        theme: 'dracula',
+                                        foldGutter: true,
+                                        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+                                        extraKeys: {
+                                            "F11": function(cm) {
+                                                cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+                                            },
+                                            "Esc": function(cm) {
+                                                if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+                                            },
+                                            "Ctrl-Q": function(cm){
+                                                cm.foldCode(cm.getCursor());
+                                            },
+                                            "Ctrl-Space": "autocomplete"
+                                        },
+                                    })
+
+                                    // new RegExp(`<${b_name}([\\s\\S]*?)<\\/${b_name}>`, "g")
+
+                                    function getBaliseName(balise, full = true) {
+                                        let b_name = balise.replaceAll('<', '').replaceAll('>', '');
+                                        return full ? b_name : b_name.split(' ')[0];
+                                    }
+
+                                    function getBaliseRegExp(balise) {
+                                        return new RegExp(`<${getBaliseName(balise)}([\\s\\S]*?)<\\/${getBaliseName(balise, false)}>`, "g")
+                                    }
+
+                                    function getBaliseInformations(balise, parent = null) {
+                                        let html = (parent === null ? values.match(getBaliseRegExp(balise))[0] : parent.html.match(getBaliseRegExp(balise))[0]);
+                                        let childs = html.match(/\<.+?\>/g).filter(balise => values.match(getBaliseRegExp(balise)));
+                                        childs.shift();
+                                        return {
+                                            balise: balise,
+                                            name: getBaliseName(balise, false),
+                                            html: html,
+                                            childs: childs,
+                                            has_childs: childs.length > 0
+                                        }
+                                    }
+
+                                    let balises = values.match(/\<.+?\>/g).filter(balise => values.match(getBaliseRegExp(balise)));
+
+
+                                    function getTemplate(last_balise) {
+                                        let obj = {};
+                                        last_balise.childs.forEach(balise => {
+                                            if(last_balise.balise === balise) return;
+                                            balise = getBaliseInformations(balise);
+
+                                            //IS CHILD
+                                            if(last_balise.html.includes(balise.html)) {
+
+                                                //HAS CHILD
+                                                if(balise.has_childs) {
+                                                    obj[balise.balise] = getTemplate(balise);
+
+                                                //HASN'T CHILD
+                                                } else {
+                                                    obj[balise.balise] = null;
+                                                }
+
+                                            //IS NOT CHILD
+                                            }else {
+                                                last_balise = balise;
+                                            }
+                                        });
+
+                                        return Object.entries(obj).length > 0 ? obj : null;
+                                    }
+
+                                    let template_schema = {};
+                                    template_schema[getBaliseInformations(balises[0]).balise] = getTemplate(getBaliseInformations(balises[0]));
+
+                                    let editor_commercial = document.querySelector('#template-editor-block-commercial');
+
+                                    function displayTemplate(obj) {
+                                        let html = '';
+                                        html += '<ul>';
+                                            for (const [balise, childs] of Object.entries(obj)) {
+
+                                                if(childs !== null) {
+                                                    let random = Math.floor(Math.random() * (999 - 99));
+                                                    html +=
+                                                        '<li>' +
+                                                        `   <a href="#" data-toggle="collapse" class="collapsed" data-target="#collapse-folder-${getBaliseName(balise, false)}${random}">` +
+                                                        `   <i class="fas fa-code"></i> ${getBaliseName(balise, false)} <i class="fas fa-angle-right"></i>` +
+                                                        '   </a>' +
+                                                        `   <div id="collapse-folder-${getBaliseName(balise, false)}${random}" class="collapse">` +
+                                                               displayTemplate(childs) +
+                                                        '   </div>' +
+                                                        '</li>'
+                                                }else {
+                                                    html +=
+                                                        '<li>' +
+                                                        `   <span><i class="fas fa-code"></i> ${getBaliseName(balise, false)}</span>` +
+                                                        '</li>'
+                                                }
+
+                                            }
+                                        html += '</ul>';
+                                        return html;
+                                    }
+
+                                    editor_commercial.innerHTML = displayTemplate(template_schema);
 
                                     break;
 
