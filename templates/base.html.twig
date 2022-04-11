@@ -32,7 +32,7 @@
             <div class="header-bot-nav-circle"></div>
             <nav class="header-bot-nav-links">
                 <a {% if app.request.get('_route')|lower  == 'home' %}class="underlined"{% endif %} href="{{ path("home") }}">Accueil</a>
-                <a href="">Forum</a>
+                <a {% if app.request.get('_route')|lower  == 'forum' %}class="underlined"{% endif %} href="{{ path("forum") }}">Forum</a>
                 <a href="">Services</a>
                 <a href="">Aide</a>
 
