@@ -1186,6 +1186,7 @@ input[type=radio]:checked + label::after {
 }
 #home .hero button {
   margin-left: 30%;
+  border-radius: 15px;
 }
 #home .hero .hero-search .hero-search__wrapper {
   text-align: left;
