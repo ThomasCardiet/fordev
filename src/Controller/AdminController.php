@@ -145,10 +145,13 @@ class AdminController extends AbstractController
                     $array = [];
                     foreach ($files as $file) {
                         switch (true) {
+
+                            //IS TWIG FILE
                             case str_contains($file, '.html.twig'):
                                 $array[$file] = $path;
                                 break;
 
+                            //IS FOLDER
                             case !str_contains($file, '.'):
                                 $array[$file] = getFiles($path . "/" . $file);
                                 break;

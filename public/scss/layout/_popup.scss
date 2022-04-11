@@ -1,4 +1,5 @@
 #overlay {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -9,6 +10,7 @@
 }
 
 #popup {
+  display: none;
   position: fixed;
   top: 22%;
   left: 5%; //calc(((100% - var(--right_menu_size)) - var(--popup_width)) / 2)
@@ -118,6 +120,7 @@
 //POPUP NOTIFICATION
 
 #popup-notification {
+  display: none;
   position: fixed;
   bottom: 20px;
   right: 20px;
