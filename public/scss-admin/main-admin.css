@@ -20251,35 +20251,65 @@ main {
   background-color: #f6f6f6;
 }
 .arbo-block #template-editor-block #template-editor-block-commercial ul li {
+  position: relative;
   width: 80%;
-  margin: 0 auto 10px auto;
+  margin: 20px auto;
   border: 1px solid white;
 }
-.arbo-block #template-editor-block #template-editor-block-commercial ul li a, .arbo-block #template-editor-block #template-editor-block-commercial ul li span {
+.arbo-block #template-editor-block #template-editor-block-commercial ul li .modified {
+  position: absolute;
+  right: -15px;
+  top: -10px;
+  border-radius: 50%;
+  background-color: white;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding-top: 4px;
+}
+.arbo-block #template-editor-block #template-editor-block-commercial ul li .modified i {
+  color: var(--error);
+  font-size: 20px;
+}
+.arbo-block #template-editor-block #template-editor-block-commercial ul li > span {
   position: relative;
   background-color: green;
   padding: 10px 10px;
-  border-radius: 10px 0;
   width: 100%;
   display: block;
   color: white;
 }
-.arbo-block #template-editor-block #template-editor-block-commercial ul li a:hover, .arbo-block #template-editor-block #template-editor-block-commercial ul li span:hover {
-  background-color: var(--light_green);
-}
-.arbo-block #template-editor-block #template-editor-block-commercial ul li a .fa-angle-right, .arbo-block #template-editor-block #template-editor-block-commercial ul li span .fa-angle-right {
+.arbo-block #template-editor-block #template-editor-block-commercial ul li > span span {
   position: absolute;
-  right: 15px;
+  display: flex;
+  right: 20px;
   top: 15px;
-  transform: rotate(90deg);
 }
-.arbo-block #template-editor-block #template-editor-block-commercial ul li a.collapsed .fa-angle-right, .arbo-block #template-editor-block #template-editor-block-commercial ul li span.collapsed .fa-angle-right {
+.arbo-block #template-editor-block #template-editor-block-commercial ul li > span span .fa-angle-right {
+  transform: rotate(90deg);
+  font-size: 18px;
+}
+.arbo-block #template-editor-block #template-editor-block-commercial ul li > span span .fa-angle-right.collapsed {
   transform: rotate(0deg);
 }
-.arbo-block #template-editor-block #template-validate-btn {
+.arbo-block #template-editor-block #template-editor-block-commercial ul li > span span .fa-angle-right:hover {
+  color: var(--light_green);
+  cursor: pointer;
+}
+.arbo-block #template-editor-block #template-editor-block-commercial ul li > span span .fa-pen {
+  margin-right: 15px;
+}
+.arbo-block #template-editor-block #template-editor-block-commercial ul li > span span .fa-pen:hover {
+  color: var(--light_green);
+  cursor: pointer;
+}
+.arbo-block #template-editor-block #template-validate-btn-block {
   position: absolute;
   right: 0;
   bottom: 0;
+}
+.arbo-block #template-editor-block #template-validate-btn-block button {
+  color: white;
 }
 
 .dropdown .dropdown-menu {
@@ -21071,67 +21101,67 @@ form.user .btn-user {
 
 @keyframes noise-anim {
   0% {
-    clip: rect(88px, 9999px, 85px, 0);
+    clip: rect(23px, 9999px, 98px, 0);
   }
   5% {
-    clip: rect(96px, 9999px, 40px, 0);
+    clip: rect(63px, 9999px, 59px, 0);
   }
   10% {
-    clip: rect(53px, 9999px, 49px, 0);
+    clip: rect(18px, 9999px, 17px, 0);
   }
   15% {
-    clip: rect(57px, 9999px, 67px, 0);
+    clip: rect(21px, 9999px, 8px, 0);
   }
   20% {
-    clip: rect(35px, 9999px, 78px, 0);
+    clip: rect(74px, 9999px, 24px, 0);
   }
   25% {
-    clip: rect(61px, 9999px, 38px, 0);
+    clip: rect(98px, 9999px, 6px, 0);
   }
   30% {
-    clip: rect(90px, 9999px, 94px, 0);
+    clip: rect(76px, 9999px, 15px, 0);
   }
   35% {
-    clip: rect(53px, 9999px, 52px, 0);
+    clip: rect(12px, 9999px, 70px, 0);
   }
   40% {
-    clip: rect(56px, 9999px, 5px, 0);
+    clip: rect(28px, 9999px, 26px, 0);
   }
   45% {
-    clip: rect(59px, 9999px, 65px, 0);
+    clip: rect(26px, 9999px, 67px, 0);
   }
   50% {
-    clip: rect(4px, 9999px, 48px, 0);
+    clip: rect(85px, 9999px, 92px, 0);
   }
   55% {
-    clip: rect(23px, 9999px, 12px, 0);
+    clip: rect(21px, 9999px, 77px, 0);
   }
   60% {
-    clip: rect(51px, 9999px, 41px, 0);
+    clip: rect(73px, 9999px, 38px, 0);
   }
   65% {
-    clip: rect(42px, 9999px, 58px, 0);
+    clip: rect(25px, 9999px, 63px, 0);
   }
   70% {
-    clip: rect(24px, 9999px, 1px, 0);
+    clip: rect(80px, 9999px, 42px, 0);
   }
   75% {
-    clip: rect(12px, 9999px, 82px, 0);
+    clip: rect(63px, 9999px, 36px, 0);
   }
   80% {
-    clip: rect(46px, 9999px, 73px, 0);
+    clip: rect(14px, 9999px, 44px, 0);
   }
   85% {
-    clip: rect(88px, 9999px, 70px, 0);
+    clip: rect(2px, 9999px, 31px, 0);
   }
   90% {
-    clip: rect(53px, 9999px, 91px, 0);
+    clip: rect(63px, 9999px, 46px, 0);
   }
   95% {
-    clip: rect(94px, 9999px, 84px, 0);
+    clip: rect(34px, 9999px, 94px, 0);
   }
   100% {
-    clip: rect(88px, 9999px, 58px, 0);
+    clip: rect(44px, 9999px, 44px, 0);
   }
 }
 .error:after {
@@ -21149,67 +21179,67 @@ form.user .btn-user {
 
 @keyframes noise-anim-2 {
   0% {
-    clip: rect(31px, 9999px, 23px, 0);
+    clip: rect(21px, 9999px, 26px, 0);
   }
   5% {
-    clip: rect(55px, 9999px, 87px, 0);
+    clip: rect(26px, 9999px, 98px, 0);
   }
   10% {
-    clip: rect(67px, 9999px, 44px, 0);
+    clip: rect(22px, 9999px, 14px, 0);
   }
   15% {
-    clip: rect(74px, 9999px, 92px, 0);
+    clip: rect(65px, 9999px, 43px, 0);
   }
   20% {
-    clip: rect(77px, 9999px, 68px, 0);
+    clip: rect(67px, 9999px, 29px, 0);
   }
   25% {
-    clip: rect(72px, 9999px, 33px, 0);
+    clip: rect(89px, 9999px, 47px, 0);
   }
   30% {
-    clip: rect(28px, 9999px, 65px, 0);
+    clip: rect(65px, 9999px, 23px, 0);
   }
   35% {
-    clip: rect(28px, 9999px, 39px, 0);
+    clip: rect(69px, 9999px, 70px, 0);
   }
   40% {
-    clip: rect(63px, 9999px, 4px, 0);
+    clip: rect(37px, 9999px, 46px, 0);
   }
   45% {
-    clip: rect(88px, 9999px, 58px, 0);
+    clip: rect(92px, 9999px, 94px, 0);
   }
   50% {
-    clip: rect(69px, 9999px, 27px, 0);
+    clip: rect(49px, 9999px, 87px, 0);
   }
   55% {
-    clip: rect(32px, 9999px, 95px, 0);
+    clip: rect(24px, 9999px, 94px, 0);
   }
   60% {
-    clip: rect(25px, 9999px, 47px, 0);
+    clip: rect(29px, 9999px, 67px, 0);
   }
   65% {
-    clip: rect(86px, 9999px, 29px, 0);
+    clip: rect(49px, 9999px, 81px, 0);
   }
   70% {
-    clip: rect(63px, 9999px, 92px, 0);
+    clip: rect(19px, 9999px, 86px, 0);
   }
   75% {
-    clip: rect(40px, 9999px, 37px, 0);
+    clip: rect(75px, 9999px, 66px, 0);
   }
   80% {
-    clip: rect(58px, 9999px, 23px, 0);
+    clip: rect(75px, 9999px, 33px, 0);
   }
   85% {
-    clip: rect(96px, 9999px, 73px, 0);
+    clip: rect(52px, 9999px, 70px, 0);
   }
   90% {
-    clip: rect(12px, 9999px, 1px, 0);
+    clip: rect(22px, 9999px, 43px, 0);
   }
   95% {
-    clip: rect(77px, 9999px, 4px, 0);
+    clip: rect(24px, 9999px, 100px, 0);
   }
   100% {
-    clip: rect(73px, 9999px, 26px, 0);
+    clip: rect(89px, 9999px, 99px, 0);
   }
 }
 .error:before {

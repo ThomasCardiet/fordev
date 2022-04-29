@@ -52,6 +52,7 @@
 
                 <!-- DEVELOPER EDITOR -->
                 <div id="template-editor-block-developer" class="template-editor-type" data-type="0">
+
                     <div id="template-editor-block-loader">
                         <img src="{{ asset('img/gif/loader.gif') }}" alt="#">
                     </div>
@@ -66,16 +67,40 @@
                         </select>
                     </p>
 
-                    <button id="template-validate-btn" class="btn btn-success mt-2 h-10 float-right" data-toggle="modal" data-target="#updateFileModal">
-                        Modifier
-                    </button>
-
                     <textarea id="template-editor-textarea"></textarea>
                 </div>
 
                 <!-- DEVELOPER EDITOR -->
                 <div id="template-editor-block-commercial" class="template-editor-type" data-type="1"></div>
 
+                <div id="template-validate-btn-block">
+                    <button class="btn btn-warning h-10" data-toggle="modal" data-target="#resetFileModal">
+                        Réinitialiser
+                    </button>
+                    <button class="btn btn-success h-10" data-toggle="modal" data-target="#updateFileModal">
+                        Modifier
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- MODAL COMMERCIAL EDITOR -->
+            <div class="modal fade" id="template-editor-block-commercial-popup" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Modification de la balise <span class="modal-title-baliseName"></span></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body"></div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                            <button id="commercial-editor-update-btn" type="button" class="btn btn-primary" data-dismiss="modal">Modifier</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
