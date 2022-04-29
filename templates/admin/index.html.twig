@@ -22,6 +22,7 @@
 
 {% block javascripts %}
     <script src="{{ asset("js/ajax.js") }}"></script>
+    <script src="{{ asset("js/admin/admin.js") }}"></script>
 
     {% if page_name is same as('templates') %}
         <!-- Code Mirror -->
@@ -54,5 +55,4 @@
         <script src="{{ asset("js/plugins/codemirror/addons/folding/comment-fold.js") }}"></script>
     {% endif %}
 
-    <script src="{{ asset("js/admin/admin.js") }}"></script>
 {% endblock %}

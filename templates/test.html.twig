@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Site Officiel du Forum Fordev, pour développeurs tous langages de programmation">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="{{ asset('img/logo.png') }}">
+
+    <title>{% block title %}{% endblock %}</title>
+    <script src="https://kit.fontawesome.com/dc883addae.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('scss/main.css') }}">
+</head>
+
+<header>
+
+    <section class="header-top">
+
+        <div class="header-top-logo">
+            <img src="{{ asset('img/logo.png') }}" alt="#">
+            <div class="header-top-logo-desc">
+                <p>{{ getField('slogan') }}</p>
+                <h1>{{ getField('title') }}</h1>
+                <hr>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="header-bot">
+        <div class="header-bot-nav">
+            <div class="header-bot-nav-circle"></div>
+            <nav class="header-bot-nav-links">
+                <a {% if app.request.get('_route')|lower  == 'home' %}class="underlined"{% endif %} href="{{ path("home") }}">Accueil</a>
+                <a href="">Forum</a>
+                <a href="">Services</a>
+                <a href="">Aide</a>
+
+            </nav>
+        </div>
+    </section>
+
+</header>
+<main>
+
+    <!-- POPUP NEEDS -->
+    {% include 'includes/popups.html.twig' %}
+
+
+        <p id="popup-notification-msg"></p>
+    </div>
+
+    {% block body %}{% endblock %}
+</main>
+
+<ul id="right-menu">
+    {#USER MENU#}
+    <li>
+        <i data-path="{{ path('auth') }}" data-target="account" class="link fas fa-user right-menu-icon"></i>
+        {% if app.user %}
+        <div class="right-menu-popup" id="right-menu-popup-account">
+            <div id="right-menu-popup-account-informations">
+                {% set pp_path = 'users/' ~ app.user.getPpPath() %}
+                {% if app.user.getPpPath() is null %}
+                    {% set pp_path = 'unknown.png' %}
+                {% endif %}
+                <img data-value="pp" src="{{ asset("img/profile/#{pp_path}") }}" alt="#">
+                <div>
+                    <h3>{{ app.user.username }}</h3>
+                    <p>{{ app.user.createdAt|date('d/m/Y') }}</p>
+                </div>
+            </div>
+            <div id="right-menu-popup-account-icons">
+                <i data-path="{{ path('security_logout') }}" class="link fas fa-sign-out-alt"></i>
+                <i class="fas fa-bell"></i>
+            </div>
+            <div class="right-menu-popup-account-stat yellow">
+                <div>
+                    47 <br> Gloires
+                </div>
+            </div>
+            <div class="right-menu-popup-account-stat blue">
+                <div>
+                    14 <br> Projets
+                </div>
+            </div>
+            <div class="right-menu-popup-account-stat red">
+                <div>
+                    64 <br> Posts
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </li>
+    {#SEARCH MENU#}
+    <li>
+        <i data-target="search" class="fas fa-search right-menu-icon"></i>
+        <div class="right-menu-popup" id="right-menu-popup-search">
+            <h3>Rechercher sur le Forum</h3>
+            <div>
+                <input type="text" placeholder="Recherche à effectuer...">
+                <div>
+                    <i class="fas fa-paper-plane"></i>
+                </div>
+            </div>
+        </div>
+    </li>
+    {#SETTINGS MENU#}
+    <li>
+        <i data-target="settings" class="fas fa-cog right-menu-icon"></i>
+        <div class="right-menu-popup" id="right-menu-popup-settings">
+
+        </div>
+    </li>
+</ul>
+
+
+</main>
+
+{% include 'includes/right-menu.html.twig' %}
+<footer class="footer">
+    <div class="container">
+        <div class="footer__social">
+            <div class="wrapper">
+                <div class="icon facebook">
+                    <div class="tooltip">Facebook</div>
+                    <span><i class="fab fa-facebook-f"></i></span>
+                </div>
+                <div class="icon twitter">
+                    <div class="tooltip">Twitter</div>
+                    <span><i class="fab fa-twitter"></i></span>
+                </div>
+                <div class="icon instagram">
+                    <div class="tooltip">Instagram</div>
+                    <span><i class="fab fa-instagram"></i></span>
+                </div>
+                <div class="icon github">
+                    <div class="tooltip">Github</div>
+                    <span><i class="fab fa-github"></i></span>
+                </div>
+                <div class="icon youtube">
+                    <div class="tooltip">Youtube</div>
+                    <span><i class="fab fa-youtube"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer__links col1">
+            <p class="footer__links__title">Liens</p>
+            <a href="#">Accueil</a>
+            <a href="#">Forum</a>
+            <a href="#">Services</a>
+        </div>
+
+        <div class="footer__links col2">
+            <p class="footer__links__title">Informations</p>
+            <a href="#">A propos</a>
+            <a href="#">CGU</a>
+        </div>
+
+        <div class="footer__copyright">
+            <p class="footer__copyright__title">Fordev</p>
+            <p class="footer__copyright__text">
+                Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.
+            </p>
+        </div>
+    </div>
+    <div class="attribution">
+        Fordev © {{ getField('copyright_year') }} Tous droits réservés.
+    </div>
+</footer>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{{ asset('js/menu.js') }}"></script>
+<script src="{{ asset("js/popups.js") }}"></script>
+{% block javascripts %}{% endblock %}
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

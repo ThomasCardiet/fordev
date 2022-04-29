@@ -72,44 +72,81 @@
         background-color: #f6f6f6;
 
         li {
+          position: relative;
           width: 80%;
-          margin: 0 auto 10px auto;
+          margin: 20px auto;
           border: 1px solid white;
 
-          a, span {
+          //MODIFIED ICON
+          .modified {
+            position: absolute;
+            right: -15px;
+            top: -10px;
+            border-radius: 50%;
+            background-color: white;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            padding-top: 4px;
+
+            i {
+              color: var(--error);
+              font-size: 20px;
+            }
+          }
+
+          > span {
             position: relative;
             background-color: green;
             padding: 10px 10px;
-            border-radius: 10px 0;
+            //border-radius: 10px 0;
             width: 100%;
             display: block;
             color: white;
 
-            &:hover {
-              background-color: var(--light_green);
-            }
+              span {
+                position: absolute;
+                display: flex;
+                right: 20px;
+                top: 15px;
 
-            .fa-angle-right {
-              position: absolute;
-              right: 15px;
-              top: 15px;
-              transform: rotate(90deg);
-            }
+                //OPEN ICON
+                .fa-angle-right {
+                  transform: rotate(90deg);
+                  font-size: 18px;
 
-            &.collapsed {
-              .fa-angle-right {
-                transform: rotate(0deg);
+                  &.collapsed {
+                    transform: rotate(0deg);
+                  }
+
+                  &:hover {
+                    color: var(--light_green);
+                    cursor: pointer;
+                  }
+                }
+
+                //MODIF ICON
+                .fa-pen {
+                  margin-right: 15px;
+
+                  &:hover {
+                    color: var(--light_green);
+                    cursor: pointer;
+                  }
+                }
               }
-            }
           }
         }
       }
     }
 
-    #template-validate-btn {
+    #template-validate-btn-block {
       position: absolute;
       right: 0;
       bottom: 0;
+      button {
+        color: white;
+      }
     }
   }
 
