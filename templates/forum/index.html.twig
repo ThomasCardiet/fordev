@@ -7,7 +7,84 @@
 {% block body %}
     <section id="forum">
 
+        <div id="forum-header">
+            <h2>Questions Générales</h2>
+            <p>Une question ? Posez la ici</p>
 
+            <a href="#"><i class="fas fa-comment-alt"></i> Nouvelle question</a>
+        </div>
+
+        <div id="forum-block">
+
+            <ul id="forum-block-list">
+                <li id="forum-block-list-head">
+                    <i class="fas fa-folder-open"></i> Catégories
+                </li>
+                <li class="forum-block-list-content active">
+                    <span class="forum-block-list-content-name">Cat 0</span><span class="forum-block-list-content-count">0</span>
+                </li>
+                {% for i in range(1,3) %}
+                <li class="forum-block-list-content">
+                    <span class="forum-block-list-content-name">Cat {{ i }}</span><span class="forum-block-list-content-count">{{ i * 10 }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <div id="forum-block-content">
+
+                <ul id="forum-block-content-header">
+                    <li class="active">Toutes</li>
+                    <li>10 Dernières</li>
+                </ul>
+
+                <ul id="forum-block-content-posts">
+                    <li>
+                        <i class="fas fa-star active"></i>
+                        <h3>Problème framework Symfony 5</h3>
+                        <div>
+                            <ul>
+                                <li><img src="{{ asset("img/profile/unknown.png") }}" alt="#"> Unknown</li>
+                                <li><i class="fas fa-folder-open"></i> Cat 1</li>
+                                <li><i class="fas fa-comment-alt"></i> 5</li>
+                                <li><i class="fas fa-clock"></i> 21/05/2021</li>
+                            </ul>
+                            <ul>
+                                <li><i class="fas fa-clock"></i> il y a 5 minutes</li>
+                                <li><img src="{{ asset("img/profile/unknown.png") }}" alt="#"> Unknown</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    {% for i in range(1,3) %}
+
+                    <li>
+                        <i class="fas fa-star"></i>
+                        <h3>Problème framework Symfony 5</h3>
+                        <div>
+                            <ul>
+                                <li><img src="{{ asset("img/profile/unknown.png") }}" alt="#"> Unknown</li>
+                                <li><i class="fas fa-folder-open"></i> Cat 1</li>
+                                <li><i class="fas fa-comment-alt"></i> 5</li>
+                                <li><i class="fas fa-clock"></i> 21/05/2021</li>
+                            </ul>
+                            <ul>
+                                <li><i class="fas fa-clock"></i> il y a 5 minutes</li>
+                                <li><img src="{{ asset("img/profile/unknown.png") }}" alt="#"> Unknown</li>
+                            </ul>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <div id="forum-block-content-footer">
+                    <button>Page précédente</button>
+                    <p>Page <span>1</span> sur 13</p>
+                    <button>Page suivante</button>
+                </div>
+
+            </div>
+
+        </div>
 
     </section>
 {% endblock %}

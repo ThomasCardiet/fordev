@@ -175,3 +175,70 @@ header, main, footer {
     width: 100%;
     height: 100%;
 }
+
+// SETTINGS
+#right-menu-popup-settings {
+
+    padding: 20px;
+
+    > h3 {
+        font-size: 1.5vw;
+        text-align: left;
+        width: 90%;
+        display: block;
+        margin: 0 auto 15px auto;
+    }
+
+    #night-switch {
+        position: relative;
+        border-radius: 20px;
+        width: 70px;
+        height: 35px;
+        padding: 10px 13px 0 13px;
+        display: flex;
+        justify-content: space-between;
+        background-color: white;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        .circle {
+            background-color: black;
+            position: absolute;
+            border-radius: 50%;
+            height: 90%;
+            width: 45%;
+            z-index: 9;
+            top: 5%;
+            left: 3px;
+        }
+
+        i {
+            color: black;
+            font-size: 16px;
+        }
+    }
+
+}
+
+html[data-theme="dark"] {
+    #right-menu-popup-settings {
+
+        #night-switch {
+            border: 2px solid white;
+            background-color: black;
+
+            .circle {
+                background-color: white;
+                left: 36px;
+            }
+
+            i {
+                color: white;
+                font-size: 13px;
+            }
+        }
+
+    }
+}

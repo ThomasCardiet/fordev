@@ -28,6 +28,10 @@ html {
   overflow-x: hidden;
 }
 
+body {
+  background-color: var(--dark_grey);
+}
+
 main {
   margin-top: 180px;
 }

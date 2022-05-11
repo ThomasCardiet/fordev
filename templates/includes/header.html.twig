@@ -1,0 +1,41 @@
+<header>
+
+    <div id="header-unminified">
+        <section class="header-top">
+
+            <div class="header-top-logo">
+                <img src="{{ asset('img/logo.png') }}" alt="#">
+                <div class="header-top-logo-desc">
+                    <p>{{ getField('slogan') }}</p>
+                    <h1>{{ getField('title') }}</h1>
+                    <hr>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="header-bot">
+            <div class="header-bot-nav">
+                <div class="header-bot-nav-circle"></div>
+                <nav class="header-bot-nav-links">
+                    <a {% if app.request.get('_route')|lower  == 'home' %}class="underlined"{% endif %} href="{{ path("home") }}">Accueil</a>
+                    <a {% if app.request.get('_route')|lower  == 'forum' %}class="underlined"{% endif %} href="{{ path("forum") }}">Forum</a>
+                    <a href="">Services</a>
+                    <a href="">Aide</a>
+
+                </nav>
+            </div>
+        </section>
+    </div>
+
+    <div id="header-minified">
+        <a {% if app.request.get('_route')|lower  == 'home' %}class="underlined"{% endif %} href="{{ path("home") }}">Accueil</a>
+        <a {% if app.request.get('_route')|lower  == 'forum' %}class="underlined"{% endif %} href="{{ path("forum") }}">Forum</a>
+        <a href="">Services</a>
+        <a href="">Aide</a>
+        <div class="header-logo">
+            <img src="{{ asset('img/logo.png') }}" alt="#">
+        </div>
+    </div>
+
+</header>

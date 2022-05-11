@@ -53,16 +53,25 @@
         </div>
     </li>
 
-    {#ADMIN MENU#}
-    <li>
-        <i data-popup="false" data-path="{{ path('admin') }}" data-target="settings" class="link fas fa-hammer right-menu-icon"></i>
-    </li>
-
     {#SETTINGS MENU#}
     <li>
         <i data-target="settings" class="fas fa-cog right-menu-icon"></i>
         <div class="right-menu-popup" id="right-menu-popup-settings">
-
+            <h3>Réglages du site</h3>
+            <div id="night-switch">
+                <div class="circle"></div>
+                <i class="fa-solid fa-moon"></i>
+                <i class="fa-solid fa-sun"></i>
+            </div>
+            <select>
+                <option value="0">Français</option>
+                <option value="1">Anglais</option>
+            </select>
         </div>
+    </li>
+
+    {#ADMIN MENU#}
+    <li>
+        <i data-popup="false" data-path="{{ path('admin') }}" data-target="settings" class="link fas fa-hammer right-menu-icon"></i>
     </li>
 </ul>

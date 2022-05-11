@@ -36,6 +36,10 @@ html {
   overflow-x: hidden;
 }
 
+body {
+  background-color: var(--dark_grey);
+}
+
 main {
   margin-top: 180px;
 }
@@ -241,6 +245,57 @@ header, main, footer {
   text-align: center;
   width: 100%;
   height: 100%;
+}
+
+#right-menu-popup-settings {
+  padding: 20px;
+}
+#right-menu-popup-settings > h3 {
+  font-size: 1.5vw;
+  text-align: left;
+  width: 90%;
+  display: block;
+  margin: 0 auto 15px auto;
+}
+#right-menu-popup-settings #night-switch {
+  position: relative;
+  border-radius: 20px;
+  width: 70px;
+  height: 35px;
+  padding: 10px 13px 0 13px;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+}
+#right-menu-popup-settings #night-switch:hover {
+  cursor: pointer;
+}
+#right-menu-popup-settings #night-switch .circle {
+  background-color: black;
+  position: absolute;
+  border-radius: 50%;
+  height: 90%;
+  width: 45%;
+  z-index: 9;
+  top: 5%;
+  left: 3px;
+}
+#right-menu-popup-settings #night-switch i {
+  color: black;
+  font-size: 16px;
+}
+
+html[data-theme=dark] #right-menu-popup-settings #night-switch {
+  border: 2px solid white;
+  background-color: black;
+}
+html[data-theme=dark] #right-menu-popup-settings #night-switch .circle {
+  background-color: white;
+  left: 36px;
+}
+html[data-theme=dark] #right-menu-popup-settings #night-switch i {
+  color: white;
+  font-size: 13px;
 }
 
 #overlay {
@@ -833,96 +888,22 @@ header {
   top: 0;
   left: 0;
   z-index: 10;
-  width: 100%;
+  width: 96%;
 }
-
-/* HEADER TOP SECTION */
-.header-top {
-  background-color: black;
-  position: relative;
-  height: 90px;
-}
-
-/* LOGO */
-.header-top-logo {
-  display: flex;
-  position: absolute;
-  width: 50%;
-  top: 20px;
-  left: 2%;
-  z-index: 1;
-}
-
-.header-top-logo > img {
-  background-color: var(--dark_grey);
-  border-radius: 50%;
-  object-fit: contain;
-  width: 9em;
-}
-
-.header-top-logo-desc {
-  font-family: "zilla_slabmedium", sans-serif;
-  color: white;
-  margin-left: 10px;
-  width: 50%;
-}
-
-.header-top-logo-desc > h1, .header-top-logo-desc > hr {
-  margin: 0 0 0 15px;
-}
-
-.header-top-logo-desc > p {
-  font-size: 0.9em;
-  margin: 0;
-}
-
-.header-top-logo-desc > h1 {
-  font-size: 2em;
-  margin-top: -6px;
-}
-
-/* HEADER BOT SECTION */
-.header-bot {
-  background-color: var(--yellow);
-  padding: 10px 0;
-  height: 90px;
-}
-
-.header-bot-nav {
-  height: 65px;
-  background-color: var(--dark_grey);
-  box-sizing: border-box;
-  width: 88.9%;
-  float: right;
-  margin-right: 1%;
-  position: relative;
-}
-
-.header-bot-nav-circle {
-  clip-path: ellipse(54px 100% at 0 2%);
-  width: 54px;
-  height: 100%;
-  float: left;
-  background-color: var(--yellow);
-  position: absolute;
-}
-
-.header-bot-nav-links {
+header .header-bot-nav-links, header #header-minified {
   display: flex;
   justify-content: space-around;
   width: 80%;
   margin: 20px auto 0 auto;
 }
-
-.header-bot-nav-links > a {
+header .header-bot-nav-links > a, header #header-minified > a {
   text-decoration: none;
   color: white;
   font-size: 1.4em;
   z-index: 1;
   font-family: sans-serif;
 }
-
-.header-bot-nav-links > a:after {
+header .header-bot-nav-links > a:after, header #header-minified > a:after {
   content: "";
   display: block;
   margin: auto;
@@ -931,10 +912,90 @@ header {
   background: transparent;
   transition: width 0.5s ease, background-color 0.5s ease;
 }
-
-.header-bot-nav-links > a:hover:after, .header-bot-nav-links > a:hover:after, .header-bot-nav-links > a.underlined:after {
+header .header-bot-nav-links > a:hover:after, header .header-bot-nav-links > a:hover:after, header .header-bot-nav-links > a.underlined:after, header #header-minified > a:hover:after, header #header-minified > a:hover:after, header #header-minified > a.underlined:after {
   width: 100%;
   background: white;
+}
+header #header-unminified {
+  /* HEADER TOP SECTION */
+  /* LOGO */
+  /* HEADER BOT SECTION */
+}
+header #header-unminified .header-top {
+  background-color: black;
+  position: relative;
+  height: 90px;
+}
+header #header-unminified .header-top-logo {
+  display: flex;
+  position: absolute;
+  width: 50%;
+  top: 20px;
+  left: 2%;
+  z-index: 1;
+}
+header #header-unminified .header-top-logo > img {
+  background-color: var(--dark_grey);
+  border-radius: 50%;
+  object-fit: contain;
+  width: 9em;
+}
+header #header-unminified .header-top-logo-desc {
+  font-family: "zilla_slabmedium", sans-serif;
+  color: white;
+  margin-left: 10px;
+  width: 50%;
+}
+header #header-unminified .header-top-logo-desc > h1, header #header-unminified .header-top-logo-desc > hr {
+  margin: 0 0 0 15px;
+}
+header #header-unminified .header-top-logo-desc > p {
+  font-size: 0.9em;
+  margin: 0;
+}
+header #header-unminified .header-top-logo-desc > h1 {
+  font-size: 2em;
+  margin-top: -6px;
+}
+header #header-unminified .header-bot {
+  background-color: var(--yellow);
+  padding: 10px 0;
+  height: 90px;
+}
+header #header-unminified .header-bot-nav {
+  height: 65px;
+  background-color: var(--dark_grey);
+  box-sizing: border-box;
+  width: 88.9%;
+  float: right;
+  margin-right: 1%;
+  position: relative;
+}
+header #header-unminified .header-bot-nav-circle {
+  clip-path: ellipse(54px 100% at 0 2%);
+  width: 54px;
+  height: 100%;
+  float: left;
+  background-color: var(--yellow);
+  position: absolute;
+}
+header #header-minified {
+  position: relative;
+  background-color: var(--dark_grey);
+  margin: 0 auto;
+  padding: 20px 0;
+  width: 100%;
+  border: 10px solid var(--yellow);
+}
+header #header-minified .header-logo {
+  position: absolute;
+  background-color: var(--dark_grey);
+  border-radius: 50%;
+  border: 4px solid var(--yellow);
+  width: 6%;
+}
+header #header-minified .header-logo img {
+  width: 100%;
 }
 
 button {
@@ -2526,6 +2587,152 @@ hr {
 #invitation-type-1 .share-link-block button:hover {
   cursor: pointer;
   background-color: var(--light_green);
+}
+
+#forum {
+  padding: 20px 10%;
+  background-color: var(--light_grey);
+}
+#forum #forum-header {
+  background: url("../../img/forum/background_forum.png") no-repeat;
+  background-size: cover;
+  padding: 40px 5%;
+  position: relative;
+}
+#forum #forum-header h2 {
+  color: white;
+}
+#forum #forum-header p {
+  color: var(--grey);
+}
+#forum #forum-header a {
+  position: absolute;
+  right: 1.5%;
+  bottom: 20%;
+  color: var(--green);
+  text-decoration: none;
+  border: 2px var(--green) solid;
+  border-radius: 10px;
+  padding: 5px 12px;
+  font-size: 22px;
+}
+#forum #forum-header a i {
+  font-size: 0.8em;
+}
+#forum #forum-header a:hover {
+  border-color: var(--light_green);
+  color: var(--light_green);
+}
+#forum #forum-block {
+  margin: 15px 0;
+  display: flex;
+  justify-content: space-between;
+}
+#forum #forum-block #forum-block-list {
+  width: 20%;
+  list-style: none;
+}
+#forum #forum-block #forum-block-list li {
+  background-color: var(--dark_grey);
+  color: var(--grey);
+  padding: 15px 5%;
+}
+#forum #forum-block #forum-block-list #forum-block-list-head {
+  text-align: center;
+}
+#forum #forum-block #forum-block-list .forum-block-list-content {
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  display: flex;
+  justify-content: space-between;
+}
+#forum #forum-block #forum-block-list .forum-block-list-content.active, #forum #forum-block #forum-block-list .forum-block-list-content:hover {
+  border-color: var(--green);
+  color: var(--green);
+  cursor: pointer;
+}
+#forum #forum-block #forum-block-content {
+  width: 78%;
+}
+#forum #forum-block #forum-block-content #forum-block-content-header {
+  list-style: none;
+  display: flex;
+  padding: 15px 0;
+}
+#forum #forum-block #forum-block-content #forum-block-content-header li {
+  margin-right: 10px;
+  color: var(--grey);
+}
+#forum #forum-block #forum-block-content #forum-block-content-header li:hover, #forum #forum-block #forum-block-content #forum-block-content-header li.active {
+  color: white;
+  cursor: pointer;
+}
+#forum #forum-block #forum-block-content #forum-block-content-posts {
+  list-style: none;
+}
+#forum #forum-block #forum-block-content #forum-block-content-posts > li {
+  padding: 30px 0 20px 6%;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  position: relative;
+}
+#forum #forum-block #forum-block-content #forum-block-content-posts > li .fa-star {
+  position: absolute;
+  left: 0;
+  top: 15%;
+  color: var(--grey);
+}
+#forum #forum-block #forum-block-content #forum-block-content-posts > li .fa-star.active {
+  color: var(--green);
+}
+#forum #forum-block #forum-block-content #forum-block-content-posts > li h3 {
+  color: white;
+  margin-bottom: 10px;
+}
+#forum #forum-block #forum-block-content #forum-block-content-posts > li div {
+  display: flex;
+  justify-content: space-between;
+  color: var(--grey);
+}
+#forum #forum-block #forum-block-content #forum-block-content-posts > li div ul {
+  list-style: none;
+  display: flex;
+}
+#forum #forum-block #forum-block-content #forum-block-content-posts > li div ul li {
+  margin-right: 10px;
+}
+#forum #forum-block #forum-block-content #forum-block-content-posts > li div ul li i {
+  color: var(--green);
+}
+#forum #forum-block #forum-block-content #forum-block-content-posts > li div ul li img {
+  width: 14px;
+  border-radius: 50%;
+}
+#forum #forum-block #forum-block-content #forum-block-content-footer {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+#forum #forum-block #forum-block-content #forum-block-content-footer button {
+  color: var(--green);
+  text-decoration: none;
+  border: 2px var(--green) solid;
+  border-radius: 10px;
+  padding: 5px 12px;
+  font-size: 12px;
+}
+#forum #forum-block #forum-block-content #forum-block-content-footer button:hover {
+  background-color: unset;
+  border-color: var(--light_green);
+  color: var(--light_green);
+}
+#forum #forum-block #forum-block-content #forum-block-content-footer p {
+  margin-top: 8px;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+#forum #forum-block #forum-block-content #forum-block-content-footer p span {
+  color: var(--green);
 }
 
 /*# sourceMappingURL=main.css.map */

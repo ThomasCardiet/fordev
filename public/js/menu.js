@@ -11,7 +11,7 @@ hidePopups();
 
 // HOVERS
 icons.mouseenter(function () {
-    if($(this).data('popup') !== undefined && $(this).data('popup') === false) return;
+    if($(this).data('popup') !== undefined && $(this).data('popup') === false) return hidePopups();
 
     let target = $(this).data('target');
     hidePopups();
@@ -23,12 +23,7 @@ icons.mouseenter(function () {
             && !hover.className.includes('right-menu-popup')) {
             while (hover) {
                 hover = hover.parentNode;
-                if(hover !== document && hover !== null) {
-                    if (hover.classList.contains('right-menu-popup')) {
-                        return;
-                        return;
-                    }
-                }
+                if((hover !== document && hover !== null) && hover.classList.contains('right-menu-popup')) return;
             }
             hidePopups();
         }
