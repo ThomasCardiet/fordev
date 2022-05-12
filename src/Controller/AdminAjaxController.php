@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Fields;
 use App\Entity\FieldsCategory;
 use App\Entity\Friend;
+use App\Entity\Menu;
 use App\Entity\Project;
 use App\Entity\ProjectContributor;
 use App\Entity\ProjectRole;
@@ -41,6 +42,7 @@ class AdminAjaxController extends AbstractController
         $user_repo = $em->getRepository(User::class);
         $fields_category_repo = $em->getRepository(FieldsCategory::class);
         $fields_repo = $em->getRepository(Fields::class);
+        $menu_repo = $em->getRepository(Menu::class);
 
         $data = [];
         $method_exist = true;
@@ -75,6 +77,16 @@ class AdminAjaxController extends AbstractController
                 $RAW_QUERY = "SELECT * FROM fields
                                 LEFT JOIN (SELECT id as user_id, username as last_user_edit_username FROM user) user
                                 ON user.user_id = fields.last_user_edit_id";
+
+                $executes = [];
+
+                break;
+
+            case 'getMenus':
+
+                $RAW_QUERY = "SELECT * FROM menu
+                                LEFT JOIN (SELECT id as user_id, username as last_user_edit_username FROM user) user
+                                ON user.user_id = menu.last_user_edit_id";
 
                 $executes = [];
 
@@ -227,6 +239,61 @@ class AdminAjaxController extends AbstractController
                 }else {
 
                     $data['msg'] = "Le champ n'existe pas.";
+
+                }
+
+                break;
+
+            case 'createMenu':
+
+                $data = [
+                    'code' => 200,
+                    'msg' => '',
+                    'status' => 'error'
+                ];
+
+                if(empty($menu_repo->findBy(['name' => $fields['menu_name']]))) {
+
+                    $menu = new Menu();
+                    $menu->setName($fields['menu_name'])
+                        ->setPath($fields['menu_path'])
+                        ->setLastUserEdit($this->getUser())
+                        ->setEditedAt(new \DateTimeImmutable());
+
+                    $em->persist($menu);
+                    $em->flush();
+
+                    $data['msg'] = "Vous avez ajouté le menu '" . $fields['menu_name'] . "'.";
+                    $data['status'] = 'success';
+
+                }else {
+
+                    $data['msg'] = "Le menu '" . $fields['menu_name'] . "' existe déjà.";
+
+                }
+
+                break;
+
+            case 'removeMenu':
+
+                $data = [
+                    'code' => 200,
+                    'msg' => '',
+                    'status' => 'error'
+                ];
+
+                $menu = $menu_repo->find($fields['menu_id']);
+                if(!empty($menu)) {
+
+                    $em->remove($menu);
+                    $em->flush();
+
+                    $data['msg'] = "Vous avez supprimé le menu '" . $menu->getName() . "'.";
+                    $data['status'] = 'success';
+
+                }else {
+
+                    $data['msg'] = "Le menu n'existe pas.";
 
                 }
 

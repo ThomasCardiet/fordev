@@ -3,6 +3,7 @@
 namespace App\Twig;
 
 use App\Entity\Fields;
+use App\Entity\Menu;
 use Doctrine\ORM\EntityManager;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -41,6 +42,7 @@ class AppExtension extends AbstractExtension
             new TwigFunction('getField', [$this, 'getField']),
             new TwigFunction('isType', [$this, 'isType']),
             new TwigFunction('getRandomInt', [$this, 'getRandomInt']),
+            new TwigFunction('getRoutes', [$this, 'getRoutes']),
         ];
     }
 
@@ -59,5 +61,11 @@ class AppExtension extends AbstractExtension
 
     public function getRandomInt($min, $max) {
         return random_int($min, $max);
+    }
+
+    public function getRoutes()
+    {
+        $menus_repo = $this->em->getRepository(Menu::class);
+        return $menus_repo->findAll();
     }
 }

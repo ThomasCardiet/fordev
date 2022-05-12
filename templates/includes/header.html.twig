@@ -18,21 +18,18 @@
             <div class="header-bot-nav">
                 <div class="header-bot-nav-circle"></div>
                 <nav class="header-bot-nav-links">
-                    <a {% if app.request.get('_route')|lower  == 'home' %}class="underlined"{% endif %} href="{{ path("home") }}">Accueil</a>
-                    <a {% if app.request.get('_route')|lower  == 'forum' %}class="underlined"{% endif %} href="{{ path("forum") }}">Forum</a>
-                    <a href="">Services</a>
-                    <a href="">Aide</a>
-
+                    {% for route in getRoutes() %}
+                        <a {% if app.request.get('_route')|lower  == route.path %}class="underlined"{% endif %} href="{{ path(route.path) }}">{{ route.name }}</a>
+                    {% endfor %}
                 </nav>
             </div>
         </section>
     </div>
 
     <div id="header-minified">
-        <a {% if app.request.get('_route')|lower  == 'home' %}class="underlined"{% endif %} href="{{ path("home") }}">Accueil</a>
-        <a {% if app.request.get('_route')|lower  == 'forum' %}class="underlined"{% endif %} href="{{ path("forum") }}">Forum</a>
-        <a href="">Services</a>
-        <a href="">Aide</a>
+        {% for route in getRoutes() %}
+            <a {% if app.request.get('_route')|lower  == route.path %}class="underlined"{% endif %} href="{{ path(route.path) }}">{{ route.name }}</a>
+        {% endfor %}
         <div class="header-logo">
             <img src="{{ asset('img/logo.png') }}" alt="#">
         </div>

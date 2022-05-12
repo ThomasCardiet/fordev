@@ -121,6 +121,11 @@ class User implements UserInterface
      */
     private $lastEditedFields;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Menu::class, mappedBy="last_user_edit")
+     */
+    private $lastEditedMenus;
+
     public function __construct()
     {
         $this->requestedFriends = new ArrayCollection();
@@ -130,6 +135,7 @@ class User implements UserInterface
         $this->ownedProjects = new ArrayCollection();
         $this->contributedProjects = new ArrayCollection();
         $this->lastEditedFields = new ArrayCollection();
+        $this->lastEditedMenus = new ArrayCollection();
     }
 
 
@@ -517,6 +523,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($lastEditedField->getLastUserEdit() === $this) {
                 $lastEditedField->setLastUserEdit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Menu[]
+     */
+    public function getLastEditedMenus(): Collection
+    {
+        return $this->lastEditedMenus;
+    }
+
+    public function addLastEditedMenu(Menu $lastEditedMenu): self
+    {
+        if (!$this->lastEditedMenus->contains($lastEditedMenu)) {
+            $this->lastEditedMenus[] = $lastEditedMenu;
+            $lastEditedMenu->setLastUserEdit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLastEditedMenu(Menu $lastEditedMenu): self
+    {
+        if ($this->lastEditedMenus->removeElement($lastEditedMenu)) {
+            // set the owning side to null (unless already changed)
+            if ($lastEditedMenu->getLastUserEdit() === $this) {
+                $lastEditedMenu->setLastUserEdit(null);
             }
         }
 

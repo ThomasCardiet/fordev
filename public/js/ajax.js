@@ -236,8 +236,9 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                                 // Get Fields Categories
                                 case 'getFieldCategories':
                                 case 'getFields':
+                                case 'getMenus':
 
-                                    $(`[data-update="${name}"]`).each(function (){
+                                    $(`[data-update="${name}"]`).each(function () {
 
                                         const el = $(this);
                                         switch (el.prop('nodeName').toLowerCase()) {
@@ -247,7 +248,7 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
 
                                                 // INCREMENT MISSING
                                                 let missings = values.filter(v => Object.values(this.children).filter(child => v.id === child.value).length <= 0);
-                                                if(missings.length > 0) {
+                                                if (missings.length > 0) {
                                                     missings.forEach(miss => {
                                                         this.innerHTML += `<option value="${miss.id}">${miss.name}</option>`
                                                     });
@@ -255,7 +256,7 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
 
                                                 // INCREMENT REMOVED
                                                 let removed = Object.values(this.children).filter(child => values.filter(v => child.value === v.id).length <= 0 && child.value !== '-1');
-                                                if(removed.length > 0) {
+                                                if (removed.length > 0) {
                                                     removed.forEach(rem => {
                                                         rem.remove();
                                                     });
@@ -268,15 +269,17 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
 
                                     //Update values block
                                     let fieldCategoryColumns = document.querySelectorAll('[data-fieldCategory_id]');
+                                    let missings = [];
+                                    let removed = [];
                                     switch (name) {
                                         case 'getFieldCategories':
 
                                             // INCREMENT MISSING
-                                            let missings = values.filter(v => Object.values(fieldCategoryColumns).filter(column => v.id === column.dataset.fieldcategory_id).length <= 0);
-                                            if(missings.length > 0) {
+                                            missings = values.filter(v => Object.values(fieldCategoryColumns).filter(column => v.id === column.dataset.fieldcategory_id).length <= 0);
+                                            if (missings.length > 0) {
                                                 missings.forEach(miss => {
 
-                                                    let others = fieldCategoryColumns[fieldCategoryColumns.length-1];
+                                                    let others = fieldCategoryColumns[fieldCategoryColumns.length - 1];
                                                     let newFieldCategoryColumn = document.createElement('div');
 
                                                     newFieldCategoryColumn.dataset.fieldcategory_id = miss.id;
@@ -297,8 +300,8 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                                             }
 
                                             // INCREMENT REMOVED
-                                            let removed = Object.values(fieldCategoryColumns).filter(column => values.filter(v => column.dataset.fieldcategory_id === v.id).length <= 0 && column.dataset.fieldcategory_id !== '-1');
-                                            if(removed.length > 0) {
+                                            removed = Object.values(fieldCategoryColumns).filter(column => values.filter(v => column.dataset.fieldcategory_id === v.id).length <= 0 && column.dataset.fieldcategory_id !== '-1');
+                                            if (removed.length > 0) {
                                                 removed.forEach(rem => {
                                                     rem.remove();
                                                 });
@@ -313,8 +316,8 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                                                 let fieldLines = fieldsBlock.children;
 
                                                 // INCREMENT MISSING
-                                                let missings = columnFields.filter(v => Object.values(fieldLines).filter(child => child.dataset.field_id !== undefined && v.id === child.dataset.field_id).length <= 0);
-                                                if(missings.length > 0) {
+                                                missings = columnFields.filter(v => Object.values(fieldLines).filter(child => child.dataset.field_id !== undefined && v.id === child.dataset.field_id).length <= 0);
+                                                if (missings.length > 0) {
                                                     missings.forEach(miss => {
                                                         fieldsBlock.innerHTML +=
                                                             `         <div class="input-group mb-3" data-field_id="${miss.id}">` +
@@ -330,14 +333,45 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                                                     });
                                                 }
 
-                                                let removed = Object.values(fieldLines).filter(child => child.dataset.field_id !== undefined && values.filter(v => child.dataset.field_id === v.id).length <= 0);
-                                                if(removed.length > 0) {
+                                                removed = Object.values(fieldLines).filter(child => child.dataset.field_id !== undefined && values.filter(v => child.dataset.field_id === v.id).length <= 0);
+                                                if (removed.length > 0) {
                                                     removed.forEach(rem => {
                                                         rem.remove();
                                                     });
                                                 }
 
-                                            })
+                                            });
+
+                                            break;
+
+                                        case 'getMenus':
+
+                                            let menusColumn = document.querySelector('#menus-list');
+                                            let menusBlock = menusColumn.querySelector('.card-body');
+                                            let menusLines = menusBlock.children;
+
+                                            // INCREMENT MISSING
+                                            missings = values.filter(v => Object.values(menusLines).filter(child => child.dataset.menu_id !== undefined && v.id === child.dataset.menu_id).length <= 0);
+                                            if (missings.length > 0) {
+                                                missings.forEach(miss => {
+                                                    menusBlock.innerHTML +=
+                                                        `         <div class="input-group mb-3" data-menu_id="${miss.id}">` +
+                                                        `              <i class="fas fa-info-circle info-bubble" data-toggle="tooltip" data-placement="top" title="Modification du champ ${miss.name} (${miss.path}) | édité le ${formatDate(miss.edited_at)} par ${miss.last_user_edit_username}"></i>` +
+                                                        `              <input id="update-menu-menu_name_${miss.id}" type="text" class="form-control bg-light border-0 small" placeholder="${miss.name}" value="${miss.name}">` +
+                                                        `              <input type="text" value="${miss.path}" disabled="disabled" />` +
+                                                        `              <button class="ajax-btn btn btn-danger h-25" type="button" data-method="removeMenu" data-menu_id="${miss.id}">` +
+                                                        '                   Supprimer' +
+                                                        '              </button>' +
+                                                        '          </div>'
+                                                });
+                                            }
+
+                                            removed = Object.values(menusLines).filter(child => child.dataset.menu_id !== undefined && values.filter(v => child.dataset.menu_id === v.id).length <= 0);
+                                            if (removed.length > 0) {
+                                                removed.forEach(rem => {
+                                                    rem.remove();
+                                                });
+                                            }
 
                                             break;
                                     }

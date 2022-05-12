@@ -168,6 +168,18 @@ class AdminController extends AbstractController
                 ]);
 
                 break;
+
+            // MENUS MODIFICATION
+            case 'menus':
+                $paths = [];
+                foreach($this->get('router')->getRouteCollection()->all() as $name => $obj)
+                {
+                    if(!str_starts_with($name, '_') && !str_contains($name, 'app_')) $paths[] = $name;
+                }
+                $variables = array_merge($variables, [
+                    'paths' => $paths
+                ]);
+                break;
         }
 
         return $this->render('admin/index.html.twig', $variables);

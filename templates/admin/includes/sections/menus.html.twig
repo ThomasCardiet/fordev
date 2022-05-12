@@ -1,0 +1,38 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Ajout de menus</h6>
+    </div>
+    <div class="card-body">
+
+        <!-- Create Field -->
+        <div class="d-flex mb-2">
+            <i class="fas fa-info-circle info-bubble" data-toggle="tooltip" data-placement="top" title="Ajouter un menu"></i>
+            <input id="create-menu-menu_name" type="text" class="form-control bg-light border-1 small col-md-2" placeholder="Nom">
+            <select id="create-menu-menu_path" class="form-select col-md-2 ml-1 mr-1">
+                {% for path in paths %}
+                    <option value="{{ path }}">{{ path }}</option>
+                {% endfor %}
+            </select>
+            <button class="ajax-btn btn btn-primary" data-method="createMenu">
+                Créer
+            </button>
+        </div>
+
+        <!-- Remove Field -->
+        <div class="d-flex mb-2">
+            <i class="fas fa-info-circle info-bubble" data-toggle="tooltip" data-placement="top" title="Supprimer un menu"></i>
+            <select id="remove-menu-menu_id" class="form-select col-md-2 ml-1 mr-1" data-update="getMenus"></select>
+            <button class="ajax-btn btn btn-primary" data-method="removeMenu">
+                Supprimer
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<div class="card shadow mb-4" id="menus-list">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Ajout de menus</h6>
+    </div>
+    <div class="card-body"></div>
+</div>

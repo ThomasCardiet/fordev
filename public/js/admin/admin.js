@@ -28,6 +28,16 @@ methods = {
         },
     },
 
+    getMenus: {
+        section: 'menus',
+        update: true,
+        type: 'get',
+        style: null,
+        params: {
+            data: 'menus',
+        },
+    },
+
     getFile: {
         section: 'templates',
         update: false,
@@ -39,6 +49,8 @@ methods = {
     },
 
     /*Update methods*/
+
+    //FIELDS
     createFieldCategory: {
         type: 'action',
         close_popup: false,
@@ -136,6 +148,49 @@ methods = {
             }
         }
     },
+
+    //MENUS
+    createMenu: {
+        type: 'action',
+        close_popup: false,
+        style: 'message',
+        form: {
+            name: 'create-menu',
+            data: {
+                menu_name: {
+                    file: false,
+                    can_empty: false,
+                    reset: true,
+                    error_message: 'Vous devez saisir un nom de menu.'
+                },
+                menu_path: {
+                    file: false,
+                    can_empty: false,
+                    reset: true,
+                    error_message: 'Vous devez saisir un lien de menu.'
+                },
+            }
+        }
+    },
+
+    removeMenu: {
+        type: 'action',
+        close_popup: false,
+        style: 'message',
+        form: {
+            name: 'remove-menu',
+            data: {
+                menu_id: {
+                    file: false,
+                    can_empty: false,
+                    reset: false,
+                    error_message: 'Vous devez saisir un ID de menu.'
+                },
+            }
+        }
+    },
+
+    //TEMPLATES
 
     updateFile: {
         type: 'action',

@@ -18,7 +18,7 @@ night_switch.click(function() {
         ];
     }
     $(this).find(".circle")[0].animate(animation, {
-        duration: 300,
+        duration: 200,
     });
 })
 
