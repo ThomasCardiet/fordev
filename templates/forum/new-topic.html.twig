@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}Nouveau Topic{% endblock %}
+
+{% block body %}
+    <section id="new-topic">
+
+        <form action="{{ path('view_topic') }}" class="block-form" method="post">
+
+            <div class="flex">
+                <div>
+                    <div class="block-form-input">
+                        <i class="fas fa-keyboard"></i>
+                        <input type="text" placeholder="Sujet du topic" value="">
+                    </div>
+                </div>
+
+                <div>
+                    <div class="block-form-input">
+                        <i class="fas fa-tag"></i>
+                        <select>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <textarea></textarea>
+
+            <button>Envoyer la question</button>
+        </form>
+
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset("js/links.js") }}"></script>
+    <script src="{{ asset("js/ajax.js") }}"></script>
+{% endblock %}

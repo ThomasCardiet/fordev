@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Fields;
 use App\Entity\FieldsCategory;
+use App\Entity\ForumCategory;
 use App\Entity\Friend;
 use App\Entity\Menu;
 use App\Entity\Project;
@@ -43,6 +44,7 @@ class AdminAjaxController extends AbstractController
         $fields_category_repo = $em->getRepository(FieldsCategory::class);
         $fields_repo = $em->getRepository(Fields::class);
         $menu_repo = $em->getRepository(Menu::class);
+        $category_repo = $em->getRepository(ForumCategory::class);
 
         $data = [];
         $method_exist = true;
@@ -56,8 +58,6 @@ class AdminAjaxController extends AbstractController
         foreach ($request->request as $field => $value) {
             $fields[$field] = $value;
         }
-
-        $user = $user_repo->find($fields['user_id']);
 
         // METHODS
         switch ($m) {
@@ -87,6 +87,14 @@ class AdminAjaxController extends AbstractController
                 $RAW_QUERY = "SELECT * FROM menu
                                 LEFT JOIN (SELECT id as user_id, username as last_user_edit_username FROM user) user
                                 ON user.user_id = menu.last_user_edit_id";
+
+                $executes = [];
+
+                break;
+
+            case 'getForumCategories':
+
+                $RAW_QUERY = "SELECT * FROM forum_category";
 
                 $executes = [];
 
@@ -294,6 +302,58 @@ class AdminAjaxController extends AbstractController
                 }else {
 
                     $data['msg'] = "Le menu n'existe pas.";
+
+                }
+
+                break;
+
+            case 'createForumCategory':
+
+                $data = [
+                    'code' => 200,
+                    'msg' => '',
+                    'status' => 'error'
+                ];
+
+                if(empty($category_repo->findBy(['name' => $fields['category_name']]))) {
+
+                    $category = new ForumCategory();
+                    $category->setName($fields['category_name']);
+
+                    $em->persist($category);
+                    $em->flush();
+
+                    $data['msg'] = "Vous avez ajouté la catégorie '" . $fields['category_name'] . "'.";
+                    $data['status'] = 'success';
+
+                }else {
+
+                    $data['msg'] = "La catégorie '" . $fields['category_name'] . "' existe déjà.";
+
+                }
+
+                break;
+
+            case 'removeForumCategory':
+
+                $data = [
+                    'code' => 200,
+                    'msg' => '',
+                    'status' => 'error'
+                ];
+
+                $category = $category_repo->find($fields['category_id']);
+                if(!empty($category)) {
+
+                    $em->remove($category);
+                    $em->flush();
+
+                    $data['msg'] = "Vous avez supprimé la catégorie '" . $category->getName() . "'.";
+                    $data['status'] = 'success';
+
+                }else {
+
+                    $data['msg'] = "La catégorie n'existe pas.";
 
                 }
 

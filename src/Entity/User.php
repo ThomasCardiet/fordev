@@ -126,6 +126,11 @@ class User implements UserInterface
      */
     private $lastEditedMenus;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ForumTopic::class, mappedBy="owner")
+     */
+    private $forumTopics;
+
     public function __construct()
     {
         $this->requestedFriends = new ArrayCollection();
@@ -136,6 +141,7 @@ class User implements UserInterface
         $this->contributedProjects = new ArrayCollection();
         $this->lastEditedFields = new ArrayCollection();
         $this->lastEditedMenus = new ArrayCollection();
+        $this->forumTopics = new ArrayCollection();
     }
 
 
@@ -553,6 +559,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($lastEditedMenu->getLastUserEdit() === $this) {
                 $lastEditedMenu->setLastUserEdit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ForumTopic[]
+     */
+    public function getForumTopics(): Collection
+    {
+        return $this->forumTopics;
+    }
+
+    public function addForumTopic(ForumTopic $forumTopic): self
+    {
+        if (!$this->forumTopics->contains($forumTopic)) {
+            $this->forumTopics[] = $forumTopic;
+            $forumTopic->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeForumTopic(ForumTopic $forumTopic): self
+    {
+        if ($this->forumTopics->removeElement($forumTopic)) {
+            // set the owning side to null (unless already changed)
+            if ($forumTopic->getOwner() === $this) {
+                $forumTopic->setOwner(null);
             }
         }
 

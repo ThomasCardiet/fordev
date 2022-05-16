@@ -38,6 +38,16 @@ methods = {
         },
     },
 
+    getForumCategories: {
+        section: 'forumCategories',
+        update: true,
+        type: 'get',
+        style: null,
+        params: {
+            data: 'categories',
+        },
+    },
+
     getFile: {
         section: 'templates',
         update: false,
@@ -185,6 +195,41 @@ methods = {
                     can_empty: false,
                     reset: false,
                     error_message: 'Vous devez saisir un ID de menu.'
+                },
+            }
+        }
+    },
+
+    //FORUM CATEGORIES
+    createForumCategory: {
+        type: 'action',
+        close_popup: false,
+        style: 'message',
+        form: {
+            name: 'create-category',
+            data: {
+                category_name: {
+                    file: false,
+                    can_empty: false,
+                    reset: true,
+                    error_message: 'Vous devez saisir un nom de catégorie.'
+                },
+            }
+        }
+    },
+
+    removeForumCategory: {
+        type: 'action',
+        close_popup: false,
+        style: 'message',
+        form: {
+            name: 'remove-category',
+            data: {
+                menu_id: {
+                    file: false,
+                    can_empty: false,
+                    reset: false,
+                    error_message: 'Vous devez saisir un ID de catégorie.'
                 },
             }
         }

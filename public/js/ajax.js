@@ -237,6 +237,7 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                                 case 'getFieldCategories':
                                 case 'getFields':
                                 case 'getMenus':
+                                case 'getForumCategories':
 
                                     $(`[data-update="${name}"]`).each(function () {
 
@@ -367,6 +368,37 @@ function methodsFunctions(name, value, data = {}, containFile = false) {
                                             }
 
                                             removed = Object.values(menusLines).filter(child => child.dataset.menu_id !== undefined && values.filter(v => child.dataset.menu_id === v.id).length <= 0);
+                                            if (removed.length > 0) {
+                                                removed.forEach(rem => {
+                                                    rem.remove();
+                                                });
+                                            }
+
+                                            break;
+
+
+                                        case 'getForumCategories':
+
+                                            let categoriesColumn = document.querySelector('#forum-categories-list');
+                                            let categoriesBlock = categoriesColumn.querySelector('.card-body');
+                                            let categoriesLines = categoriesBlock.children;
+
+                                            // INCREMENT MISSING
+                                            missings = values.filter(v => Object.values(categoriesLines).filter(child => child.dataset.menu_id !== undefined && v.id === child.dataset.menu_id).length <= 0);
+                                            if (missings.length > 0) {
+                                                missings.forEach(miss => {
+                                                    categoriesBlock.innerHTML +=
+                                                        `         <div class="input-group mb-3" data-menu_id="${miss.id}">` +
+                                                        `              <i class="fas fa-info-circle info-bubble" data-toggle="tooltip" data-placement="top" title="Modification de la catégorie ${miss.name} "></i>` +
+                                                        `              <input id="update-menu-menu_name_${miss.id}" type="text" class="form-control bg-light border-0 small" placeholder="${miss.name}" value="${miss.name}">` +
+                                                        `              <button class="ajax-btn btn btn-danger h-25" type="button" data-method="removeMenu" data-menu_id="${miss.id}">` +
+                                                        '                   Supprimer' +
+                                                        '              </button>' +
+                                                        '          </div>'
+                                                });
+                                            }
+
+                                            removed = Object.values(categoriesLines).filter(child => child.dataset.menu_id !== undefined && values.filter(v => child.dataset.menu_id === v.id).length <= 0);
                                             if (removed.length > 0) {
                                                 removed.forEach(rem => {
                                                     rem.remove();

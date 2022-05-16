@@ -1,0 +1,33 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Ajout de catégories</h6>
+    </div>
+    <div class="card-body">
+
+        <!-- Create Field -->
+        <div class="d-flex mb-2">
+            <i class="fas fa-info-circle info-bubble" data-toggle="tooltip" data-placement="top" title="Ajouter une catégorie"></i>
+            <input id="create-category-category_name" type="text" class="form-control bg-light border-1 small col-md-2" placeholder="Nom">
+            <button class="ajax-btn btn btn-primary" data-method="createForumCategory">
+                Créer
+            </button>
+        </div>
+
+        <!-- Remove Field -->
+        <div class="d-flex mb-2">
+            <i class="fas fa-info-circle info-bubble" data-toggle="tooltip" data-placement="top" title="Supprimer une catégorie"></i>
+            <select id="remove-category-category_id" class="form-select col-md-2 ml-1 mr-1" data-update="getForumCategories"></select>
+            <button class="ajax-btn btn btn-primary" data-method="removeForumCategory">
+                Supprimer
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<div class="card shadow mb-4" id="forum-categories-list">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Gestion des catégories</h6>
+    </div>
+    <div class="card-body"></div>
+</div>

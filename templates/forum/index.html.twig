@@ -11,7 +11,7 @@
             <h2>Questions Générales</h2>
             <p>Une question ? Posez la ici</p>
 
-            <a href="#"><i class="fas fa-comment-alt"></i> Nouvelle question</a>
+            <a href="{{ path('create_topic') }}"><i class="fas fa-comment-alt"></i> Nouvelle question</a>
         </div>
 
         <div id="forum-block">
@@ -20,12 +20,9 @@
                 <li id="forum-block-list-head">
                     <i class="fas fa-folder-open"></i> Catégories
                 </li>
-                <li class="forum-block-list-content active">
-                    <span class="forum-block-list-content-name">Cat 0</span><span class="forum-block-list-content-count">0</span>
-                </li>
-                {% for i in range(1,3) %}
+                {% for category in categories %}
                 <li class="forum-block-list-content">
-                    <span class="forum-block-list-content-name">Cat {{ i }}</span><span class="forum-block-list-content-count">{{ i * 10 }}</span>
+                    <span class="forum-block-list-content-name">{{ category.name }}</span><span class="forum-block-list-content-count">{{ category.topics|length }}</span>
                 </li>
                 {% endfor %}
             </ul>
