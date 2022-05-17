@@ -434,3 +434,45 @@
     top: 38px;
   }
 }
+
+
+//CGU POPUP
+#register-cgu-popup {
+  position: absolute;
+  width: 35%;
+  height: 40%;
+  top: 30%;
+  left: 32.5%;
+  z-index: 9;
+  background-color: white;
+}
+
+@keyframes open-popup {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1);
+  }
+  90% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes close-popup {
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(0.9);
+  }
+  20% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}

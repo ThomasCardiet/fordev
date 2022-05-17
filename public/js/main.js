@@ -26,7 +26,6 @@ night_switch.click(function() {
 const header_unminified = $('#header-unminified');
 const header_minified = $('#header-minified');
 function minifyHeader(active = false) {
-    console.debug(active)
     if(active) {
         header_unminified.hide();
         header_minified.show();

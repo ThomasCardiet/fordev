@@ -16,7 +16,8 @@
 
                 <div class="auth-block-form-input">
                     <i class="fas fa-user"></i>
-                    <input type="text" name="user_login" placeholder="Identifiant ou Email" value="">
+                    <input type="text" name="user_login" placeholder="Identifiant ou Email"
+                           value="{% if app.request.cookies.get("user_login") is not null %}{{ app.request.cookies.get("user_login") }}{% endif %}">
                 </div>
                 {% if errors['login'] is defined and errors['type'] == 'login' %}
                     {% for msg in errors['login'] %}
@@ -27,6 +28,10 @@
                 <div class="auth-block-form-input">
                     <i class="fas fa-lock"></i>
                     <input type="password" name="user_password" placeholder="Mot de passe">
+                    <div class="password-icons">
+                        <i data-feather="eye"></i>
+                        <i data-feather="eye-off"></i>
+                    </div>
                 </div>
                 {% if errors['password'] is defined and errors['type'] == 'login' %}
                     {% for msg in errors['password'] %}
@@ -35,8 +40,10 @@
                 {% endif %}
 
                 <div class="auth-block-form-remember">
-                    <input type="checkbox" name="remember" value="1">
-                    Se souvenir de moi
+                    <label class="container">Se souvenir de moi
+                        <input type="checkbox" value=true {% if app.request.cookies.get("user_login") is not null %}checked{% endif %}>
+                        <span class="checkmark"></span>
+                    </label>
                 </div>
 
                 <!--FORGET PASSWORD-->
@@ -74,7 +81,8 @@
                     <div>
                         <div class="auth-block-form-input">
                             <i class="fas fa-user"></i>
-                            <input type="text" name="user_username" placeholder="Identifiant" value="{% if params['username'] is defined %}{{ params['username'] }}{% endif %}">
+                            <input type="text" name="user_username" placeholder="Identifiant"
+                                   value="{% if app.request.request.get('user_username') is not null %}{{ app.request.request.get('user_username') }}{% elseif params['username'] is defined %}{{ params['username'] }}{% endif %}">
                         </div>
                         {% if errors['username'] is defined and errors['type'] == 'register' %}
                             {% for msg in errors['username'] %}
@@ -86,7 +94,8 @@
                     <div>
                         <div class="auth-block-form-input">
                             <i class="fas fa-envelope"></i>
-                            <input type="email" name="user_email" placeholder="Email" value="{% if params['email'] is defined %}{{ params['email'] }}{% endif %}">
+                            <input type="email" name="user_email" placeholder="Email"
+                                   value="{% if app.request.request.get('user_email') is not null %}{{ app.request.request.get('user_email') }}{% elseif params['email'] is defined %}{{ params['email'] }}{% endif %}">
                         </div>
                         {% if errors['email'] is defined and errors['type'] == 'register' %}
                             {% for msg in errors['email'] %}
@@ -100,7 +109,8 @@
                     <div>
                         <div class="auth-block-form-input">
                             <i class="fas fa-user"></i>
-                            <input type="text" name="user_name" placeholder="Prénom" value="{% if params['name'] is defined %}{{ params['name'] }}{% endif %}">
+                            <input type="text" name="user_name" placeholder="Prénom"
+                                   value="{% if app.request.request.get('user_name') is not null %}{{ app.request.request.get('user_name') }}{% elseif params['name'] is defined %}{{ params['name'] }}{% endif %}">
                         </div>
                         {% if errors['name'] is defined and errors['type'] == 'register' %}
                             {% for msg in errors['name'] %}
@@ -112,7 +122,8 @@
                     <div>
                         <div class="auth-block-form-input">
                             <i class="fas fa-user"></i>
-                            <input type="text" name="user_surname" placeholder="Nom" value="{% if params['surname'] is defined %}{{ params['surname'] }}{% endif %}">
+                            <input type="text" name="user_surname" placeholder="Nom"
+                                   value="{% if app.request.request.get('user_surname') is not null %}{{ app.request.request.get('user_surname') }}{% elseif params['surname'] is defined %}{{ params['surname'] }}{% endif %}">
                         </div>
                         {% if errors['surname'] is defined and errors['type'] == 'register' %}
                             {% for msg in errors['surname'] %}
@@ -126,7 +137,19 @@
                     <div>
                         <div class="auth-block-form-input">
                             <i class="fas fa-lock"></i>
-                            <input type="password" name="user_password" placeholder="Mot de passe">
+                            <input id="auth-input-new-pass" type="password" name="user_password" placeholder="Mot de passe">
+                            <div class="password-icons">
+                                <i data-target="auth-input-new-pass" class="password-security-icon wrong" data-feather="x-circle"></i>
+                                <i data-target="auth-input-new-pass" class="password-security-icon success" data-feather="check-circle"></i>
+
+                                <i data-feather="eye"></i>
+                                <i data-feather="eye-off"></i>
+                            </div>
+
+                            <div id="password-security-popup">
+                                <p><i data-feather="alert-triangle"></i>Votre mot de passe :</p>
+                                <ul id="password-security-popup-list"></ul>
+                            </div>
                         </div>
                         {% if errors['password'] is defined and errors['type'] == 'register' %}
                             {% for msg in errors['password'] %}
@@ -138,7 +161,18 @@
                     <div>
                         <div class="auth-block-form-input">
                             <i class="fas fa-lock"></i>
-                            <input type="password" name="user_confirm_password" placeholder="Confirmation de mot de passe">
+                            <input id="auth-input-confirm-pass" type="password" name="user_confirm_password" placeholder="Confirmation de mot de passe">
+                            <div class="password-icons">
+                                <i data-target="auth-input-confirm-pass" class="password-security-icon wrong" data-feather="x-circle"></i>
+                                <i data-target="auth-input-confirm-pass" class="password-security-icon success" data-feather="check-circle"></i>
+
+                                <i data-feather="eye"></i>
+                                <i data-feather="eye-off"></i>
+                            </div>
+
+                            <div id="password-confirm-popup">
+                                <p><i data-feather="alert-triangle"></i>Les mots de passent doivent correspondre</p>
+                            </div>
                         </div>
                         {% if errors['confirm_password'] is defined and errors['type'] == 'register' %}
                             {% for msg in errors['confirm_password'] %}
@@ -148,7 +182,15 @@
                     </div>
                 </div>
 
-                <button type="submit" name="register_submit">S'inscrire</button>
+                <div id="register-cgu-popup">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>En vous inscrivant vous acceptez les <a href="">Conditions générales d'Utilisation</a> de {{ getField('Title') }}</p>
+                    <hr>
+                    <button id="register-cgu-popup-btn-close" class="register-cgu-popup-btn">Annuler</button>
+                    <button class="register-cgu-popup-btn" type="submit" name="register_submit">Accepter</button>
+                </div>
+
+                <button id="register-cgu-popup-btn-open">S'inscrire</button>
 
             </form>
 
@@ -160,5 +202,6 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="https://unpkg.com/feather-icons"></script>
     <script src="{{ asset("js/auth/auth.js") }}"></script>
 {% endblock %}

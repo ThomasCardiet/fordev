@@ -57,6 +57,7 @@ body.on('click', '.popup-btn', e => {
 
 overlay.click(function () {
     togglePopup(false, true);
+    toggleCguForm(false);
 })
 
 /*TOGGLE POPUP*/

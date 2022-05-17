@@ -39,6 +39,7 @@ class AuthController extends AbstractController
 
                 $login = $p->get('user_login');
                 $password = $p->get('user_password');
+                $remember = $p->get('remember');
                 $errors['type'] = 'login';
 
                 //ERRORS
@@ -53,7 +54,17 @@ class AuthController extends AbstractController
                 if(!empty($password)) {
                     if($user !== null) {
                         if($encoder->isPasswordValid($user, $password)) {
+
+                            //LOGIN USER
                             $this->loginUser($user);
+
+                            //REMEMBER PART
+                            if($remember !== null) {
+                                setcookie("user_login", $login);
+                            }else if (isset($_COOKIE['user_login'])) {
+                                setcookie("user_login", "", time() - 3600);
+                            }
+
                         }else {
                             $errors['password'][] = 'Mot de passe incorrect';
                         }

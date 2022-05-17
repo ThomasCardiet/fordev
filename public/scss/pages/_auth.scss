@@ -110,6 +110,7 @@
     .auth-block-form-input {
         border-bottom: solid 1px var(--grey);
         margin-top: 50px;
+        position: relative;
 
         i {
             color: var(--green);
@@ -124,9 +125,80 @@
             width: 70%;
             background-color: transparent;
             color: white;
+
+            &#auth-input-new-pass {
+                width: 78% !important;
+            }
         }
         ::placeholder {
              opacity: 0.3;
+        }
+
+        //PASSWORD SECURITY POPUP AND PASSWORD CONFIRM POPUP
+        #password-security-popup, #password-confirm-popup {
+            position: absolute;
+            background-color: var(--dark_grey);
+            border: solid 1px var(--warning);
+            width: 100%;
+            z-index: 9;
+            padding: 0 12px 12px 10px;
+            top: 100%;
+            left: 0;
+            color: white;
+            display: none;
+
+            p {
+                .feather-alert-triangle {
+                    width: 15px;
+                    transform: translateY(25%);
+                    margin-right: 5px;
+                }
+            }
+
+            #password-security-popup-list {
+                margin-left: 10px;
+                margin-top: 5px;
+                list-style-type: '- ';
+                font-size: 12px;
+            }
+        }
+
+        .password-icons {
+            position: absolute;
+            color: white;
+            top: 0;
+            right: 0;
+
+            //HIDE/SHOW PASSWORD ICONS
+            .feather-eye:hover, .feather-eye-off:hover {
+                color: var(--green);
+            }
+
+            > svg:hover {
+                cursor: pointer;
+            }
+
+            .feather-eye {
+                display: none;
+            }
+
+            //PASSWORD SECURITY ICONS
+            .password-security-icon {
+
+                display: none;
+
+                &.wrong {
+                    color: var(--error);
+                }
+
+                &.warning {
+                    color: var(--warning);
+                }
+
+                &.success {
+                    color: var(--success);
+                }
+            }
         }
     }
 
@@ -203,6 +275,34 @@
     > button:hover {
         cursor: pointer;
         background-color: var(--light_green);
+    }
+
+    #register-cgu-popup {
+        display: none;
+        background-color: var(--light_grey);
+        text-align: center;
+        color: white;
+        padding: 50px 0 0 0;
+
+        p {
+            a {
+                color: var(--green);
+                text-decoration: none;
+            }
+            margin: 20px auto;
+        }
+
+        i {
+            font-size: 50px;
+            color: var(--green);
+        }
+
+        hr {
+            width: 90%;
+            margin: 0 auto 20px auto;
+            border: 1px solid var(--green);
+        }
+
     }
 }
 

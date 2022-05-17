@@ -58,6 +58,7 @@ main {
   --red: #E6103B;
   --error: #ab2f2f;
   --success: #37a237;
+  --warning: #FDD56C;
   --gold: #CBBD31;
   --aqua: #00FEC2;
   --mat_gold: #b79136;
@@ -691,6 +692,44 @@ html[data-theme=dark] #right-menu-popup-settings #night-switch i {
     top: 38px;
   }
 }
+#register-cgu-popup {
+  position: absolute;
+  width: 35%;
+  height: 40%;
+  top: 30%;
+  left: 32.5%;
+  z-index: 9;
+  background-color: white;
+}
+
+@keyframes open-popup {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1);
+  }
+  90% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes close-popup {
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(0.9);
+  }
+  20% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
 .footer {
   background-color: var(--dark_grey);
   color: var(--white);
@@ -1050,6 +1089,68 @@ input[type=radio]:checked + label::after {
   background-color: var(--green);
 }
 
+.container {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: #eee;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: var(--green);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 8px;
+  top: 4px;
+  width: 2px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
 #auth {
   background: url("../../img/home/background_1.png") no-repeat fixed;
   background-size: cover;
@@ -1144,6 +1245,7 @@ input[type=radio]:checked + label::after {
 .auth-block-form .auth-block-form-input {
   border-bottom: solid 1px var(--grey);
   margin-top: 50px;
+  position: relative;
 }
 .auth-block-form .auth-block-form-input i {
   color: var(--green);
@@ -1158,8 +1260,61 @@ input[type=radio]:checked + label::after {
   background-color: transparent;
   color: white;
 }
+.auth-block-form .auth-block-form-input input#auth-input-new-pass {
+  width: 78% !important;
+}
 .auth-block-form .auth-block-form-input ::placeholder {
   opacity: 0.3;
+}
+.auth-block-form .auth-block-form-input #password-security-popup, .auth-block-form .auth-block-form-input #password-confirm-popup {
+  position: absolute;
+  background-color: var(--dark_grey);
+  border: solid 1px var(--warning);
+  width: 100%;
+  z-index: 9;
+  padding: 0 12px 12px 10px;
+  top: 100%;
+  left: 0;
+  color: white;
+  display: none;
+}
+.auth-block-form .auth-block-form-input #password-security-popup p .feather-alert-triangle, .auth-block-form .auth-block-form-input #password-confirm-popup p .feather-alert-triangle {
+  width: 15px;
+  transform: translateY(25%);
+  margin-right: 5px;
+}
+.auth-block-form .auth-block-form-input #password-security-popup #password-security-popup-list, .auth-block-form .auth-block-form-input #password-confirm-popup #password-security-popup-list {
+  margin-left: 10px;
+  margin-top: 5px;
+  list-style-type: "- ";
+  font-size: 12px;
+}
+.auth-block-form .auth-block-form-input .password-icons {
+  position: absolute;
+  color: white;
+  top: 0;
+  right: 0;
+}
+.auth-block-form .auth-block-form-input .password-icons .feather-eye:hover, .auth-block-form .auth-block-form-input .password-icons .feather-eye-off:hover {
+  color: var(--green);
+}
+.auth-block-form .auth-block-form-input .password-icons > svg:hover {
+  cursor: pointer;
+}
+.auth-block-form .auth-block-form-input .password-icons .feather-eye {
+  display: none;
+}
+.auth-block-form .auth-block-form-input .password-icons .password-security-icon {
+  display: none;
+}
+.auth-block-form .auth-block-form-input .password-icons .password-security-icon.wrong {
+  color: var(--error);
+}
+.auth-block-form .auth-block-form-input .password-icons .password-security-icon.warning {
+  color: var(--warning);
+}
+.auth-block-form .auth-block-form-input .password-icons .password-security-icon.success {
+  color: var(--success);
 }
 .auth-block-form .auth-block-form-remember {
   margin-top: 10px;
@@ -1223,6 +1378,29 @@ input[type=radio]:checked + label::after {
 .auth-block-form > button:hover {
   cursor: pointer;
   background-color: var(--light_green);
+}
+.auth-block-form #register-cgu-popup {
+  display: none;
+  background-color: var(--light_grey);
+  text-align: center;
+  color: white;
+  padding: 50px 0 0 0;
+}
+.auth-block-form #register-cgu-popup p {
+  margin: 20px auto;
+}
+.auth-block-form #register-cgu-popup p a {
+  color: var(--green);
+  text-decoration: none;
+}
+.auth-block-form #register-cgu-popup i {
+  font-size: 50px;
+  color: var(--green);
+}
+.auth-block-form #register-cgu-popup hr {
+  width: 90%;
+  margin: 0 auto 20px auto;
+  border: 1px solid var(--green);
 }
 
 #auth-block-type {
